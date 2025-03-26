@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estaciones</title>
+
+    <style>
+        h1 {
+            text-align: center;
+            color: blue;
+        }
+
+        .formulario {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .Tabla {
+            border: 1px ;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        form {
+            line-height: 2;
+            padding: 20px;
+        }
+
+        form input, form select {
+            margin: 8px 0;
+            padding: 5px;
+        }
+
+        th {
+            background-color: lightblue;
+            color: blue;
+        }
+
+        th, td {
+            border: 1px solid blue;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1><strong>ESTACIONES</strong></h1>
+    <div class="formulario">
+        <form action="/submit" method="GET">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <br>
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion" required>
+            <br>
+
+            <label for="barrio">Barrio:</label>
+            <select id="barrio" name="barrio">
+                <option value="centro">Centro</option>
+                <option value="palermo">Palermo</option>
+                <option value="pocitos">Pocitos</option>
+                <option value="malvin">Malvín</option>
+            </select>
+            <br>
+
+            <label for="activa">Activa:</label>
+            <input type="checkbox" id="activa" name="activa" required> 
+            <br>
+
+            <button type="submit">Enviar</button>
+            <br>
+
+        </form>
+    </div>  
+    <div class="Tabla">
+        <table>
+            <thead>
+                <th colspan="5">Estaciones de Tren</th>
+            </thead>
+            <thead>
+                <th>Número</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Barrio</th>
+                <th>Activa</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Estación Central</td>
+                    <td>Av. Principal 123</td>
+                    <td>Centro</td>
+                    <td>Sí</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Estación Norte</td>
+                    <td>Calle 45 #678</td>
+                    <td>Palermo</td>
+                    <td>Sí</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Estación Sur</td>
+                    <td>Ruta 8 km 15</td>
+                    <td>Pocitos</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Estación Este</td>
+                    <td>Av. Costa 890</td>
+                    <td>Malvín</td>
+                    <td>Sí</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>  
+</body>
+</html>
