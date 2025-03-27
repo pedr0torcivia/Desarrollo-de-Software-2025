@@ -1,0 +1,109 @@
+Realize cada paso y vaya visualizando  el resultado parcial y experimente variaciones para ver como cambia.
+
+1. Cree el archivo vacío estilos.css en la misma carpeta que el archivo index.html
+
+2. Edite el archivo index.html y agregue una referencia al archivo estilos.css
+<link type="text/css" rel="stylesheet" href="estilos.css" />
+
+Inicialmente vamos a trabajar en la distribución de las distintas secciones dentro del espacio del navegador
+
+3. Asignar al div con clase = container un ancho del 100% y un borde de 1px 
+    
+width: 100%;
+border: 1px solid gray;
+
+4. Aplicar los siguientes estilos a los elementos header y footer
+
+padding: 1em;
+color: white;
+background-color: black;
+clear: left; /* hace que comiencen en el margen izquierdo */
+text-align: center;
+
+5. Aplicar los siguientes estilos al elemento nav
+
+float: left;
+margin: 0;
+
+6. Aplicar los estilos siguientes al elemento article
+
+margin-left: 170px;
+border-left: 1px solid gray;
+padding: 1em;
+overflow: hidden;
+
+7. Aplicar una fuente para todo el documento que despues podremos redefinir para elementos particulares
+
+font-family: Verdana, Tahoma, Arial;
+
+8. Centrar la tabla de artículos, para eso aplicamos los siguientes articulos al div listaArticulos
+
+width:100%;
+height:100%;
+
+y el siguiente estilo a la tabla:
+
+margin: 0 auto; 
+
+9. Ahora daremos un mejor aspecto a la tabla de artículos, aplicando los siguientes estilos a la tablaArticulos
+
+border-collapse: separate;
+border-spacing: 90px 30px;
+width: 90%;
+
+y una altura fija a las celdas de la tabla de 40px
+
+height:40px;
+
+10. Vamos a convertír una lista de links en un menú de navegación usando los siguientes estilos a las listas ul que se encuentran en la seccion de navegación, estos no deben afectar a las otras listas
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+}
+
+nav li a {
+    display: block;
+    color: #000;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+
+nav li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+11. Modifiquemos el estilo del botón comprar con estos estilos o alguna variante. Debemos aplicarlos a todos los botones "Comprar"
+
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+	background: rgb(28, 184, 65);
+	padding: 7px;
+	border: none;
+    outline:none;
+	
+12. Ahora mejoramos la distribución de la imagen y los datos de cada artículo aplicando a los div con la clase imagenArticulo los siguientes estilos
+
+ float: left;
+ width: 40%;
+ overflow: hidden;
+ padding-left: 20px
+
+y a los div con la clase datosArticulo los siguientes estilos
+ 
+ font-size: 0.7em;
+ overflow: hidden;
+
+y le aplicamos los siguientes estilos al select:
+
+    width: 80%;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+
