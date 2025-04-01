@@ -7,19 +7,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: blue;
+            background-image: url(https://images.unsplash.com/photo-1614850523011-8f49ffc73908?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGlnaHQlMjBibHVlJTIwYmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vhM;
             margin: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
             font-style: normal;
         
         }
 
         .container {
-            background-color: orange;
+            background-image: url(https://images.unsplash.com/photo-1530982011887-3cc11cc85693?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8b3JhbmdlJTIwYmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D);
             padding: 20px;
             border: 5px solid black;
             margin: 20px;
@@ -32,19 +33,43 @@
             text-decoration: double;
             text-align: center;
             text-shadow: 3px 3px 5px navy;
-            font-size: 40px;
-   
+            font-size: 60px;
+            animation: pulse 2s infinite;
         }
 
+        @keyframes pulse {
+            0% {
+            transform: scale(1);
+            text-shadow: 3px 3px 5px navy;
+            }
+            50% {
+            transform: scale(1.1);
+            text-shadow: 5px 5px 10px darkblue;
+            }
+            100% {
+            transform: scale(1);
+            text-shadow: 3px 3px 5px navy;
+            }
+        }
+        
         img {
             align-self: center;
             display: block;
+            transition: transform 1.5s ease-in-out, filter 1.5s ease-in-out, content 1.5s ease-in-out;
             margin-left: auto;
             margin-right: auto;
             width: 50%;
-            border: 5px solid navy
+            filter: drop-shadow(5px 5px 15px navy);
+            border-radius: 10px;
+          }
+
+        img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(5px 5px 15px navy) brightness(3);
+            content: url('./logo.png'); 
         }
 
+        
         p {
             color: navy;
             text-align: justify;
@@ -64,13 +89,20 @@
             font-weight: bold;
             text-shadow: 5px 5px 5px navy;
             text-decoration: underline;
+            transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
+        }
+
+        a:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(5px 5px 15px navy) brightness(1.2);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>MORCILLA IS COOL</h1>
-        <img src="https://img.desmotivaciones.es/201012/morzilla.jpg" alt="Morcilla is cool" width="300">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Firefox_logo%2C_2017.png" alt="Morcilla is cool" width="300">
+        <br>
         <p>At Morcilla, we're a global community of:</p>
         <ul>
             <li><strong>TECHNOLOGISTS</strong></li>
