@@ -1,0 +1,19 @@
+Explicación de los Conceptos Aplicados:
+1 Colores y Fondos:
+
+background-color para cambiar el fondo de la página y los elementos.
+color para definir el color del texto.
+
+2 Tipografía y Tamaño:
+
+font-family para definir la fuente.
+font-size y line-height para ajustar la apariencia del texto.
+
+3 Diseño con Flexbox:
+
+display: flex para distribuir elementos en línea.
+justify-content: space-around para separarlos uniformemente.
+
+4 Efectos Hover:
+
+transition para animar cambios de color cuando se pasa el cursor sobre el botón.

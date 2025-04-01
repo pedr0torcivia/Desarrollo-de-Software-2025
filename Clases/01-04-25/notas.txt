@@ -1,0 +1,8 @@
+CLASE 01/04/2025
+
+1)-Se han realizado cambios en el archivo /Ejercicios_Apuntes/Apunte4/index.html 
+para hacer la pagina mas estetica, en linea con los conocimientos adquiridos durante 
+la semana pasada
+
+2)-Se ha realizado la actividad del Apunte 5:
+ /Ejercicios_Apuntes/Apunte5/index.html 
