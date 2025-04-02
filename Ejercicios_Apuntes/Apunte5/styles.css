@@ -1,31 +1,62 @@
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background-image: url(https://xmple.com/wallpaper/yellow-green-streaks-lines-stripes-2176x904-c2-008080-ffefd5-l2-151-302-a-30-f-1.svg)
+}
 a {
     background-color: #333;
     border: none;
-    color: #fff;
-    padding: 10px 20px;
+    color: #fff0d5;
+    padding: 8px 15px;
     font-size: 1rem;
-    font: 10px 'Arial', sans-serif;
+    font-family: 'Poppins', Arial, sans-serif;
     text-decoration: none;
     border-radius: 5px;
     cursor: pointer;
+    display: inline-block;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
     }
 
 
 a:hover {
     background-color: #555;
-    transform: scale(1.05);
+    transform: scale(1.25);
+    box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.2);
     }
 
-nav {
+.navbar {
     display: flex;
-    justify-content: left;
+    flex-direction: column;
+    text-align: center;
     gap: 10px; 
     background-color: #333;
     padding: 10px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-}
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+.nav-link:hover {
+    color: #880606 !important;
+    text-decoration: underline;
+    font-weight: bold;
+    }
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff0d5;
+    text-decoration: none;
+    }
+
+.navbar-brand:hover {
+    color: #00b5b5 !important;
+    text-decoration: underline;
+    font-weight: bold;
+    }
+
 
 footer {
     background-color: #333;
@@ -35,5 +66,21 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    font: 10px 'Arial', sans-serif;
+    font: 10px 'Poppins', sans-serif;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.5s ease;
+    margin-top: 50px;
+    z-index: 10; 
+    }
+
+header {
+        text-align: center;
+        flex: auto;
+        flex-direction: column;
+        margin-bottom: 20px;
+        color: #111111;
+        font-weight: bold;
+        letter-spacing: 35px;
+        line-height: 2;
+        font-size: 30px;
     }

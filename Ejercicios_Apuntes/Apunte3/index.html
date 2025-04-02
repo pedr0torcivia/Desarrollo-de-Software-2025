@@ -1,11 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Primer Sitio Web</title>
+      <style>
+            /* Estilos generales */
+            body {
+                  font-family: 'Poppins', sans-serif;
+                  font-size: 16px;
+                  margin: 0;
+                  padding: 0;
+                  background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Fondo suave en tonos grises claros */
+                  color: #495057; /* Gris oscuro para el texto */
+                  overflow-x: hidden;
+            }
+
+            /* Header */
+            header {
+                  color: #ffffff;
+                  text-align: center;
+                  padding: 20px;
+                  background-color: #6c757d; /* Gris elegante */
+                  transition: all 0.3s ease-in-out;
+                  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            header:hover {
+                  background-color: #495057; /* Gris más oscuro */
+                  transform: scale(1.05);
+                  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            header h1 {
+                  font-size: 2.5rem;
+                  animation: fadeInDown 1s ease-in-out;
+            }
+
+            header h1 span {
+                  color: #ff7f50; /* Coral para destacar */
+            }
+
+            /* Navegación */
+            nav ul {
+                  list-style: none;
+                  padding: 0;
+                  display: flex;
+                  justify-content: center;
+                  background-color: #6c757d; /* Gris elegante */
+                  margin: 0;
+            }
+
+            nav ul li {
+                  margin: 0 15px;
+            }
+
+            nav ul li a {
+                  text-decoration: none;
+                  color: white;
+                  font-weight: bold;
+                  padding: 10px 15px;
+                  border-radius: 5px;
+                  transition: background-color 0.3s ease;
+            }
+
+            nav ul li a:hover {
+                  background-color: #495057; /* Gris más oscuro */
+            }
+
+            /* Contenedor principal */
+            .container {
+                  width: 80%;
+                  margin: 40px auto;
+                  padding: 20px;
+                  background-color: #ffffff; /* Blanco */
+                  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                  border-radius: 8px;
+                  animation: fadeInUp 1s ease-in-out;
+            }
+
+            /* Contenido principal */
+            main.contenido p {
+                  line-height: 1.8;
+                  text-align: justify;
+                  animation: fadeIn 1.5s ease-in-out;
+            }
+
+            /* Footer */
+            footer {
+                  text-align: center;
+                  padding: 20px;
+                  background-color: #6c757d; /* Gris elegante */
+                  color: white;
+                  margin-top: 20px;
+                  font-size: 0.9rem;
+                  animation: fadeInUp 1s ease-in-out;
+            }
+
+            footer a {
+                  color: #ff7f50; /* Coral */
+                  text-decoration: none;
+                  font-weight: bold;
+                  transition: color 0.3s ease;
+            }
+
+            footer a:hover {
+                  color: #e5533d; /* Coral más oscuro */
+            }
+
+            /* Animaciones */
+            @keyframes fadeIn {
+                  from {
+                        opacity: 0;
+                  }
+                  to {
+                        opacity: 1;
+                  }
+            }
+
+            @keyframes fadeInDown {
+                  from {
+                        opacity: 0;
+                        transform: translateY(-20px);
+                  }
+                  to {
+                        opacity: 1;
+                        transform: translateY(0);
+                  }
+            }
+
+            @keyframes fadeInUp {
+                  from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                  }
+                  to {
+                        opacity: 1;
+                        transform: translateY(0);
+                  }
+            }
+      </style>
 </head>
 <body>
-      <div class="container"></div>
+      <div class="container">
             <header>
-                  <h1><strong> <span style=color:brown> Primer Sitio Web</span></strong>  </h1>
+                  <h1><strong><span>Primer Sitio Web</span></strong></h1>
             </header>
 
             <nav id="menu">
@@ -16,7 +155,7 @@
                   </ul>
             </nav>
 
-            <main class="contenido"></div>
+            <main class="contenido">
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
                   incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
                   exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -26,6 +165,5 @@
                   <a href="https://www.google.com/?hl=es">Todos los derechos reservados @SoftPruebaGoogle</a>
             </footer>
       </div>
-
 </body>
-</html> 
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 25px;
+            background-color:  rgba(255, 255, 255, 0.85); 
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
+            backdrop-filter: blur(8px); 
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            font-family: 'Poppins', Arial, sans-serif;
+            color: #333; 
+            text-align: justify;
+            line-height: 1.8; 
+            font-size: 1.1rem; 
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: black;
+            font-family:'Poppins', Arial, sans-serif;
+        }
+
+        .btn-primary:hover {
+            background-color: #b50000; 
+            border-color: #b50000; 
+            transform: scale(0.95); 
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.html"><strong>INIZIO</strong></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="bienvenida.html"><strong>BENVENUTI</strong></a></li>
+                        <li class="nav-item"><a class="nav-link" href="contacto.html"><strong>CONTATTO</strong></a></li>
+                        <li class="nav-item"><a class="nav-link" href="fotos.html"><strong>NOSTRI PIATTI</strong></a></li>
+                        <li class="nav-item"><a class="nav-link" href="testimonios.html"><strong>TESTIMONIANZE</strong></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    <header class="py-5">
+        <h1 class="display-1">CONTATTO</h1>
+    </header>
+
+    <section class="container">
+        <div class="form-container">
+            <form id="contactForm" novalidate>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre <i class="fas fa-user"></i></label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Tu nombre" required>
+                    <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico <i class="fas fa-envelope"></i></label>
+                    <input type="email" class="form-control" id="email" placeholder="Tu correo electrónico" required>
+                    <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="mensaje" class="form-label">Mensaje <i class="fas fa-comment"></i></label>
+                    <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí" required></textarea>
+                    <div class="invalid-feedback">El mensaje no puede estar vacío.</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100" style="color: #fff0d5; background-color: #b50000; border-color: #b50000;"><i class="fas fa-paper-plane"></i> Enviar</button>
+            </form>
+        </div>
+    </section>
+
+
+    <script>
+        (function () {
+            'use strict';
+            var form = document.getElementById('contactForm');
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        })();
+    </script>
+
+    <footer>
+        <p>&copy; 2025 400091portafolio_torcivia. Todos los derechos reservados.</p>
+    </footer>
+    </div>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- CSS de Bootstrap -->
+    <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.c
+    ss" rel="stylesheet">
+    <!-- JavaScript de Bootstrap y dependencias -->
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+    </script>
+    <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.
+    min.js"></script>
+    </div>
+</body>
+</html>
