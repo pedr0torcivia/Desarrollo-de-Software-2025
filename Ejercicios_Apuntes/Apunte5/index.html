@@ -7,10 +7,19 @@
     <title>Actividad Apunte 5</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+
+        body {
+            height: 50vh; overflow: hidden;
+        }
         .pasta-img {
             width: 1000px; 
             height: 1000px;
+            margin-top: -120px;
+            border-radius: 50%;
+            position: relative;
+            border: 5px rgba(0, 0, 0, 0.5);
             animation: rotate 5s linear infinite; 
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
         }
 
         @keyframes rotate {
@@ -21,6 +30,43 @@
                 transform: rotate(360deg);
             }
         }
+
+        
+        .title-animated {
+                color: #fff0d5;
+                text-align: center;
+                position: relative;
+                animation: fadeIn 2s ease-in-out;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+        
+            .title-animated::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: -5px;
+                width: 0;
+                height: 4px;
+                background-color: #b50000;
+                transition: width 2s ease-in-out;
+                transform: translateX(-50%);
+            }
+        
+            .title-animated:hover::after {
+                width: 100%;
+
+            }
+        
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
 
     </style>
 
@@ -53,46 +99,13 @@
         <h1 class="display-1 title-animated">
             PASTI DEI RAGAZZI
         </h1>
-        
-        <style>
-            .title-animated {
-                color: #fff0d5;
-                text-align: center;
-                position: relative;
-                animation: fadeIn 2s ease-in-out;
-            }
-        
-            .title-animated::after {
-                content: "";
-                position: absolute;
-                left: 50%;
-                bottom: -5px;
-                width: 0;
-                height: 4px;
-                background-color: #b50000;
-                transition: width 2s ease-in-out;
-                transform: translateX(-50%);
-            }
-        
-            .title-animated:hover::after {
-                width: 100%;
-            }
-        
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        </style>
+
     </header>
     </nav>
     <div class="container text-center my-5">
-        <img src="https://www.pngplay.com/wp-content/uploads/15/Seafood-Pasta-Download-Free-PNG.png" alt="Pasta girando" class="pasta-img">
+        <div class="d-flex justify-content-center">
+            <img src="https://www.pngplay.com/wp-content/uploads/15/Seafood-Pasta-Download-Free-PNG.png" alt="Pasta girando" class="pasta-img img-fluid">
+        </div>
     </div>
 
     <footer>
