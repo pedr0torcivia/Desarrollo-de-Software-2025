@@ -11,14 +11,13 @@
   
 </head>
 <style>
-    body {
-      margin: 0;
-      font-family: 'Inter Tight', sans-serif;
-      background: linear-gradient(to right, #f8f9fa, #e9ecef);
-      color: #212529;
-      overflow-x: hidden;
+    h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem); 
+        font-weight: 800;
+        color: #1f2d3d;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
-
 </style>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -37,15 +36,15 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="informesDropdown" role="button" data-bs-toggle="dropdown">Informes</a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="ventas.html">Ventas</a></li>
-                  <li><a class="dropdown-item" href="compras.html">Compras</a></li>
-                  <li><a class="dropdown-item" href="libro_iva.html">Libro de IVA</a></li>
+                  <li><a class="dropdown-item" href="#">Ventas</a></li>
+                  <li><a class="dropdown-item" href="#">Compras</a></li>
+                  <li><a class="dropdown-item" href="#">Libro de IVA</a></li>
                 </ul>
               </li>
             </ul>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="btn btn-outline-light d-flex align-items-center" href="login.html">
+                <a class="btn btn-outline-light d-flex align-items-center" href="#">
                   <span class="me-2">Login</span>
                   <i class="bi bi-arrow-right"></i>
                 </a>
@@ -54,7 +53,9 @@
           </div>
         </div>
       </nav>
-    
+
+      <h1 class="text-center my-5">Listado de Artículos</h1>
+      <hr>
 
 
     
