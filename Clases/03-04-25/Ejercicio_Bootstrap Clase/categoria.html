@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <link href="/Bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Bootstrap/css/bootstrap-icons.css" rel="stylesheet" />
+  
+</head>
+<style>
+    h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem); 
+        font-weight: 800;
+        color: #1f2d3d;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand d-flex align-items-center" href="#">
+            <img id="logo" src="https://www.alot.com.ar/images/site_nuevo/Pyme-24.png" alt="Logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="inicio.html">Inicio</a></li>
+              <li class="nav-item"><a class="nav-link" href="categoria.html">Categorias</a></li>
+              <li class="nav-item"><a class="nav-link" href="articulos.html">Artículos</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="informesDropdown" role="button" data-bs-toggle="dropdown">Informes</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="ventas.html">Ventas</a></li>
+                  <li><a class="dropdown-item" href="compras.html">Compras</a></li>
+                  <li><a class="dropdown-item" href="libro_iva.html">Libro de IVA</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="btn btn-outline-light d-flex align-items-center" href="login.html">
+                  <span class="me-2">Login</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <h1 class="text-center my-5">Categorías de Artículos</h1>
+      <hr>
+      <table class="table table-striped table-bordered mx-auto" style="width: 80%;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Electrónica</td>
+                <td>Artículos electrónicos y gadgets.</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Ropa</td>
+                <td>Vestimenta y accesorios.</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Hogar</td>
+                <td>Artículos para el hogar y decoración.</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Juguetes</td>
+                <td>Juguetes y juegos para niños.</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Deportes</td>
+                <td>Equipamiento y ropa deportiva.</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Libros</td>
+                <td>Literatura y libros de texto.</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Salud</td>
+                <td>Productos de salud y bienestar.</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Alimentos</td>
+                <td>Comida y bebidas.</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Herramientas</td>
+                <td>Herramientas y suministros de bricolaje.</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Automotriz</td>
+                <td>Accesorios y repuestos para automóviles.</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>Jardinería</td>
+                <td>Herramientas y suministros para jardinería.</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>Oficina</td>
+                <td>Artículos de oficina y papelería.</td>
+            </tr>
+        </tbody>
+      </table>
+
+
+      <footer>
+        <p>&copy; 2025 PYME Pro. Todos los derechos reservados. <a href="#">Política de Privacidad</a></p>
+      </footer>
+    <script src="/Bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

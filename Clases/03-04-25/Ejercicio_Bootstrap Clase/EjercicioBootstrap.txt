@@ -1,0 +1,13 @@
+Siguiendo el modelo de https://pymes2025.azurewebsites.net/
+hacer la pagina de html+bootstrat de
+* inicio.html
+* categorias.html
+* articulos.html
+En todas incluir el mismo menu que permita navegar entre las mismas.
+
+inicio.html - Presentacion
+categoria.html - 
+articulos.html - Tabla con 3 divs: uno de busqueda, otro de tabla 
+                y otro de agregar articulos
+
+con menu de bootstrap (navbar).

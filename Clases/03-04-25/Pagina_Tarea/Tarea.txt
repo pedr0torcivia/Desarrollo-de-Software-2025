@@ -1,6 +1,0 @@
-inicio.html - Presentacion
-categoria.html - 
-articulos.html - Tabla con 3 divs: uno de busqueda, otro de tabla 
-                y otro de agregar articulos
-
-con menu de bootstrap (navbar).
