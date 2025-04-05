@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    font-family: 'Inter Tight', sans-serif;
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    color: #212529;
+    overflow-x: hidden;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 10px;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 5;
+  }
+
+  footer a {
+    color: #ffc107;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  #logo {
+    max-width: 100px;
+    height: auto;
+  }
+
+  .navbar-brand span {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+  }
