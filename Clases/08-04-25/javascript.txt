@@ -1,0 +1,149 @@
+08/04/25 - DDS: JAVASCRIPT
+
+Lenguaje muy utilizado. Se utiliza para Front y Back. No es un lenguaje fuertemente tipado
+Soporta los tipos de datos: string, number (inft, float), bool, null, undefined, object, date,
+array, RegEx, Error, etc. (Algunos de estos son built-in-objects, que son especializaciones del 
+tipo object)
+Null no cuenta con informacion, Undefined no se puede conocer el dato porque no está definido el valor de
+la variable. 
+
+Asignar varible:        let X = <valor de variable>;
+Print:                  console.log(X)
+Printear tipo de dato:  console.log(typeof X)
+
+Usar camelCase para identificadores de variables. Las variables declaradas y no inicialiadas aún contienen
+el valor undefined. Las declaradas con "const" son variables de lectura:
+
+Asignar variable const: const X = 23;
+
+Tambien existe la posibilidad de usar var como asignador de variables pero no será de uso. En el caso de no 
+usar let, var o const, en el ambito local no habra problemas. 
+
+Variables: 
+typeof: es un operador que devuelve el tipo basico de una variable. 
+constructor: devuelve el constructor de la vairable y sirve para obtener informacion precisa sobre la variable.
+                let a = new Date(2025, 06, 27);
+                typeof a; /* devuelve: "object" */
+                a.constructor /* devuelve la funcion y object */
+
+Conversion de tipos: puede ser explicitamente (usando una función de conversión) o implicitamene (por JS
+automaticamente). 
+Convertir datos a string:
+    -función global: String() --> String(false)
+    -método .toString() --> false.toString()
+Convertir datos a number:
+    -función Global: Number() (false=0, true=1)
+    -método .parseInt()
+    -método .parseFloat()
+    -método unario +
+
+Coersion de tipos: el interprete de JS asumirá el tipo de datos cuando utiliza el operador +. 
+Por ejemplo: '11' + 1 = '111'
+
+Operadores lógicos:
+    - && (and)
+    -|| (or)
+    - == (igualad)
+    - =! (desigualdad)
+    - === (estrictamente iguales)
+    - !== (no estrictamente iguales)
+    - >=, <=, >, < (mayor, menor)
+
+Sentencias Condicionales:
+
+    if (condicion) {
+        return true;
+    } else if {
+        return false;
+    } else {
+        break;
+    }
+
+    switch(expresión) {
+        case n:
+            codigo
+            breask
+        case m:
+            codigo
+        default:
+            codigo
+    }
+
+Sentencias iterativas:
+
+    for (sentencia1; sentencia2) {
+        codigo
+        //break;
+        //continue;
+    }
+
+    for (let i = 0; i < cosas.lenght, i++) {
+        console.log(Cosas[i])
+    }
+
+
+    for (let propiedad in Persona) {
+        console.log(Persona[propiedad])
+    }
+
+    while (condición) {
+        código
+    }
+
+    do {
+        codigo
+        break
+    }
+
+-break: sale de la iteración y continúa ejectuando .
+-continue: omite la iteración. 
+
+ARRAY: son una clase especial de objeto cuyas propiedades son valores númericos. 
+Sintaxis:                  let nombre-array = [item1, item2, ...];
+Ejemplo:                   let colores = ["Verde", "Azul"];
+Acceder a los elementos:   let color1 = colores[0];
+
+Propiedades y métodos: 
+    leght: devuelve tamaño
+    push(): agrega elemento al final. 
+    pop(): remueve el ultimo elemento.
+    unshift(): agrega elemento al principio.
+    shift(): remueve el primer elemento.
+    delete: elimina un elemento dejandolo empty. delete colores[1]
+    slice(posicion, elementos, nuevo1, nuevo2): elimina y agrega elementos.
+    slice(inicio, fin): Obtiene n elementos.
+    sort(): ordena el array.
+    reverse(): invierte el orden del array. 
+
+FUNCIONES: 
+    function nombre(parametro1, parametro2) {
+        /* código */ 
+        return var 
+    }
+
+Invocar una funcion: nombre()
+Asignar una función como cualquier objeto: let a = sumar; d = c(5,6); /* d contendrá 11 */
+Funciones arrow: sumar = (a,b) => { return a +b; }; sumar = (a,b) => a + b; 
+
+OBJETOS: se puede definir un objeto asignado propiedades y métodos.
+    let persona = new Object();
+    persona.nombre = "Pedro";
+    persona.apellido = "Torcivia";
+    persona.nombreCompleto = function (){
+        return this.nombre + " " + this.apellido;
+    };
+
+    let persona = {nombre:"Pedro", apellido:"Torcivia"}; 
+
+JSON: viene de JS Object Notation. Es un formato de intercambio dedatos independiente del
+lenguaje. Es auto-descripto. Es facil de entender. 
+Sintaxis: let objeto = JSON.parse(textoJson)
+
+{
+"clientes" : [
+        {"nombre":"Geronimo", "apellido":"Benavides"};
+        {"nombre":"Coscu", "apellido":"Army"};
+]
+}
+
+FETCH: funcion de JS que permite obtener información de una direccion url. 
