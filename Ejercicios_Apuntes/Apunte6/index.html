@@ -59,18 +59,24 @@
         // Ejercicio 2: Mostrar palabras en un recuadro
         function mostrarEnRecuadro() {
             const frase = document.getElementById("frase").value;
-            const palabras = frase.split(" ");
-            const longitudMaxima = Math.max(...palabras.map(palabra => palabra.length));
-            const borde = "*".repeat(longitudMaxima + 4);
-            let resultado = `${borde}\n`;
+            let palabras = frase.split(" ");
+            let longitud = 0;
 
-            palabras.forEach(palabra => {
-                resultado += `* ${palabra.padEnd(longitudMaxima, " ")} *\n`;
-            });
+            for (let i = 0; i < palabras.length; i++) {
+                if (palabras[i].length > longitud) {
+                    longitud = palabras[i].length;
+                }
+            }
 
-            resultado += borde;
-            document.getElementById("resultado2").textContent = resultado;
+            console.log("*".repeat(longitud + 4));
+
+            for (let i = 0; i < palabras.length; i++) {
+                console.log(`* ${palabras[i].padEnd(longitud, " ")} *`);
+            }
+
+            console.log("*".repeat(longitud + 4));
         }
+
     </script>
 </body>
 </html>
