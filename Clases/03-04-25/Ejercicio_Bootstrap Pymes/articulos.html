@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artículos</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: #1f2d3d;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img id="logo" src="https://www.alot.com.ar/images/site_nuevo/Pyme-24.png" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="inicio.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="categoria.html">Categorías</a></li>
+                    <li class="nav-item"><a class="nav-link" href="articulos.html">Artículos</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="informesDropdown" role="button" data-bs-toggle="dropdown">Informes</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Ventas</a></li>
+                            <li><a class="dropdown-item" href="#">Compras</a></li>
+                            <li><a class="dropdown-item" href="#">Libro de IVA</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light d-flex align-items-center" href="#">
+                            <span class="me-2">Login</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h1 class="text-center my-5">Listado de Artículos</h1>
+    <hr>
+
+    <div class="d-flex justify-content-center flex-column align-items-center gap-4">
+        <div style="max-width: 600px;" class="w-100">
+            <form id="formularioArticulo">
+                <div class="mb-3">
+                    <label for="nombreArticulo" class="form-label">Nombre del Artículo</label>
+                    <input type="text" class="form-control" id="nombreArticulo" placeholder="Ingrese el nombre del artículo">
+                </div>
+                <div class="mb-3">
+                    <label for="activo" class="form-label">Activo</label>
+                    <select id="activo" class="form-select">
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-success w-50 me-2" onclick="agregarArticulo()">Agregar</button>
+                    <button type="button" class="btn btn-primary w-50" onclick="buscarArticulo()">Buscar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive w-100" style="max-width: 1000px;">
+            <table class="table table-bordered table-striped" id="tablaArticulos">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Activo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 PYME Pro. Todos los derechos reservados. <a href="#">Política de Privacidad</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let articulos = [
+            { nombre: "ADAPTADOR PCI WIFI TL-WN751ND", activo: "SI" },
+            { nombre: "AIRE ACONDICIONADO LG 3000 FC", activo: "NO" },
+            { nombre: "ACCESO", activo: "SI" },
+        ];
+
+        function renderTabla(filtrados = articulos) {
+            const body = document.getElementById("tablaBody");
+            body.innerHTML = "";
+            filtrados.forEach((art, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${art.nombre}</td>
+                    <td>${art.activo}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary me-1" onclick="ver(${index})">👁️</button>
+                        <button class="btn btn-sm btn-outline-success me-1" onclick="editar(${index})">✏️</button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="eliminar(${index})">❌</button>
+                    </td>
+                `;
+                body.appendChild(row);
+            });
+        }
+
+        function agregarArticulo() {
+            const nombre = document.getElementById("nombreArticulo").value.trim();
+            const activo = document.getElementById("activo").value;
+
+            if (!nombre) {
+                alert("Ingrese un nombre válido para el artículo.");
+                return;
+            }
+            if (articulos.some(art => art.nombre.toLowerCase() === nombre.toLowerCase())) {
+                alert("El artículo ya existe.");
+                return;
+            }
+
+            articulos.push({ nombre, activo });
+            document.getElementById("tablaArticulos").style.display = "table";
+            renderTabla();
+            document.getElementById("formularioArticulo").reset();
+        }
+
+        function buscarArticulo() {
+            const nombre = document.getElementById("nombreArticulo").value.trim().toLowerCase();
+            const tabla = document.getElementById("tablaArticulos");
+
+            if (!nombre) {
+                renderTabla();
+            } else {
+                const filtrados = articulos.filter(a => a.nombre.toLowerCase().includes(nombre));
+                renderTabla(filtrados);
+            }
+
+            tabla.style.display = "table";
+        }
+
+        function ver(index) {
+            const art = articulos[index];
+            alert(`📄 Nombre: ${art.nombre}\n📌 Activo: ${art.activo}`);
+        }
+
+        function editar(index) {
+            const art = articulos[index];
+            document.getElementById("nombreArticulo").value = art.nombre;
+            document.getElementById("activo").value = art.activo;
+        }
+
+        function eliminar(index) {
+            const confirmar = confirm(`¿Desea eliminar "${articulos[index].nombre}"?`);
+            if (confirmar) {
+                articulos.splice(index, 1);
+                renderTabla();
+            }
+        }
+    </script>
+</body>
+</html>
