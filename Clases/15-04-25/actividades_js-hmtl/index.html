@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad JS + HTML</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #divClickeable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #divClickeable:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        #img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-light text-center py-5">
+
+    <div class="container">
+        <!-- EJERCICIO 1 -->
+        <div id="mensaje" class="alert alert-primary fs-4 fw-semibold">
+            Mensajito
+        </div>
+
+        <!-- EJERCICIO 2 -->
+        <ul id="lista" class="list-group mb-3 w-50 mx-auto">
+            <li class="list-group-item">Elemento 1</li>
+            <li class="list-group-item">Elemento 2</li>
+            <li class="list-group-item">Elemento 3</li>
+        </ul>
+
+        <button id="Boton" class="btn btn-success mb-4">Agregar Ítem</button>
+
+        <!-- EJERCICIO 3 -->
+        <div class="mb-3">
+            <img src="https://images.steamusercontent.com/ugc/1646595043658713843/958423A5335387D67B37841E98DFBF948F85C23C/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" id="img" class="img-fluid">
+        </div>
+
+        <button id="cambiarFoto" class="btn btn-warning mb-4">Cambiar Imagen</button>
+
+        <!-- EJERCICIO 4 -->
+        <div id="divClickeable" class="p-4 bg-danger text-white rounded shadow fw-bold">
+            HAZ CLICK!! (NO BAIT)
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // EJERCICIO 1
+        let mensaje = document.getElementById("mensaje");
+        mensaje.innerHTML = "¡Bienvenido a la práctica de Asincronismo y Eventos!";
+
+        // EJERCICIO 2
+        document.getElementById("Boton").addEventListener("click", function () {
+            const nuevoItem = document.createElement("li");
+            nuevoItem.textContent = "Elemento Agregado";
+            nuevoItem.className = "list-group-item";
+            document.getElementById("lista").appendChild(nuevoItem);
+        });
+
+        // EJERCICIO 3 - Cambio con botón
+        const img = document.getElementById("img");
+        document.getElementById("cambiarFoto").addEventListener("click", function () {
+            img.setAttribute("src", "https://media.tenor.com/5usWEjU0cOsAAAAM/twtjjk.gif");
+        });
+
+        // EJERCICIO - Imagen
+        const imagen = document.getElementById("img");
+        const originalImg = "https://images.steamusercontent.com/ugc/1646595043658713843/958423A5335387D67B37841E98DFBF948F85C23C/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false";
+        const baitImg = "https://media.tenor.com/5usWEjU0cOsAAAAM/twtjjk.gif";
+        let imagenCambiada = false;
+
+        // Click en la imagen: cambia o vuelve
+        imagen.addEventListener("click", function () {
+            if (!imagenCambiada) {
+                imagen.setAttribute("src", baitImg);
+                imagenCambiada = true;
+            } else {
+                imagen.setAttribute("src", originalImg);
+                imagenCambiada = false;
+            }
+        });
+
+        // Botón: siempre vuelve a la original
+        document.getElementById("cambiarFoto").addEventListener("click", function () {
+            if (imagenCambiada) {
+                imagen.setAttribute("src", originalImg);
+                imagenCambiada = false;
+            }
+        });
+
+        // EJERCICIO 4 - Div clickeable
+        const divElem = document.getElementById("divClickeable");
+        divElem.addEventListener("click", function () {
+            const baiteado = divElem.classList.toggle("bg-dark");
+            divElem.classList.toggle("bg-danger");
+
+            if (baiteado) {
+                divElem.textContent = "¡Baiteado!";
+            } else {
+                divElem.textContent = "HAZ CLICK!! (NO BAIT)";
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
