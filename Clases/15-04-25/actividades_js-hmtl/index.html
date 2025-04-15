@@ -45,7 +45,7 @@
 
         <!-- EJERCICIO 3 -->
         <div class="mb-3">
-            <img src="https://images.steamusercontent.com/ugc/1646595043658713843/958423A5335387D67B37841E98DFBF948F85C23C/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" id="img" class="img-fluid">
+            <img src="https://i.pinimg.com/originals/e0/f6/29/e0f629e044543ffaf85641d0b2491229.gif" id="img" class="img-fluid">
         </div>
 
         <button id="cambiarFoto" class="btn btn-warning mb-4">Cambiar Imagen</button>
@@ -54,6 +54,32 @@
         <div id="divClickeable" class="p-4 bg-danger text-white rounded shadow fw-bold">
             HAZ CLICK!! (NO BAIT)
         </div>
+
+        <!-- EJERCICIO 5 -->
+         <br>
+         <input type="text" id="campoEntrada" placeholder="Escribe algo...">
+         <p id="salidaTexto"></p>
+
+         <!-- EJERCICIO 6 -->
+        <br>
+        <div class="container mt-2">
+            <h1 class="mb-2">PUBLICACIONES</h1>
+            <table class="table table-bordered table-striped">
+                <thead class="thead dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Contenido</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPosts">
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- EJERCICIO 7 -->
+        
     </div>
 
     <!-- Scripts -->
@@ -63,22 +89,18 @@
         mensaje.innerHTML = "¡Bienvenido a la práctica de Asincronismo y Eventos!";
 
         // EJERCICIO 2
+        let contadorElemento = 4;
         document.getElementById("Boton").addEventListener("click", function () {
             const nuevoItem = document.createElement("li");
-            nuevoItem.textContent = "Elemento Agregado";
+            nuevoItem.textContent = "Elemento " + contadorElemento;
+            contadorElemento++;
             nuevoItem.className = "list-group-item";
             document.getElementById("lista").appendChild(nuevoItem);
         });
 
-        // EJERCICIO 3 - Cambio con botón
-        const img = document.getElementById("img");
-        document.getElementById("cambiarFoto").addEventListener("click", function () {
-            img.setAttribute("src", "https://media.tenor.com/5usWEjU0cOsAAAAM/twtjjk.gif");
-        });
-
-        // EJERCICIO - Imagen
+        // EJERCICIO 3 
         const imagen = document.getElementById("img");
-        const originalImg = "https://images.steamusercontent.com/ugc/1646595043658713843/958423A5335387D67B37841E98DFBF948F85C23C/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false";
+        const originalImg = "https://i.pinimg.com/originals/e0/f6/29/e0f629e044543ffaf85641d0b2491229.gif";
         const baitImg = "https://media.tenor.com/5usWEjU0cOsAAAAM/twtjjk.gif";
         let imagenCambiada = false;
 
@@ -93,15 +115,18 @@
             }
         });
 
-        // Botón: siempre vuelve a la original
+        // Botón: alterna también entre las imágenes
         document.getElementById("cambiarFoto").addEventListener("click", function () {
-            if (imagenCambiada) {
+            if (!imagenCambiada) {
+                imagen.setAttribute("src", baitImg);
+                imagenCambiada = true;
+            } else {
                 imagen.setAttribute("src", originalImg);
                 imagenCambiada = false;
             }
         });
 
-        // EJERCICIO 4 - Div clickeable
+        // EJERCICIO 4 
         const divElem = document.getElementById("divClickeable");
         divElem.addEventListener("click", function () {
             const baiteado = divElem.classList.toggle("bg-dark");
@@ -113,9 +138,44 @@
                 divElem.textContent = "HAZ CLICK!! (NO BAIT)";
             }
         });
+
+        // EJERCICIO 5
+        const campo = document.getElementById("campoEntrada");
+        const salida = document.getElementById("salidaTexto");
+
+        campo.addEventListener("input", function(){
+            salida.textContent = campo.value;
+        })
+
+        // EJERCICIO 6
+        fetch("https://jsonplaceholder.typicode.com/posts")
+            .then(response=> response.json())
+            .then(data=> {
+                const primerosDiez= data.slice(0, 10);
+                const tabla = document.getElementById("tablaPosts");
+
+                primerosDiez.forEach(post => {
+                    const fila = document.createElement("tr");
+
+                    fila.innerHTML = `
+                        <td>${post.id}</td>
+                        <td>${post.title}</td>
+                        <td>${post.body}</td>
+                    `;
+
+                    tabla.appendChild(fila);
+                })
+            })
+
+            .catch(error=> {
+                console.error("Error al obtener los datos: ", error);
+            })
+        
+        // EJERCICIO 7
+
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

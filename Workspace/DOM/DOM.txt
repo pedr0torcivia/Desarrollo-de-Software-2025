@@ -2,6 +2,23 @@ Document Object Model
 
 Forma en que JavaScript permite acceder al documento HTML. Representación del documento en un grupo de nodos y
 objetos estructurados con propiedades y metodos. Define de que manera los programas pueden acceder para modificar
-su estructura, estilo y contenido. 
+su estructura, estilo y contenido. Los nodos referencian las etiquetas head, body, etc. Representacion en forma de arbol 
+HTML. Es una API de JS. 
+
+Document
+│
+└── html
+    ├── head
+    │   └── title
+    │       └── "Mi Página"
+    │
+    └── body
+        ├── h1
+        │   └── "Bienvenido"
+        ├── p
+        │   └── "Este es un ejemplo del DOM"
+        └── button
+            └── "Haz clic aquí"
+
 
 #Document representa cualquier pagina cargada en el navegador. 
