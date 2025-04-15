@@ -1,0 +1,110 @@
+ORM (Object-Relational-Mapping): abstrae la base de datos para que el programados haga consultas
+en el lenguaje en el que esta programado sin necesitar SQL.
+
+[BASE DE DATOS] <----> [ORM] <----> [Objetos en lenguaje BackEnd] <----> [CRUD]
+
+Ventajas: 
+-Abstracción: facilita la intercacción con la BD a través de objetos y clases.
+-Mismo Lenguaje: expresa todas las operaciones con la BD en un mismo lenguaje.
+-Portabilidad: facilita la migración entre diferentes sistemas de BD.
+-Seguridad: ayuda a prevenir vulnerabilidades como la inyeccion SQL. 
+
+Desventajas: 
+-Rendimiento: puede haber una sobrecarga de rendimiento debido a la abstracción.
+-SQl puede ser mas eficiente para usuarios con dominio en BD, antes que el uso de ORM.
+-Curva de aprendizaje amplia. 
+-El mapeo conlleva esfuerzo y tiempo.
+-Dificultad para encontrar errores y problemas de performance. 
+
+SEQUELIZE: ORM basado en promesas para Node.js. Compatible con gestores de BD. Facilita creacion,
+manipulación y consultas de bases de datos. Posee soporte para transacciones, relaciones, carga 
+diferida y precarga (lazy loading/eager loading) y recopilación para lectura. 
+
+Inicializar Sequelize: Configurar archivo de conexión a la base de datos, importar Sequelize y SQLite
+en el archivo de conexión
+
+MODELO: Abstraccion que representa una tabla en la BD, en forma de un objeto en JS. 
+Define estructura, atributos y propiedades (tipo de datos, validaciones y relaciones/asociaciones
+con otros modelos).
+
+Se definen usando el metodo define por ejemplo:  sequelize.define(modelName, attributes, optiones)
+O extendiendo la clase MOdel y llamando a init(atributes, options).
+
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require("./db");
+const Usuario = sequelize.define('Usuario', {
+    nombre: { type: DataTypes.STRING, allowNull: false },
+    apellido: { type: DataTypes.STRING, allowNull: false },
+    usuario: { type: DataTypes.STRING, allowNull: false },
+    password: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false, unique: true, validate:
+{ isEmail: true}},
+},
+    {
+    sequelize,
+    modelName: "usuario",
+    timestamps: false,
+    } 
+
+
+Propiedades de columnas:
+PK: se indica mediante primaryKey: true.
+Columna Autoincremental: se indica mediante autoIncrement: true.
+Valores Nulos: con el atributo allowNull: true se aceptan  vlalores nulos.
+Valor por Defecto: asignando la propiedad defaultValue.
+
+Consultar los datos utilizando sequelize
+const sequelize = require("./db");
+const Usuario = require("./usuario");
+async function obtenerTodosLosUsuarios()
+{
+    const usuarios = await Usuario.findAll();
+    usuarios.forEach((u) => {
+        console.log(`${u.id}||${u.nombre}|${u.apellido}|${u.usuario}|${u.email}|`);
+});
+};
+obtenerTodosLosUsuarios();
+
+Consultar datos SIN sequelize
+import * as sqlite3 from 'sqlite3'
+import * as Sequelize from 'sequelize'
+const db = new sqlite3.default.Database("./usuarios.db",sqlite3.OPEN_READWRITE, (err)=>{
+    if (err) return console.error(err.message);});
+
+async function buscarUsuarios() {
+    let sql_select = "SELECT * FROM usuarios"
+    await db.all(sql_select, [], (err,rows)=>{
+        console.log('trae todos los usuarios');
+    if(err) return console.error(err.message);
+    rows.forEach((row)=>{
+        console.log(row);
+    });
+    });
+}
+buscarUsuarios();
+
+Crear Registro en BD con Sequelize
+const sequelize = require("./db");
+const Usuario = require("./usuario");
+async function crearUsuario(){
+    const rnd = (new Date()).getMilliseconds()
+    const nuevoUsuario = {
+        nombre: "Nombre " + rnd,
+        apellido: "Apellido" + rnd,
+        usuario: "napellido" + rnd ,
+        password: rnd.toString(),
+        email: "napellido" + rnd + "@gmail.com",
+    };
+    const usuario = await Usuario.create(nuevoUsuario);
+    console.log("Usuario creado ID:", usuario.id);
+    }
+crearUsuario()
+
+Modificar datos
+async function actualizarUsuario(id, nombre){
+    const u = await Usuario.findOne({ where: { id: id } });
+    if (u){
+        u.nombre = nombre;
+        await u.save();
+    }
+}
