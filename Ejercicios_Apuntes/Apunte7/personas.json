@@ -1,29 +1,29 @@
 {
-  "personas": [
-    {
-      "nombre": "Juan",
-      "edad": 25,
-      "profesion": "Ingeniero"
-    },
-    {
-      "nombre": "Ana",
-      "edad": 30,
-      "profesion": "Arquitecta"
-    },
-    {
-      "nombre": "Luis",
-      "edad": 28,
-      "profesion": "Médico"
-    },
-    {
-      "nombre": "María",
-      "edad": 22,
-      "profesion": "Estudiante"
-    },
-    {
-      "nombre": "Pedro",
-      "edad": 35,
-      "profesion": "Abogado"
-    }
-  ]
+    "personas": [
+        {
+            "nombre": "Juan",
+            "edad": 25,
+            "profesion": "Ingeniero"
+        }, 
+        {
+            "nombre": "Ana",
+            "edad": 30,
+            "profesion": "Arquitecta"
+        },
+        {
+            "nombre": "Luis",
+            "edad": 28,
+            "profesion": "Médico"
+        },
+        {
+            "nombre": "María",
+            "edad": 22,
+            "profesion": "Estudiante"
+        },
+        {
+            "nombre": "Pedro",
+            "edad": 35,
+            "profesion": "Abogado"
+        }
+    ]
 }

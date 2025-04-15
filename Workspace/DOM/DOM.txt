@@ -1,0 +1,7 @@
+Document Object Model
+
+Forma en que JavaScript permite acceder al documento HTML. Representación del documento en un grupo de nodos y
+objetos estructurados con propiedades y metodos. Define de que manera los programas pueden acceder para modificar
+su estructura, estilo y contenido. 
+
+#Document representa cualquier pagina cargada en el navegador. 

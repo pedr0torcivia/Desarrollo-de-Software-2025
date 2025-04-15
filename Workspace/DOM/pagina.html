@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Qué es el DOM?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    .card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 10px 15px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1 id="h1">DOM EN JS</h1>
+    <p id="explicacion">
+      El DOM (Document Object Model) es una representación en forma de árbol de todos los elementos de una página web.
+      Permite que JavaScript acceda y manipule el contenido, estructura y estilos de los documentos HTML y XML.
+    </p>
+
+    <button>Haz click aquí</button>
+
+    <ul class="list">
+      <li>JS</li>
+      <li>Python</li>
+      <li>Java</li>
+    </ul>
+    <img src="https://i.pinimg.com/736x/a4/51/4a/a4514afcc05529c83d714d6a7083e365.jpg" width="500px">
+  </div>
+  <div class="old-div">
+    Esto se va a eliminar
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
