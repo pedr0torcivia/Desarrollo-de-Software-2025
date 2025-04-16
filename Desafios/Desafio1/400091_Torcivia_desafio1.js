@@ -16,7 +16,7 @@ function promedio(cantidad, suma) {
 
 function main() {
     // Generador de números
-    const random = seedrandom('1763519',  { state: true });
+    const random = seedrandom(1763519,  { state: true });
 
     // Obtención de números
     const cantidad = 1000000;
@@ -73,10 +73,11 @@ function main() {
         } 
         
         // Punto 6
-        if (Math.abs(numeros[i]).toString().length == 6) {
-            sumador6Dig += numeros[i];
-            contador6Dig++; 
-        }
+        let valorAbs = Math.abs(numeros[i]);
+        if (valorAbs >= 100000 && valorAbs <= 999999) {
+        sumador6Dig += numeros[i];
+        contador6Dig++; 
+        } 
     }
     console.log("Positivos:", positivos);
     console.log("Negativos:", negativos);
@@ -85,7 +86,7 @@ function main() {
     console.table(contadores);
     console.log("Menor número:", menor, "en posición:", posMenor);
     console.log("Cantidad de números con mismo signo que el anterior:", cantSignoIgual);
-    console.log("Suma de números con 6 dígitos:", promedio(contador6Dig, sumador6Dig));
+    console.log("Promedio de números con 6 dígitos:", promedio(contador6Dig, sumador6Dig));
 }
 
-main() 
+main()
