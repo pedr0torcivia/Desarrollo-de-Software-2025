@@ -1,5 +1,5 @@
 const seedrandom = require('seedrandom');
-const rng = seedrandom('1763519'); // Semilla definida
+const rng = seedrandom(1763519); // Semilla definida
 
 const numeros = [];
 const resultados = {
