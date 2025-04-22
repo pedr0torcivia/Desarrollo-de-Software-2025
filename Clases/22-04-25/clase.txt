@@ -1,0 +1,107 @@
+22/04/25
+
+Caso típico: GET a una base de datos
+En una app web común (por ejemplo, un sistema de usuarios, una tienda online, etc.), suele 
+haber un backend que accede a una base de datos para recuperar información. Esto se hace generalmente
+con una petición HTTP GET.
+
+Ejemplo:
+GET /api/productos
+Este endpoint le pide al backend que consulte la base de datos y devuelva los productos.
+
+
+Respuesta del backend: JSON
+El backend responde con los datos en formato JSON, que es fácil de manejar desde JavaScript.
+
+Ejemplo de respuesta JSON:
+[
+  { "id": 1, "nombre": "Laptop", "precio": 1200 },
+  { "id": 2, "nombre": "Mouse", "precio": 25 }
+]
+Esto representa un arreglo de objetos en JavaScript.
+
+Objetos para el frontend
+Una vez que el frontend recibe ese JSON, lo convierte automáticamente en un arreglo de
+objetos JavaScript usando fetch.
+
+fetch("https://mi-api.com/api/productos")
+  .then(res => res.json())
+  .then(productos => {
+    console.log(productos); // acá ya es un array de objetos JS
+  });
+
+
+Ahora tenés un arreglo como:
+[
+  { id: 1, nombre: "Laptop", precio: 1200 },
+  { id: 2, nombre: "Mouse", precio: 25 }
+]
+
+Postman es una herramienta para desarrolladores que permite hacer pruebas a APIs (interfaces
+de programación). Con Postman podés hacer peticiones HTTP como GET, POST, PUT, DELETE, etc., y
+ver cómo responde el servidor, sin tener que escribir código.
+¿Para qué se usa Postman concretamente?
+Hacer peticiones GET para obtener datos de una API.
+Enviar datos con POST o PUT para probar cómo la API los recibe.
+Probar endpoints de una API para ver si funcionan correctamente.
+Ver respuestas en formato JSON que devuelve el servidor.
+Enviar cabeceras (headers), tokens de autenticación, parámetros, etc.
+Simular el comportamiento de un cliente (como un navegador o una app).
+
+¿Por qué se usa Postman?
+Porque es muy cómodo para probar y depurar APIs rápidamente. Antes de escribir el código
+en el frontend, podés usar Postman para asegurarte de que la API devuelve los datos correctos 
+y que está funcionando bien.
+
+Relación con fetch y el navegador
+Cuando usás fetch en JavaScript desde el frontend, estás haciendo lo mismo que Postman: 
+mandás una petición a un servidor. La diferencia es que Postman lo hace de forma manual 
+para pruebas, mientras que fetch se usa desde el código de una app o página web.
+
+-Mostrar objetos en la tabla (API pública)
+Si estás usando una API pública (como la de JSONPlaceholder o PokéAPI), hacés lo mismo: 
+usás fetch para pedir datos y después los mostrás en una tabla HTML.
+
+fetch("https://jsonplaceholder.typicode.com/users")
+  .then(res => res.json())
+  .then(usuarios => {
+    const tbody = document.querySelector("#tabla-usuarios tbody");
+    usuarios.forEach(user => {
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${user.id}</td>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+      `;
+      tbody.appendChild(fila);
+    });
+  });
+
+-Usar el DOM para acceder al HTML del browser
+El DOM (Document Object Model) permite modificar el contenido del HTML desde JavaScript. 
+Así es como "inyectás" los datos que recibiste.
+
+const tbody = document.querySelector("tbody");
+const fila = document.createElement("tr");
+fila.innerHTML = `<td>Dato</td>`;
+tbody.appendChild(fila);
+
+Con eso, estás accediendo al HTML desde JS y mostrando en el navegador lo que obtuviste de
+una base de datos remota, convertida a JSON, y luego manipulada como objetos JS.
+
+Una API es un servicio que permite conectar dos sistemas diferentes. Su uso principal es permitir
+la comunicación entre una aplicación y otra, facilitando el intercambio de datos o funcionalidades 
+sin que una tenga que saber cómo está hecha la otra. Por ejemplo, una aplicación del clima puede 
+consultar una API para obtener los datos del tiempo sin tener que procesarlos ella misma.
+También se usa para separar el frontend del backend. El frontend, que es lo que ve el usuario, puede
+pedir datos al backend a través de una API, como cuando un sitio web muestra productos que vienen desde 
+una base de datos.
+Otro uso muy común es la integración con servicios externos. Muchas aplicaciones usan APIs de terceros,
+como la de Google Maps para mostrar mapas, la de PayPal para pagos, o la de Twitter para mostrar tuits.
+Las APIs también sirven para automatizar tareas entre sistemas. Por ejemplo, un sistema de ventas puede
+comunicarse automáticamente con uno de stock a través de una API para actualizar inventario cada vez que 
+hay una venta.
+Además, las APIs permiten que un mismo servicio se use desde distintas plataformas. Por ejemplo, una red 
+social puede ofrecer una API que es usada tanto por su sitio web como por su aplicación móvil.
+En resumen, una API es como un puente que conecta sistemas distintos, marcando claramente las reglas para
+pedir y recibir datos o funcionalidades.
