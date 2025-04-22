@@ -1,0 +1,3 @@
+{
+  "start:csv": "node proceso-csv/app.js"
+}

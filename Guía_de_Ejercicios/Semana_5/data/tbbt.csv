@@ -1,0 +1,280 @@
+season,episode,title,rating_imdb
+1,1,Pilot,8.7
+1,2,The Big Bran Hypothesis,8.5
+1,3,The Fuzzy Boots Corollary,8.6
+1,4,The Luminous Fish Effect,8.4
+1,5,The Hamburger Postulate,8.2
+1,6,The Middle Earth Paradigm,8.3
+1,7,The Dumpling Paradox,8.2
+1,8,The Grasshopper Experiment,8.5
+1,9,The Cooper-Hofstadter Polarization,8.7
+1,10,The Loobenfeld Decay,8.6
+1,11,The Pancake Batter Anomaly,8.4
+1,12,The Jerusalem Duality,8.3
+1,13,The Bat Jar Conjecture,8.2
+1,14,The Financial Permeability,8.1
+1,15,The Porkchop Indeterminacy,8.4
+1,16,The Peanut Reaction,8.5
+1,17,The Terminator Decoupling,8.6
+1,18,The Staircase Implementation,8.7
+1,19,The Separation Agitation,8.3
+1,20,The Hofstadter Isotope,8.5
+1,21,The Big Bear Precipitation,8.6
+1,22,The Friendship Algorithm,8.7
+1,23,The Baghdad Configuration,8.4
+1,24,The Dubious Morality of a Best Friend,8.6
+2,1,The Bad Fish Paradigm,8.8
+2,2,The Codpiece Topology,8.7
+2,3,The Barbarian Sublimation,8.9
+2,4,The Griffin Equivalency,8.8
+2,5,The Financial Permeability,8.5
+2,6,The Proximity Dilemma,8.4
+2,7,The Panty Piñata Polarization,8.6
+2,8,The Lizard-Spock Expansion,8.7
+2,9,The White Asparagus Triangulation,8.5
+2,10,The Vengeance Formulation,8.6
+2,11,The Bath Item Gift Hypothesis,8.9
+2,12,The Killer Robot Instability,8.8
+2,13,The Friendship Algorithm,8.7
+2,14,The Financial Permeability,8.5
+3,1,The Electric Can Opener Fluctuation,9.0
+3,2,The Jiminy Conjecture,8.9
+3,3,The Staircase Implementation,9.2
+3,4,The Lunar Excitation,8.8
+3,5,The Work Song Nanocluster,9.1
+3,6,The Deposition Corrosion,8.7
+3,7,The Pancake Batter Anomaly,8.5
+3,8,The Bozeman Reaction,8.9
+3,9,The Recombination Hypothesis,8.8
+3,10,The Gorilla Experiment,9.2
+3,11,The Psychopath Test,8.6
+3,12,The Bizarro Jerry,8.5
+3,13,The Cooper-Hofstadter Polarization,9.0
+3,14,The Financial Permeability,8.8
+3,15,The Amber-Autonomy Effect,8.7
+3,16,The Dull Mortality Paradox,9.2
+3,17,The Cake Decoupling,8.8
+3,18,The Kissing Controversy,9.0
+3,19,The Mirror Neuron Demolition,9.1
+3,20,The Weather Forecast Paradox,8.9
+3,21,The Double-Helix Hypothesis,8.5
+3,22,The Staircase Implementation,9.2
+3,23,The Lunar Excitation,8.8
+4,1,The Robotic Manipulation,8.5
+4,2,The Cruciferous Vegetable Amplification,8.7
+4,3,The Fish Fry Fluctuation,9.0
+4,4,The Terminator Decoupling,8.6
+4,5,The Bedroom Experiment,8.7
+4,6,The Climbing Equation,9.0
+4,7,The Universal Theorem,8.6
+4,8,The Space-Time Anomaly,8.8
+4,9,The Cheesecake Tactic,8.7
+4,10,The Atomic Exchange,9.1
+4,11,The Alien's Conundrum,8.5
+4,12,The Balloon Experiment,8.6
+4,13,The Spaceship Retrieval,8.7
+4,14,The Funhouse Antagonism,8.5
+4,15,The Meteorite Incident,8.8
+4,16,The Umbrella Paradox,8.6
+4,17,The Quantum Calculation,9.0
+4,18,The Universal Surplus,8.8
+4,19,The Romance Equation,8.7
+4,20,The Particle Theory,8.9
+4,21,The Telepathy Paradox,8.6
+4,22,The Walking Simulation,8.9
+4,23,The Anger Repression,8.8
+4,24,The Big Bang Theory's Return,9.2
+5,1,The Matter of Theory,9.0
+5,2,The Curious Complexity,8.8
+5,3,The Neurotransmitter Dilemma,9.1
+5,4,The Fall of the Heptagon,8.7
+5,5,The Coded Persuasion,8.9
+5,6,The Exponentiation Theory,9.0
+5,7,The Trial Result,8.6
+5,8,The Eloquent Disruption,9.2
+5,9,The Revelation Theory,9.0
+5,10,The Invention Regulation,8.8
+5,11,The Irony Equation,9.1
+5,12,The Breaking Protocol,8.9
+5,13,The Problematic Arrangement,9.0
+5,14,The Circumference Connection,8.6
+5,15,The Secretization Theory,8.8
+5,16,The Strange Algorithm,8.7
+5,17,The Great Embrace,9.0
+5,18,The Close Probability,8.5
+5,19,The Conflict Dilemma,8.9
+5,20,The Residual Effect,8.6
+5,21,The Complex Paradox,9.1
+5,22,The Relativity Perception,9.0
+5,23,The Unfamiliar Equation,8.8
+5,24,The Nexus Theory,9.2
+6,1,The Displacement Angle,8.7
+6,2,The Algorithm Analysis,9.0
+6,3,The High Stimulation Tactic,8.9
+6,4,The Quanta Theory,8.6
+6,5,The Social Calculation,8.7
+6,6,The Graphical Outing,9.0
+6,7,The Boundaries Equation,8.9
+6,8,The Temporal Paradox,8.8
+6,9,The Nexus Project,8.7
+6,10,The Artificial Solution,9.0
+6,11,The Decoding Circuit,8.9
+6,12,The Computational Problem,8.6
+6,13,The Mirror Analysis,9.1
+6,14,The Multiverse Hypothesis,8.8
+6,15,The Logical Closure,9.0
+6,16,The Paradox Resolution,8.7
+6,17,The Structural Inconsistency,9.2
+6,18,The Computational Outcome,8.8
+6,19,The Solving Situation,8.6
+6,20,The Realignment Principle,9.0
+6,21,The Quantum Uncertainty,8.7
+6,22,The Hypothetical Balance,9.1
+6,23,The Theory Exploration,9.0
+6,24,The Shifting Parameters,8.8
+6,25,The Final Theory,9.1
+6,26,The Closure Conundrum,8.8
+7,1,The Reality Displacement,9.0
+7,2,The Great Equation,8.7
+7,3,The Temporal Reflection,8.8
+7,4,The Entropy Dilemma,9.0
+7,5,The Complex Problem,8.9
+7,6,The Boundary of Order,8.8
+7,7,The Data Flux,9.1
+7,8,The Decoding Reformation,8.9
+7,9,The Contingency Hypothesis,8.6
+7,10,The Symmetry Problem,8.8
+7,11,The Logical Path,9.0
+7,12,The Astronomical Sequence,9.1
+7,13,The Atomic Theory,8.9
+7,14,The Paradoxical Resolution,8.7
+7,15,The Entropy Bridge,9.0
+7,16,The Social Algorithm,8.8
+7,17,The Quantitative Flow,8.9
+7,18,The Signal Distortion,9.2
+7,19,The Calculation Series,8.7
+7,20,The Diagnostic Result,8.8
+7,21,The Process Optimization,9.0
+7,22,The Dilemma Theory,9.1
+7,23,The Virtual Calculation,8.9
+7,24,The Cross-Dependency,9.0
+8,1,The Quantum Effect,9.0
+8,2,The Reconciliation Solution,8.8
+8,3,The Coordination Theory,8.9
+8,4,The Combination Experiment,9.1
+8,5,The Time Paradox,9.0
+8,6,The Bridge Experiment,8.7
+8,7,The Quantum Decision,9.0
+8,8,The Theory of Instability,8.8
+8,9,The Algorithmic Complexity,9.1
+8,10,The Adjustment Theory,8.7
+8,11,The Rationalization Path,9.0
+8,12,The Displacement Hypothesis,9.2
+8,13,The Calculation Factor,9.0
+8,14,The Mathematical Equation,8.9
+8,15,The Algorithm Test,8.8
+8,16,The Critical Value,9.0
+8,17,The Data Distortion,8.7
+8,18,The Spatial Adjustment,9.1
+8,19,The Hypothesis Resolution,8.9
+8,20,The Calculation Test,9.0
+8,21,The Complex Flow,9.0
+8,22,The Quantum Calculation,9.2
+8,23,The Quantum Entanglement,9.0
+8,24,The Theoretical Solution,9.1
+9,1,The Protocol Equation,9.1
+9,2,The Diagnostic Process,8.9
+9,3,The Hypothetical Path,8.8
+9,4,The Statistical Resolution,9.0
+9,5,The Theoretical Complication,8.9
+9,6,The Mathematical Validation,8.8
+9,7,The Logical Paradox,9.1
+9,8,The Conflict Decision,8.7
+9,9,The Hypothesis Outcome,9.0
+9,10,The Correction Algorithm,8.8
+9,11,The Analytical Breakthrough,9.1
+9,12,The Conflict Result,8.7
+9,13,The Resolution Process,9.0
+9,14,The Clarity Hypothesis,8.9
+9,15,The Equation Path,9.2
+9,16,The Uncertainty Factor,8.9
+9,17,The Complex Test,9.0
+9,18,The Displacement Variable,8.8
+9,19,The Solution Approach,9.1
+9,20,The Analytical Solution,8.7
+9,21,The Calculated Theory,9.2
+9,22,The Breakthrough Calculation,9.0
+9,23,The Path Resolution,8.8
+9,24,The Completion Algorithm,9.1
+10,1,The Uncertainty Calculation,9.0
+10,2,The Protocol System,8.9
+10,3,The Calculation Path,9.1
+10,4,The Decision Theory,8.8
+10,5,The Entropy Algorithm,9.0
+10,6,The Conceptual Validation,8.7
+10,7,The Logical Equation,9.0
+10,8,The Resolution Path,9.2
+10,9,The Complexity Factor,8.8
+10,10,The Quantum Perspective,9.1
+10,11,The Algorithmic Adjustment,8.9
+10,12,The Theoretical Model,8.7
+10,13,The Calibration Theory,9.0
+10,14,The Problematic Path,8.9
+10,15,The Logical Configuration,9.0
+10,16,The Complexity Resolution,8.8
+10,17,The Systematic Approach,9.2
+10,18,The Analytical Adjustment,8.7
+10,19,The Quantum Adjustment,8.9
+10,20,The Solution Model,9.1
+10,21,The Conceptual Solution,9.0
+10,22,The Logical Outcome,9.1
+10,23,The Confirmation Path,9.2
+10,24,The Final Equation,9.0
+11,1,The Mathematical Theory,9.1
+11,2,The Logical Variable,8.8
+11,3,The Decision Path,9.0
+11,4,The Variable Complexity,8.9
+11,5,The Simplified Solution,9.0
+11,6,The Algorithmic Process,8.8
+11,7,The Adjustment Theory,9.2
+11,8,The Calculated Path,9.0
+11,9,The Procedure Hypothesis,8.9
+11,10,The Theoretical Path,8.7
+11,11,The Variable Process,9.0
+11,12,The Methodical Theory,8.9
+11,13,The Conceptual Model,9.2
+11,14,The Resolution Path,9.0
+11,15,The Confirmation Algorithm,8.7
+11,16,The Solution Equation,9.0
+11,17,The Test Model,8.9
+11,18,The Final Process,9.1
+11,19,The Simplified Model,9.0
+11,20,The Logic Theory,8.8
+11,21,The Confirmation Path,9.1
+11,22,The Probability Theory,9.0
+11,23,The Outcome Model,9.1
+11,24,The Resolution Test,9.2
+12,1,The Solution Theory,9.0
+12,2,The Conceptual Algorithm,9.1
+12,3,The Final Adjustment,8.9
+12,4,The Calculated Path,9.0
+12,5,The Theoretical Equation,8.7
+12,6,The Outcome Calculation,9.2
+12,7,The Logical Decision,9.1
+12,8,The Completion Solution,8.9
+12,9,The Resolution Algorithm,9.0
+12,10,The Adjustment Calculation,9.2
+12,11,The Confirmation Process,9.0
+12,12,The Conceptual Adjustment,8.8
+12,13,The Final Outcome,9.0
+12,14,The Analytical Decision,9.2
+12,15,The Decision Calculation,8.9
+12,16,The Resolution Model,9.1
+12,17,The Confirmation Theory,9.0
+12,18,The Resolution Process,9.2
+12,19,The Analytical Outcome,9.0
+12,20,The Logical Test,8.9
+12,21,The Final Decision,9.0
+12,22,The Outcome Test,9.2
+12,23,The Solution Process,9.1
+12,24,The Final Episode,9.3
