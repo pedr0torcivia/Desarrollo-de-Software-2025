@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Héroes Marvel</title>
+  <style>
+    body {
+      background: linear-gradient(145deg, #000000, #1a1a1a);
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      gap: 3rem;
+      text-align: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hero {
+      background-color: #111;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      max-width: 250px;
+      animation: fadeIn 1s ease-in;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .hero:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+    }
+
+    .hero img {
+      width: 220px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 1rem;
+      transition: filter 0.3s ease;
+    }
+
+    .hero img:hover {
+      filter: brightness(1.2);
+    }
+
+    .hero h2 {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      color: #ff3131;
+    }
+
+    .hero-info {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #ddd;
+      display: none;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero" data-hero="daredevil">
+      <img src="https://i.pinimg.com/736x/23/3d/ea/233deace8046e4b60f2aede90a1339a0.jpg" alt="Daredevil">
+      <h2>Daredevil</h2>
+      <div class="hero-info" id="info-daredevil"></div>
+    </div>
+
+    <div class="hero" data-hero="spiderman">
+      <img src="https://i.pinimg.com/564x/b8/87/50/b88750aaafbea07dfc075aa125f57fbd.jpg" alt="Spiderman">
+      <h2>Spiderman</h2>
+      <div class="hero-info" id="info-spiderman"></div>
+    </div>
+  </div>
+  <script>
+    document.querySelectorAll('.hero').forEach(heroCard => {
+      heroCard.addEventListener('click', async () => {
+        const heroKey = heroCard.dataset.hero;
+        const infoDiv = document.getElementById(`info-${heroKey}`);
+        const imgTag = heroCard.querySelector('img');
+  
+        // Si ya está visible, no recarga
+        if (infoDiv.style.display === 'block') return;
+  
+        try {
+          const response = await fetch(`${heroKey}.json`);
+          if (!response.ok) throw new Error('Archivo no disponible');
+  
+          const json = await response.json();
+          const character = json.data.results[0];
+  
+          const nombre = character.name;
+          const descripcion = character.description || 'Sin descripción disponible.';
+          const imagenURL = `${character.thumbnail.path}.${character.thumbnail.extension}`;
+  
+          infoDiv.innerHTML = `
+            <p><strong>Nombre:</strong> ${nombre}</p>
+            <p><strong>Descripción:</strong> ${descripcion}</p>
+          `;
+  
+          // Actualiza la imagen si no es "image_not_available"
+          if (!character.thumbnail.path.includes('image_not_available')) {
+            imgTag.src = imagenURL;
+          }
+  
+          // Reproduce sonido si lo tiene (aunque no viene en la API de Marvel)
+          if (character.sound) {
+            const audio = document.createElement('audio');
+            audio.src = character.sound;
+            audio.autoplay = true;
+            heroCard.appendChild(audio);
+          }
+  
+          infoDiv.style.display = 'block';
+        } catch (err) {
+          infoDiv.innerHTML = `<p>No se pudo cargar la información del héroe.</p>`;
+          infoDiv.style.display = 'block';
+        }
+      });
+    });
+  </script>
+  
+  
+</body>
+</html>
