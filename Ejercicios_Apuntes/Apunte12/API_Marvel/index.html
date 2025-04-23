@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marvel: Daredevil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #101010;
+      background-image: url('https://uswalldecor.com/cdn/shop/products/DI0946.jpg?v=1581094932'); /* Fondo con buena resolución */
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      color: #f8f9fa; /* Texto visible y contrastado */
+      font-family: 'Poppins', sans-serif; /* Tipografía moderna */
+      padding-top: 100px;
+    }
+
+    h1, h2 {
+      color: #e62429;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    }
+
+    .card {
+      background-color: rgba(33, 33, 33, 0.9);
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.8); 
+      padding: 15px 0;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .marvel-logo {
+      width: 150px;
+    }
+
+    .list-group-item {
+      background-color: rgba(50, 50, 50, 0.8);
+      border: none;
+      border-radius: 5px;
+      color: #f8f9fa;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .list-group-item:hover {
+      transform: scale(1.05);
+      background-color: #e62429;
+      color: white;
+    }
+
+    .btn-danger {
+      background-color: #e62429;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-danger:hover {
+      background-color: #b71c1c;
+      transform: scale(1.1);
+    }
+
+    img.rounded {
+      border: 3px solid #e62429;
+      border-radius: 10px;
+    }
+
+    .text-container {
+      background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .text-container h3 {
+      color: #e62429;
+      font-size: 1.8rem;
+    }
+
+    .text-container p {
+      color: #dcdcdc;
+      font-size: 1.1rem;
+    }
+
+    /* Mejoras responsivas */
+    @media (max-width: 767px) {
+      .marvel-logo {
+        width: 120px;
+      }
+
+      .container {
+        padding-top: 50px; /* Ajusta el espacio para pantallas pequeñas */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header con el logo de Marvel -->
+  <header>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKWvTBRoPPPWRqEhiP3PK_fvawaL2_3MI1Cg&s" alt="Marvel Logo" class="marvel-logo">
+  </header>
+
+  <div class="container py-5">
+    <h1 class="text-center mb-5">Daredevil</h1> <!-- Se asegura que solo aparezca una vez -->
+
+    <div id="info" class="mb-5"></div>
+
+    <h2>Cómics</h2>
+    <ul class="list-group mb-5" id="comics"></ul>
+
+    <h2>Series</h2>
+    <ul class="list-group mb-5" id="series"></ul>
+
+    <h2>Historias</h2>
+    <ul class="list-group mb-5" id="stories"></ul>
+
+    <h2>Eventos</h2>
+    <ul class="list-group mb-5" id="events"></ul>
+  </div>
+
+  <script>
+    fetch("daredevil.json")
+      .then(response => response.json())
+      .then(data => {
+        const personaje = data.data.results[0];
+
+        // Información principal
+        const info = document.getElementById("info");
+        info.innerHTML = `
+          <div class="row align-items-center">
+            <div class="col-md-4">
+              <img src="https://preview.redd.it/9cfd7owu24z41.png?width=1080&crop=smart&auto=webp&s=e8d5cbe1afb1865437c3379b8924d56b9bf22bd0" alt="Daredevil" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-md-8 text-container">
+              <h3>${personaje.name}</h3>
+              <p>${personaje.description || "Sin descripción disponible."}</p>
+              <a href="${personaje.urls[0].url}" target="_blank" class="btn btn-danger mt-3">Ver en Marvel.com</a>
+            </div>
+          </div>
+        `;
+
+        // Cómics
+        const comics = document.getElementById("comics");
+        personaje.comics.items.forEach(c => {
+          comics.innerHTML += `<li class="list-group-item">${c.name}</li>`;
+        });
+
+        // Series
+        const series = document.getElementById("series");
+        personaje.series.items.forEach(s => {
+          series.innerHTML += `<li class="list-group-item">${s.name}</li>`;
+        });
+
+        // Historias
+        const stories = document.getElementById("stories");
+        personaje.stories.items.forEach(st => {
+          stories.innerHTML += `<li class="list-group-item">${st.name} <span class="badge bg-secondary">${st.type}</span></li>`;
+        });
+
+        // Eventos
+        const events = document.getElementById("events");
+        personaje.events.items.forEach(e => {
+          events.innerHTML += `<li class="list-group-item">${e.name}</li>`;
+        });
+      })
+      .catch(error => console.error("Error al cargar el archivo JSON:", error));
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
