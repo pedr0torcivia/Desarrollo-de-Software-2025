@@ -16,7 +16,7 @@ El portafolio fue desarrollado de manera individual y refleja la aplicación de 
 # Clonar el repositorio
 ```bash
 git clone https://labsys.frc.utn.edu.ar/gitlab/desarrollo-de-software1/proyectos2025/3k1/portafolios/portafolio_400091_torcivia.git
-
+```
 ---
 
 <p align="center">
