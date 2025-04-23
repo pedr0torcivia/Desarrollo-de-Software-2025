@@ -41,10 +41,14 @@ function readCSV(file) {
     season1Episodes.forEach(episode => console.log(`${episode.title} - IMDb Rating: ${episode.rating_imdb}`));
 
     // Desafío 2: Mostrar el título del episodio 22 de la temporada 3 utilizando find
-    console.log("\nTítulo del episodio 22 de la temporada 3 (usando find):", episode22Season3.title);
+    const desafio2 = data.find(ep => ep.season === '3' && ep.episode === '22');
+    console.log("\n[Desafío 2] Título del episodio 22 de la temporada 3:", desafio2 ? desafio2.title : "No encontrado");
 
     // Desafío 3: Aprovechando las funcionalidades de reduce y filter mostrar el promedio del rating_imdb de la temporada 3
-    console.log("\nPromedio del rating_imdb de la temporada 3 (usando reduce y filter):", avgRating.toFixed(2));
+    const ratingsTemp3 = data
+      .filter(ep => ep.season === '3')
+      .reduce((acc, ep, _, arr) => acc + parseFloat(ep.rating_imdb) / arr.length, 0);
+    console.log("\n[Desafío 3] Promedio del rating_imdb de la temporada 3:", ratingsTemp3.toFixed(2));
 
   } catch (error) {
     console.error("Error al leer archivo CSV:", error);

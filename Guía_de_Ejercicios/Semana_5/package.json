@@ -1,3 +1,7 @@
 {
-  "start:csv": "node proceso-csv/app.js"
+  "start:csv": "node proceso-csv/app.js",
+  "type": "module",
+  "dependencies": {
+    "csv-parser": "^3.2.0"
+  }
 }
