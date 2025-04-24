@@ -1,0 +1,57 @@
+body {
+    background-color: #0d1b2a;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  h1 {
+    color: #ffffff;
+  }
+  
+  #countries-container .card {
+    background-color: #1b263b;
+    border: none;
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  #countries-container .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .country-flag {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 3px solid #ffffff;
+    margin-bottom: 1rem;
+  }
+  
+  .card-title {
+    font-family: 'Antonio', sans-serif;
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  .card-text {
+    color: #d3d3d3;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+  
+  #loading-message {
+    color: #adb5bd;
+    font-style: italic;
+  }
+  

@@ -1,0 +1,92 @@
+POSTMAN: aplicacion que nos permite consumir datos que estan en la web (recursos que cumplen con estructura APIrest).
+Los recursos se consumen con el protocolo HTTP, se encuentran en un endpoint (url). El cliente puede manipularlos y
+hacer un ABMC en ese endpoint. El protocolo HTTP utiliza: GET (Tomar/leer datos), POST (Dar alta a recursos), PUT (Modiificar recursos),
+PATCH (Permite modificar una parte del recurso), DELETE (Eliminar recursos).
+
+ORM: Intermediario entre BD y Aplicacion. Abstrae la BD para que el programador pueda realizar consultas y manipular 
+objetos en memoria sin utilizar SQL. Permite manejar Objetos en memoria (objetos binarios) y esto se ve reflejado 
+en la BD. La implementacion a utilizar es SEQUALIZE. 
+
+WebAPI con Express
+BackEnd sobre JS. El cliente es JS, HTML, CSS que va a parar al Browser y el Servidor se ejecuta sobre Windows/Linux
+en JS, y para que esta corra se necesita de node.js (escucha las peticiones de la web). El servidor web express va a 
+ser Local Host. 
+
+Express es una libreria que permite tener corriendo sobre una maquina de un servidor web que escucha peticiones POST,
+PUT, PATCH y DELETE. Es una infraestructura de aplicaciones web Node.js minima y flexible que proporciona un conjunto
+sólido de caracteristicas para apps web y moviles. Permite el desarrollo de API REST. Permite agregar plugins con 
+funcionalidades añadidas. 
+
+JSON: conjunto de datos con formato JS. Array de Objetos. 
+
+Solicitud y respuesta con express:
+app.get('/', (req, res) {
+// --
+});
+
+Por ejemplo:
+app.get('/proceedores', (req, res) {
+    res.send('datos de proveedores')
+});
+
+¿Qué es un request y un response?
+Cuando un cliente (como un navegador o una app) se comunica con el servidor, le hace una petición (request). El servidor
+ procesa esa petición y devuelve una respuesta (response).
+
+Por ejemplo, si escribís http://localhost:3000/users, estás haciendo un request al servidor para obtener usuarios, y el 
+servidor te responde con algo (una página, un texto, un JSON, etc.).
+
+¿Qué puede tener un request?
+El request puede incluir distintos tipos de datos que el servidor puede leer usando Express:
+
+1. Parámetros (params)
+Son datos que van en la URL como parte del camino.
+Ejemplo de URL: /productos/10
+Se captura así:
+app.get('/productos/:id', (req, res) => {
+  const id = req.params.id;
+  res.send(`Producto con ID: ${id}`);
+});
+
+2. Consultas (query)
+Son datos que vienen después del símbolo ? en la URL.
+Ejemplo de URL: /productos?categoria=ropa&orden=asc
+Se capturan así:
+app.get('/productos', (req, res) => {
+  const categoria = req.query.categoria;
+  const orden = req.query.orden;
+  res.send(`Categoría: ${categoria}, Orden: ${orden}`);
+});
+
+3. Cuerpo de la petición (body)
+Es un bloque de datos que se envía dentro del request, común en métodos POST o PUT.
+Necesitás activar express.json() para poder leerlo.
+
+app.use(express.json());
+
+app.post('/usuarios', (req, res) => {
+  const nuevoUsuario = req.body;
+  res.status(201).json(nuevoUsuario);
+});
+
+4. Encabezados (headers)
+Son datos técnicos que el cliente puede enviar (tipo de navegador, token de autorización, etc.).
+Se acceden con req.headers, aunque no se usan tanto al principio.
+
+¿Qué puede hacer el response? El servidor responde al cliente con:
+res.send(...)
+Para enviar texto o HTML.
+
+res.json(...)
+Para enviar datos en formato JSON.
+
+res.status(codigo)
+Para indicar el estado de la respuesta, por ejemplo:
+
+200: OK
+201: Creado
+404: No encontrado
+500: Error interno
+
+Ejemplo combinando:
+res.status(404).send('No se encontró lo que buscás');
