@@ -7,7 +7,7 @@
 
 ## Descripción
 
-Este repositorio contiene el portafolio de actividades correspondiente al cursado de la asignatura **Desarrollo de Software 1** durante el año 2025. Su objetivo principal es documentar el progreso académico a través de entregas prácticas, ejercicios de programación y reflexiones técnicas relacionadas con los contenidos abordados en clase.
+Este repositorio contiene el portafolio de actividades correspondiente al cursado de la asignatura **Desarrollo de Software** durante el año 2025. Su objetivo principal es documentar el progreso académico a través de entregas prácticas, ejercicios de programación y reflexiones técnicas relacionadas con los contenidos abordados en clase.
 
 El portafolio fue desarrollado de manera individual y refleja la aplicación de conocimientos adquiridos en el diseño, desarrollo y documentación de software siguiendo principios fundamentales de la ingeniería de software.
 
@@ -24,9 +24,21 @@ git clone https://labsys.frc.utn.edu.ar/gitlab/desarrollo-de-software1/proyectos
 </p>
 
 ## Organización del Repositorio
-├── Bootstrap → Archivos relacionados a Bootstrap
-├── Clases → Notas y ejercicios trabajados en clase
-├── Ejercicios_Apunte → Ejercicios correspondientes a cada apunte semanal
-├── Guia_de_Ejercicios → Guía de ejercicios semanales de la unidad de valoración
-├── node_modules → Dependencias del proyecto (generadas por npm)
-└── Workspace → Programas y archivos varios no relacionados directamente al proyecto
+
+- `Bootstrap`  
+  Archivos relacionados a Bootstrap
+
+- `Clases`  
+  Notas y ejercicios trabajados en clase
+
+- `Ejercicios_Apunte`  
+  Ejercicios correspondientes a cada apunte semanal
+
+- `Guia_de_Ejercicios`  
+  Guía de ejercicios semanales de la unidad de valoración
+
+- `node_modules`  
+  Dependencias del proyecto (generadas por npm)
+
+- `Workspace`  
+  Programas y archivos varios no relacionados directamente al proyecto
