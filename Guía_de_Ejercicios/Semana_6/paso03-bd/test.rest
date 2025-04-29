@@ -1,0 +1,12 @@
+### Obtener la respuesta de la API en la ruta /health-check
+
+GET http://localhost:3000/health-check
+Accept: application/json
+
+### Obtener la respuesta de la API en la ruta /echo
+GET http://localhost:3000/echo?mensaje=Hola
+Accept: application/json
+
+### Obtener la respuesta de la API en la ruta /barrios
+GET http://localhost:3000/api/barrios
+Accept: application/json
