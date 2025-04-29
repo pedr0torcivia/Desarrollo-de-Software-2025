@@ -1,0 +1,154 @@
+CONFIGURACIÓN INICIAL DE EXPRESS: Para comenzar con Express.js, primero se debe instalar el framework en un
+proyecto Node.js utilizando el comando `npm install express`. Luego, se puede crear un archivo de configuración 
+inicial que incluya la importación de Express y la configuración de un servidor básico. En el archivo principal, 
+generalmente `app.js` o `server.js`, se crea una instancia de Express y se configura un puerto donde el servidor
+escuchará las solicitudes. Express.js ofrece una gran flexibilidad para manejar rutas, parámetros y verbos HTTP, 
+lo que lo convierte en una herramienta poderosa para desarrollar APIs y servidores web. La estructura básica es 
+algo como:
+
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.listen(port, () => {
+  console.log(`Servidor corriendo en el puerto ${port}`);
+});
+
+CREACIÓN DE SERVIDOR BÁSICO CON EXPRESS.JS: El servidor básico en Express.js se establece utilizando el método
+`listen`, que indica el puerto en el cual el servidor escuchará las solicitudes. Para cambiar el puerto, es
+necesario modificar el valor de la variable `port`. Si se quiere que tanto el frontend como el backend usen 
+el mismo puerto, se debe cambiar también en ambos lugares. Si se cambia solo el puerto del backend, es necesario
+reiniciar el servidor para que el cambio tenga efecto. Sin embargo, si se usa una herramienta como `nodemon`,
+esta reinicia el servidor automáticamente cuando detecta cambios en los archivos.
+
+ENRUTAMIENTO EXPRESS.JS: El enrutamiento en Express.js permite manejar las solicitudes HTTP y definir qué hacer
+con ellas. Se utilizan métodos como `app.get()` y `app.post()` para manejar las solicitudes GET y POST,
+respectivamente. Estos métodos permiten definir qué lógica ejecutar cuando una solicitud llega a una ruta
+específica. Por ejemplo, en una aplicación básica de Express, el código podría ser:
+
+app.get('/saludo', (req, res) => {
+  res.send('Hola Mundo');
+});
+
+Formas de mandar mensajes: En Express.js, se pueden mandar respuestas de diferentes maneras. Utilizando el objeto
+`res` que se pasa en cada función de enrutamiento, se pueden enviar respuestas de tipo texto, JSON, o incluso
+archivos. Por ejemplo:
+
+res.send('Mensaje de texto');
+res.json({ mensaje: 'Respuesta en formato JSON' });
+
+API Restful: Verbos HTTP en Express.JS: Una API Restful sigue principios de arquitectura para diseñar servicios web.
+Los verbos HTTP más comunes son GET, POST, PUT, DELETE y PATCH. Cada verbo se asocia a una acción específica:
+
+- GET: Recuperar datos de un recurso. Se utiliza cuando se quiere obtener información.
+- POST: Enviar datos al servidor para crear un nuevo recurso.
+- PUT: Actualizar un recurso completo existente.
+- DELETE: Eliminar un recurso.
+- PATCH: Actualizar parcialmente un recurso.
+
+En Express.js, se definen rutas para estos verbos de la siguiente manera:
+
+app.get('/usuarios', (req, res) => {
+  res.send('Obteniendo todos los usuarios');
+});
+
+app.post('/usuarios', (req, res) => {
+  res.send('Creando un nuevo usuario');
+});
+
+Restful: Parámetros Express.js
+
+En Express.js, los parámetros se utilizan para recibir información que se pasa en la URL de una solicitud. Hay 
+varios tipos de parámetros:
+
+- Parámetros de consulta: Se encuentran después del signo de pregunta en la URL. Se usan para pasar datos
+adicionales a la solicitud. Por ejemplo: `/productos?categoria=ropa`. En Express, se pueden acceder mediante 
+`req.query.categoria`.
+
+app.get('/productos', (req, res) => {
+  const categoria = req.query.categoria;
+  res.send(`Mostrando productos de la categoría: ${categoria}`);
+});
+
+- Parámetros de ruta: Se incluyen directamente en la URL como parte de la ruta. Se indican con `:`, y se accede 
+a ellos con `req.params`. Un ejemplo sería `/usuarios/:id`, donde `id` es un parámetro de ruta.
+
+app.get('/usuarios/:id', (req, res) => {
+  const id = req.params.id;
+  res.send(`Mostrando información del usuario con ID: ${id}`);
+});
+
+- Parámetros de cuerpo: Se utilizan cuando se envían datos en el cuerpo de la solicitud, como en una solicitud POST.
+Estos datos se pueden obtener a través de `req.body` si se está utilizando un middleware como `express.json()` para 
+analizar el cuerpo de la solicitud.
+
+app.post('/usuarios', express.json(), (req, res) => {
+  const usuario = req.body;
+  res.send(`Usuario creado: ${usuario.nombre}`);
+});
+
+- Parámetros de encabezado: Los parámetros en los encabezados se utilizan para proporcionar información adicional
+en la solicitud. Se pueden acceder mediante `req.headers`. Por ejemplo, el encabezado `Authorization` se usa para 
+enviar tokens de autenticación.
+
+app.get('/perfil', (req, res) => {
+  const token = req.headers['authorization'];
+  res.send(`Token recibido: ${token}`);
+});
+
+Búsqueda en base de datos: Al interactuar con bases de datos, se suelen usar parámetros en las URLs o en el cuerpo
+de la solicitud para filtrar o consultar datos. Por ejemplo, si se busca información en una base de datos, se puede
+pasar un parámetro en la URL, y luego utilizar ese parámetro para realizar una consulta en la base de datos.
+
+USO DE MIDDLEWARE EN EXPRESS.JS: Un middleware en Express.js es una función que tiene acceso al objeto de solicitud 
+(req), al objeto de respuesta (res) y a la siguiente función de middleware en el ciclo de solicitud/respuesta. Se 
+utiliza para ejecutar código, modificar  la solicitud o respuesta, terminar el ciclo de solicitud o llamar a la siguiente
+función. Se aplica con app.use o directamente en rutas específicas. Ejemplo de middleware que muestra la hora:
+
+app.use((req, res, next) => {
+  console.log('Hora:', new Date().toISOString());
+  next();
+});
+
+También existen middlewares de terceros como express.json(), morgan, cors, etc.
+
+ORGANIZACIÓN DEL ENRUTAMIENTO: En aplicaciones pequeñas, las rutas pueden declararse directamente en 
+el archivo principal. Pero para mantener la organización en proyectos grandes, se crean archivos separados
+para las rutas y se usan routers de Express. Por ejemplo:
+
+// archivo rutas/usuarios.js
+const express = require('express');
+const router = express.Router();
+
+router.get('/', (req, res) => {
+  res.send('Lista de usuarios');
+});
+
+module.exports = router;
+
+// archivo principal
+const usuariosRouter = require('./rutas/usuarios');
+app.use('/usuarios', usuariosRouter);
+
+RESPUESTAS CON JSON: Express permite enviar respuestas en formato JSON utilizando el método res.json(). 
+Esto es útil en APIs que deben comunicar datos estructurados. Por ejemplo:
+
+app.get('/usuario', (req, res) => {
+  res.json({ nombre: 'Juan', edad: 30 });
+});
+
+VALIDACIÓN DE DATOS: La validación de datos es esencial para asegurar que las solicitudes contienen información
+correcta y segura. Puede hacerse manualmente o con librerías como express-validator o Joi.
+
+VALIDACIÓN MANUAL: Consiste en verificar cada campo de la solicitud antes de procesarla. Por ejemplo:
+
+app.post('/registro', express.json(), (req, res) => {
+  const { nombre, edad } = req.body;
+  if (!nombre || typeof nombre !== 'string') {
+    return res.status(400).send('Nombre inválido');
+  }
+  if (!edad || typeof edad !== 'number') {
+    return res.status(400).send('Edad inválida');
+  }
+  res.send('Datos válidos');
+});
