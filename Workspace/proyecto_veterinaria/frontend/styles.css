@@ -1,0 +1,22 @@
+/* styles.css */
+
+/* Estilo para mejorar separación entre cards */
+#patients-list .card {
+    transition: transform 0.2s;
+  }
+  #patients-list .card:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Espaciado general del formulario */
+  #patient-form {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+  }
+  
+  /* Borde inferior para separar la cabecera */
+  h1 {
+    border-bottom: 2px solid #0d6efd;
+    padding-bottom: 10px;
+  }
+  

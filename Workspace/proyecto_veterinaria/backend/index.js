@@ -1,27 +1,42 @@
-// backend/index.js
-
+// Importamos Express, el framework para manejar el servidor HTTP
 const express = require('express');
-const cors = require('cors'); // Se añade para permitir peticiones desde otros orígenes
+
+// Importamos CORS para permitir que otros orígenes (como el frontend en otro puerto) accedan a este servidor
+const cors = require('cors');
+
+// Creamos una instancia de la aplicación Express
 const app = express();
+
+// Importamos la instancia de Sequelize que conecta con la base de datos SQLite
 const sequelize = require('./config/db');
+
+// Importamos las rutas definidas para los pacientes
 const pacienteRoutes = require('./routes/pacienteRoutes');
+
+// Importamos el modelo Paciente para hacer operaciones directamente sobre él
 const Paciente = require('./models/Paciente');
 
-// Middleware para parsear JSON
+
+// Middleware para que Express entienda los cuerpos de las peticiones en formato JSON
 app.use(express.json());
 
-// Habilitar CORS (importante si tu frontend se sirve desde otro puerto, por ejemplo, Live Server en 5500)
+// Habilitamos CORS: necesario para que el frontend (por ejemplo, en http://localhost:5500) pueda comunicarse con el backend
 app.use(cors());
 
-// Ruta base para la API
+// Definimos la ruta base para acceder a las rutas de pacientes
+// Por ejemplo, una petición a /api/pacientes va a buscar en pacienteRoutes
 app.use('/api/pacientes', pacienteRoutes);
 
-// Sincroniza la base de datos y carga datos iniciales (seeding)
+
+// Sincroniza el modelo con la base de datos
+// force: true elimina y recrea todas las tablas (útil para desarrollo)
 sequelize.sync({ force: true }).then(async () => {
   console.log("Base de datos sincronizada.");
 
-  // Seeding: carga algunos datos de ejemplo si la tabla está vacía
+  // Contamos cuántos pacientes hay en la tabla
   const count = await Paciente.count();
+
+  // Si no hay ninguno, cargamos datos de prueba (seeding)
   if (count === 0) {
     await Paciente.bulkCreate([
       { NombreMascota: "Firulais", Propietario: "Juan Perez", Telefono: "123456789" },
@@ -31,11 +46,12 @@ sequelize.sync({ force: true }).then(async () => {
     console.log("Datos iniciales cargados.");
   }
 
-  // Inicia el servidor en el puerto 3000
+  // Iniciamos el servidor escuchando en el puerto 3000
   app.listen(3000, () => {
     console.log("Servidor corriendo en el puerto 3000");
   });
+  
 }).catch((error) => {
+  // Si ocurre un error durante la sincronización, lo mostramos por consola
   console.error("Error al sincronizar la base de datos:", error);
 });
-
