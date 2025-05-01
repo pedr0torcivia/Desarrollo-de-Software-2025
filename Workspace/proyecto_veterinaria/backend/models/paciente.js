@@ -36,3 +36,5 @@ const Paciente = sequelize.define('Paciente', {
 
 // Exportamos el modelo para poder usarlo en rutas, controladores, etc.
 module.exports = Paciente;
+
+ 
