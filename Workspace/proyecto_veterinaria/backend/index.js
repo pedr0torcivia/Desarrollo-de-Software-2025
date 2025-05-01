@@ -14,7 +14,7 @@ const sequelize = require('./config/db');
 const pacienteRoutes = require('./routes/pacienteRoutes');
 
 // Importamos el modelo Paciente para hacer operaciones directamente sobre él
-const Paciente = require('./models/Paciente');
+const Paciente = require('./models/paciente');
 
 
 // Middleware para que Express entienda los cuerpos de las peticiones en formato JSON
@@ -30,7 +30,8 @@ app.use('/api/pacientes', pacienteRoutes);
 
 // Sincroniza el modelo con la base de datos
 // force: true elimina y recrea todas las tablas (útil para desarrollo)
-sequelize.sync({ force: true }).then(async () => {
+// sequelize.sync({ force: true }).then(async () => {
+  sequelize.sync().then(async () => { // No elimina datos ni recrea las tablas
   console.log("Base de datos sincronizada.");
 
   // Contamos cuántos pacientes hay en la tabla

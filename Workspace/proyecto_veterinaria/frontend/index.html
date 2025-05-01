@@ -18,8 +18,21 @@
     <!-- Campo de búsqueda por propietario -->
     <input type="text" id="search" class="form-control mb-3" placeholder="Buscar por propietario...">
 
-    <!-- Listado de pacientes (se insertan dinámicamente en JavaScript) -->
-    <div id="patients-list" class="row gy-3"></div>
+    <!-- Tabla de pacientes -->
+    <table class="table table-bordered table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th>Nombre Mascota</th>
+          <th>Propietario</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="patients-list">
+        <!-- Se insertan filas dinámicamente con JavaScript -->
+      </tbody>
+    </table>
+
 
     <!-- Formulario de paciente (para agregar o editar) -->
     <div id="patient-form" class="mt-4 card p-4 shadow-sm">

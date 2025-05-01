@@ -1,0 +1,19 @@
+// 1) Construir aplicacion express
+import express from "express";
+import cors from "cors"; 
+
+// 25) Importar router 
+import usuariosRouter from "./routes/usuarios.routes.js";
+
+const app = express(); // Inicializar express
+app.use(express.json()); 
+
+app.use(cors({ origin: "*" })); // * para permitir solicitudes de cualquier origen desde el frontend
+// Declaro politicas de cors para permitir solicitudes desde el frontend
+
+// 26)- definir entrada a endpoints de los usuarios
+
+app.use("/usuarios", usuariosRouter);
+
+
+export default app; // 4) Exportar la aplicacion express para usarla en otros archivos

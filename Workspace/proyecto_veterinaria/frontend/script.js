@@ -71,22 +71,19 @@ async function cargarPacientes(filtro = "") {
     const listContainer = document.getElementById("patients-list");
     listContainer.innerHTML = ""; // Limpiar la lista antes de agregar nuevos pacientes
 
-    // Crear una tarjeta para cada paciente y agregarla al contenedor
+    // Crear una fila por cada paciente y agregarla a la tabla
     pacientes.forEach(paciente => {
-      const card = document.createElement("div");
-      card.className = "col-md-4 mb-3"; // Estilo de columna para cada tarjeta
-      card.innerHTML = `
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">${paciente.NombreMascota}</h5>
-            <p class="card-text"><strong>Propietario:</strong> ${paciente.Propietario}</p>
-            <p class="card-text"><strong>Teléfono:</strong> ${paciente.Telefono || 'N/A'}</p>
-            <button class="btn btn-warning btn-edit" data-id="${paciente.IdPaciente}">Editar</button>
-            <button class="btn btn-danger btn-delete" data-id="${paciente.IdPaciente}">Eliminar</button>
-          </div>
-        </div>
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${paciente.NombreMascota}</td>
+        <td>${paciente.Propietario}</td>
+        <td>${paciente.Telefono || 'N/A'}</td>
+        <td>
+          <button class="btn btn-warning btn-sm btn-edit" data-id="${paciente.IdPaciente}">Editar</button>
+          <button class="btn btn-danger btn-sm btn-delete" data-id="${paciente.IdPaciente}">Eliminar</button>
+        </td>
       `;
-      listContainer.appendChild(card); // Agregar la tarjeta al contenedor
+      listContainer.appendChild(row);
     });
 
     // Asigna el evento para eliminar cada paciente

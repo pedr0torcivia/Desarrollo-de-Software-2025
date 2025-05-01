@@ -1,0 +1,314 @@
+Cliente: usuario dia a dia. se encuentra en front y se encarga de enviar datos a back a traves de formulario, los cuales son metodos 
+de entrada de datos a un SI. Se envian medinte un JSON. 
+El JSON es la forma de comunicacion entre distintos sistemas. Se trata de una medida de acceso que permite la comparticion de datos. 
+Objetos con propiedades clave-valor.
+
+El cliente se comunica con el servidor mediante peticiones a través del protocolo HTTP mediante el uso de:
+GET (Obtener informacion), POST (Crear), PUT (Actualizar), PATCH, DELETE (Borrar).
+
+Endpoint: suma de un verbo y una URL (A donde se envia esa acción).
+
+OBJETIVO: Crear sistema completo CRUM.
+
+GIT: Controlar modificaciones de proyecto y flujo de trabajo. Utiliza Ramas: Principal (donde se encuentra el sistema), rama de 
+desarrollo (donde se construye para luego ser enviado al principal) y los de errores (que contienen errores de desarrollo).
+Primero se crea el proyecto, se asigna la rama de desarrollo para cada trabajador, se fusionan las ramas y se suben a la principal.
+3 estados: Modificado, Staged (si todavía no se ha realizado el commit) y commited.
+                        
+FRONTEND: Vistas de usuario, de forma intuitiva al sistema, reduciendo carga cognitiva. Consiste en una estructura HTML, CSS que
+consiste en la fachada del HTML y el JavaScript que contiene las dinamicas y acciones de la página. 
+
+HTML (index.html):es el lenguaje estándar para crear y estructurar páginas web. Define el contenido y la organización de elementos 
+como textos, imágenes, enlaces y formularios mediante etiquetas.
+
+Sintaxis general:
+<etiqueta atributo="Valor">Contenido</etiquetaCierre>
+Documentacion HTML: developer.mozilla.org/es/docs/Web/HTML
+
+El atributo class="" se puede aplicar a todas las etiquetas. Se utiliza para agrupar elementos que comparten un mismo estilo o 
+comportamiento.Varios elementos pueden tener la misma clase.
+
+El atributo id="" se utiliza para identificar un único elemento de forma específica. Solo un elemento puede tener un mismo id 
+dentro de una página.
+
+Tablas de especificidad: La especificidad es un sistema de puntos que determina qué regla CSS se aplica cuando hay más de una 
+opción válida para un elemento.
+
+10000 | !important
+ 1000 | Estilos en linea
+  100 | #id
+   10 | clases/atributos/pseudoclases
+    0 | selector universal
+   
+Semantica de HTML: forma de organizacion de etiquetas. Sirve para no utilizar muchos <div> y que sea mas proligo. 
+<header>
+<nav> 
+<main>
+|- <article>
+|- <section>
+<footer>
+
+Formularios: permite el acceso de datos al sistema. 
+Atributos clave: (No se utilizan xq se usa JS)
+action: URL/API a la que se envían los datos del formulario cuando se envíe.
+method: que tipo de metodo se utiliza. Generalmente es post.
+
+Tipos de input: developer.mozilla.org/es/docs/Web/HTML/Element/input
+boton, checkboc, small, gile, image, month, number, range, reset, radio, submit, time, week, etc.
+
+            <input type="text" name="nombre" id="nombre">
+    El tipo indica el tipo de atributo que tendrá el campo. El nombre es de uso para el Backend. Se recomienda que el id = name. 
+
+En los input type="checkbox" y "radio" todos los name deben ser iguales en cada campo.
+Labels: Cada Label esta asociado a un tipo de input especifico.
+<label for="valor_de_name">Campo<label><br>
+
+Validaciones: atributos required (para que sea requerido), minlenght="" maxlenght=""(minima/maxima longitud de caracteres), checked
+(para radio, checkbox)
+
+Siempre tener SUBMIT, que es un boton que envía formulario al Backend.  
+            <button type="submit">Enviar</button>
+
+CSS: Cascade Style Sheet se usa para estilizar elementos escritos en un lenguaje de marcado como HTML. Funciona con reglas marcadas 
+por un selector y compuestas por propiedades. Esto se llama una declaración. 
+
+selector {
+    propiedad: valorPropiedad
+}
+color, text-align,
+
+Se vincula con el HTML en head mediante: 
+    <link rel="stylesheet" href="styles.css"></href>
+
+Puede haber selectores por ID, por Clase y se marcan como:
+
+#id {
+    propiedad: valorPropiedad
+}
+
+.clase {
+    propiedad: valorPropiedad
+}
+
+BOOTSTRAP: libreria para simplificar la estilizacion de flexbox con CSS. Plantea Web Responsive con un sistema de grillas. 
+Un sitio tiene 12 columnas del MISMO ancho cada unam con una serie de filas. Cada seccion es una columna, proponiendo un
+grid system. Es un CSS ya escrito de antemano utilizando el atributo class.Para implementar bootstrap en el proyecto:
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+Documentacion oficial: https://getbootstrap.com/docs/5.3/getting-started/introduction/ 
+
+
+JavaScript: leguaje que se puede ejecutar en el servidor y el cliente. JS para front para hacer peticiones y mostrar
+respuestas y en el back para recibir peticiones y enviar respuestas.
+Tipos de datos: undefined, string boolean, null, symbol, number, bigint, obkect (compuesto por claves y valores).
+
+Asignacion de variables: declarar que existen las variables. 
+Inicializacion: declarar el valor inicial de la variable.
+
+    const para variables de lectura (nunca se sobreescriben), declaracion de objetos, arrays.
+    let para cadenas de caracteres, booleanos, etc (se)
+
+    console.log(variable) = print(variable)
+
+Cadenas de caracteres: se declaran con comillas dobles o simples. Si quiero incluir una variable en la cadena:
+    console.log(`Hola mundo, la variable vale: ${x}`)
+
+Operador ternario: <condicion> ? <expresión 1> : <expresion 2>
+Operadores: 
+    aritmeticos: + (suma), - (resta), * (producto), / (division), % (resto de division entera).
+    incre/decremento: ++(aumentar de a 1 la variable), -- (decrementar de a 1 la variable).
+    comparación: === (igual estricto), !== (distinto estricto), <, >, <=, >= (mayor, menor).
+    lógicos: && (and), || (or), ! (not).
+    asignación: = (asigna el valor de la derecha), /=/*=/-=/+= (divide/multiplica/resta/suma el valor de la derecha)
+
+Valores "falsy" ==> 0, false, string vacio, null, undefined, NaN (Not a Number).
+
+Funciones declaradas:
+    function suma(a,b) {
+        return a + b
+    }
+
+Funciones flecha: Funciones simplificadas. Se debe declarar arriba del programa main. 
+    const suma = (a, b) => a + b; 
+
+
+OBJETOS: serie de valores. Toda propiedad es una sociacion entre una clave y un valor.
+
+    const objeto = {
+        atributo: "valor",
+        atributo2: "valor",
+        atributo3: "valor",      
+        saludar: function () {
+            console.log("Esto es un método con atributo", this.atributo)
+        }
+    }
+
+"this" hace referencia al objeto en sí. 
+
+objeto.atributo4 = "valor" - Agregar atributo
+delete objeto.atributo4 - Borrar atributo
+
+ARRAYS: Se pueden hacer arrays de objetos. 
+const objetos = [
+    {
+        atributo: "valor",
+        atributo2: "valor",
+        atributo3: "valor", 
+    },
+    {
+        atributo: "valor",
+        atributo2: "valor",
+        atributo3: "valor", 
+    },
+];
+
+Iteración: se utilizan mapas para recorrer arreglos. Map recorre el array y por cada elemento hace algo.
+    personas.map(persona => console.log(persona));
+
+Filter: recorrer arreglos y crear un arreglo que cumple con la condición dada. 
+    const mayores20 = personas.filter(persona => persona.edad > 20);
+
+
+JSON: objetos clave valor con una notificacion especifica que son datos apropiados para un SI.
+Por ejemplo: 
+/personas.json
+
+{
+  nombre: "Lionel Messi",
+  profesion: "Futbolista",
+  edad: 37,
+  saludar: function() {
+    console.log(`Hola, soy ${this.nombre}, un ${this.profesion}. Tengo ${this.edad} años.`);
+  }
+},
+{
+  nombre: "Eminem",
+  profesion: "Rapero",
+  edad: 52,
+  saludar: function() {
+    console.log(`Hola, soy ${this.nombre}, un ${this.profesion}. Tengo ${this.edad} años.`);
+  }
+}
+
+Para importar el archivo: import personas from './personas.json' assert { type: 'json' };
+                          const personas = require('./personas.json');
+
+BACKEND: maneja la logica de negocio / casos de uso del sistema de forma abstracta. Utiliza peticiones
+para comunicarse con la BD y el cliente. Se ejecuta en el entorno node.js que pertmite ejecutar JavaScript
+en un servidor. 
+
+npm es el gestor del proyecto. Sirve para crear, ejecutar, subirlo, instalar sw de 3ros del proyecto. 
+
+SQLite: Motor de base de datos.
+Sequelize: Framework ORM. Permite vincular el modelo creado con la base de datos. 
+Express: Framework de js para construir la API. 
+Cors: Permite vincular el backend con el frontend. 
+
+Se instalan por la terminal con: 
+    npm install express sequelize sqlite3 cors
+
+
+package-lock.json => NO TOCAR. Es donde se encuentran dependencias, configuración sensible del proyecto. 
+
+Archivo .gitignore => escribiendo los nombres de los archivos que no se suben a git. 
+
+ASINCRONISMO: Permite ejecutar tareas que toman tiempo (como acceder a una API) sin bloquear el resto del programa.
+    Promesas: Son objetos que representan el resultado futuro (éxito o error) de una operación asincrónica.
+    Programación asíncronica: simular Sincronismo utilizando funciones asincronicas. 
+
+
+
+Al iniciar el proyecto se debe:
+1- En la terminal, desde el directorio de backend, ejecutar:
+    C:\Users\user\Proyecto\backend> npm init -y
+    Que crea el proyecto node y marca respuestas por defecto. Crea un archivo package.json que tiene datos 
+    sobre el proyecto. No es un json ordinario y sirve para gestionar el proyecto. NO SE TOCA!!
+
+2-Definir arquitectura del proyecto:
+    Todo se va almacenar en una carpeta source (src) con:
+        index.js -> Punto de entrada a la aplicación 
+        app.js -> Construir la API (Puente entre front y back)
+    Carpeta databases -> donde se almacena todo lo referido a la base de datos del sistema.
+    Carpeta tests -> para hacer testing (no se utiliza en este caso).
+    Carpeta models -> representacion de tablas de bases de datos a codigo. 
+    Carpeta services -> casos de uso, lógica de negocio.
+    Carpeta routes -> controladores (donde se construyen los endpoints con las APIs).
+
+PASOS DE RESOLUCIÓN:
+----
+CONSTRUIR API 
+1)- En app.js se debe construir una app express usando cors y express.
+2)- Agregar a package.json: "type":"module", (permitir importar/exportar archivos)
+3)- Instalar dependencias de desarrollo: npm i nodemon
+        Sirve para mantener el codigo en ejecucion cuando hay cambios en el backend.
+        Agregar "dev": "nodemon src/index.js" en la parte de "scripts" de package.json.
+        Esto ultimo se utiliza para cuando quiero iniciar el servidor con npm run dev.
+        (Sirve para ejecutar/correr proyecto).
+4)- Exportar la aplicacion Express para usarla en otros archivos.
+5)- En index.js se debe importar la aplicación express. 
+6)- Declarar un puerto const PORT = 3000
+7)- app.get para mostrar por pantalla que esta corriendo el servidor. 
+8)- app.listen para mostrar por terminal que el servidor funciona
+9)- BACKEND FUNCIONANDO.
+----
+BASE DE DATOS
+10)- Importar db.sqlite (Base de Datos) a la carpeta del proyeto. 
+11)- Crear modelos: crear archivos js de cada tabla que se presenta en la base de datos.
+12)- Con Sequelize se crean los modelos:
+    -Importar tipos de datos de la base de datos.
+    -Declarar objetos: atributos y metodos. 
+        -En metodos agregar timestamps: false para que sequealize no registre FechaHora de la operación.
+        -En atributos agregar cada tipo de atributos que se encuentre en la bd definiendolos como si fueran
+        un objeto. Para ver caracteristicas: sequelize.org/docs/v6
+    -Declarar modelo con la union de los objetos 
+    -Exportar modelo
+----
+CADENA DE CONEXIÓN DE BASES DE DATOS
+13)- Crear dentro de databases archivo databases.js.
+14)- Importar Sequelize y modelos.
+15)- Indicar DBMS y ubicación en disco de db.sqlite. 
+16)- Definir Modelos utilizando sequelize.define(nombre,atributos,metodos)
+    -Por ejemplo: sequelize.define("Tareas", TareasModel.tareasAttributes, TareasModel.tareasMethods)
+17)- Crear FKS entre tablas para vincularlas:
+    -sequelize.models.Tareas.belongsTo(sequelize.models.Usuarios, {foreignKey: "UsuarioID"})
+    La FK indica a que atributo hace referencia a la PK de Usuarios.
+18)-Exportar Modelo.
+----
+SERVICIOS (CASOS DE USO) Y RUTAS
+19)- Importar Base de datos definida (archivo databases.js).
+20)- Definir servicios.
+    -Crear: const entidadServices = {} donde se pondran todos los servicios a utilizar.
+    -Añadir Funciones declarando que son asincronicas con async y await permite que la ejecución pare hasta conseguir los datos
+        const getAll = async () => { 
+        const allUsuarios = await sequelize.models.Usuarios.findAll();
+        return allUsuarios.map(usuario => usuario.dataValues)
+        }
+    -Exportar: export {userServices}
+21)- Crear archivo entidad.routes.js en /routes
+22)- Importar express y servicios 
+23)- Declarar Router para definir endpoints
+    router.get("/", async(req, res) => { try {} catch(error) {}}) 
+        Donde req y res son el request del cliente y la respuesta del servidor,
+        try es intentar realizar algo y catch es lo que haría en caso de error.
+    Dentro de try se definen los objetos mediante getAll() y se los parsea a .json
+    Dentro de catch se debe devolver una respuesta con el estatus del error.
+    Numeros de errores: developer.mozilla.org/es/docs/Web/HTTP/Status
+    Se utiliza 500 para los imprevistos. 
+    catch (error) {
+        res.status(500).json({error: "Error al obtener los usuarios"}) }
+24)- Exportar router.
+25)- En app.js se importan los endpoints.
+    import { usuariosRouter } from "./routes/usuarios.routes";
+26)- Definir entrada a endpoints de las entidades 
+    app.use("/usuarios", usuariosRouter.router)
+
+VERIFICACIÓN EN POSTMAN
+- Ingresar a postman
+- Crear HTTP request
+- GET http://localhost:3000/usuarios
+- Visualizar los datos de los usuarios en la base de datos.
