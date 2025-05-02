@@ -221,7 +221,21 @@ ASINCRONISMO: Permite ejecutar tareas que toman tiempo (como acceder a una API) 
     Promesas: Son objetos que representan el resultado futuro (éxito o error) de una operación asincrónica.
     Programación asíncronica: simular Sincronismo utilizando funciones asincronicas. 
 
+Path param vs Query param:
+En una API REST, los path parameters y query parameters se utilizan para propósitos distintos.
 
+Los path parameters forman parte de la URL y se usan para identificar un recurso específico. 
+Por ejemplo, en GET /usuarios/123, el 123 es un path parameter que indica que se quiere acceder
+ al usuario con ID 123. Son obligatorios en la estructura de la ruta.
+
+Los query parameters, en cambio, se agregan al final de la URL después del signo de interrogación 
+(?) y se usan para filtrar, ordenar o limitar resultados. Por ejemplo: GET /usuarios?rol=admin 
+devuelve todos los usuarios cuyo rol es “admin”. Son opcionales y pueden combinarse.
+
+MIDDLEWARE (función que se ejecuta antes o despues de un endpoint que permite translado
+de información en distintas partes del código)
+
+CRUD: Create|Read|Update|Delete => Cuatro servicios Basicos (llamados tambien ACID).
 
 Al iniciar el proyecto se debe:
 1- En la terminal, desde el directorio de backend, ejecutar:
@@ -242,7 +256,8 @@ Al iniciar el proyecto se debe:
 PASOS DE RESOLUCIÓN:
 ----
 CONSTRUIR API 
-1)- En app.js se debe construir una app express usando cors y express.
+1)- En app.js se debe construir una app express usando cors y express. En app.js debe haber 
+la inicializacion de la aplicación, el middleware de cors, routers importados y gestion de errores.
 2)- Agregar a package.json: "type":"module", (permitir importar/exportar archivos)
 3)- Instalar dependencias de desarrollo: npm i nodemon
         Sirve para mantener el codigo en ejecucion cuando hay cambios en el backend.
@@ -292,7 +307,10 @@ SERVICIOS (CASOS DE USO) Y RUTAS
 21)- Crear archivo entidad.routes.js en /routes
 22)- Importar express y servicios 
 23)- Declarar Router para definir endpoints
-    router.get("/", async(req, res) => { try {} catch(error) {}}) 
+    router.get("/", async(req, res) => { try {
+        const usuarios = await userServices.getAll();
+        res.json(usuarios);
+    } catch(error) {}}) 
         Donde req y res son el request del cliente y la respuesta del servidor,
         try es intentar realizar algo y catch es lo que haría en caso de error.
     Dentro de try se definen los objetos mediante getAll() y se los parsea a .json
@@ -312,3 +330,416 @@ VERIFICACIÓN EN POSTMAN
 - Crear HTTP request
 - GET http://localhost:3000/usuarios
 - Visualizar los datos de los usuarios en la base de datos.
+
+27)- En entidad.routes.js declarar router para crear nuevos datos en la BD. Cuentan con un cuerpo
+que es un json.
+    router.post("/CrearUsuarios", async(req,res) => {
+        try {
+            const usuario = await userServices.createUser(req.body);
+            res.json(usuario);
+        } catch (error) {
+            res.status(500).json({error: error.message});
+        }
+    } )
+
+En caso de que la validacion de Postman no funcione utilizar (desde Powershell):
+        Invoke-RestMethod -Uri "http://localhost:3000/usuarios/CrearUsuarios" `
+    -Method Post `
+    -Body (@{
+        nombre = "Lionel"
+        apellido = "Messi"
+        usuario = "lmessi"
+        password = "goat10"
+        email = "lionel.messi@mail.com"
+    } | ConvertTo-Json) `
+    -ContentType "application/json"
+
+28)- Para eliminar por id: 
+    const deleteUser = async (idUsuario) => {
+        const usuarioABorrar = await sequelize.models.Usuarios.findByPk(idUsuario)
+        if (!usuarioABorrar) {
+            throw new Error("Usuario no encontrado")
+        }
+        await sequelize.models.Usuarios.destroy()  
+        return { mensaje: "Usuario eliminado correctamente" };
+    }
+
+29)- Para buscar por filtro: 
+    const getByFilter = async (filtro) => {
+        const where = {};
+
+        if (filtro.nombre) {
+            where.nombre = { [Op.like]: `%${filtro.nombre}%` };
+        }
+        if (filtro.apellido) {
+            where.apellido = { [Op.like]: `%${filtro.apellido}%` };
+        }
+        if (filtro.usuario) {
+            where.usuario = { [Op.like]: `%${filtro.usuario}%` };
+        }
+        if (filtro.email) {
+            where.email = { [Op.like]: `%${filtro.email}%` };
+        }
+    }
+
+30)- Para Actualizar: 
+        const updateUser = async (idUsuario, body) => {
+        const usuario = await sequelize.models.Usuarios.findByPk(idUsuario)
+        if (!usuario) {
+            throw new Error("Usuario no encontrado")
+        }
+        usuario.nombre = body.nombre ?? usuario.nombre;
+        usuario.apellido = body.apellido ?? usuario.apellido;
+        usuario.usuario = body.usuario ?? usuario.usuario;
+        usuario.password = body.password ?? usuario.password;
+        usuario.email = body.email ?? usuario.email;
+
+        await usuario.save()
+        return usuario.dataValues
+
+    }
+
+31)- CRUD BACKEND TERMINADO.
+----
+FRONTEND CON PETICIONES A BACKEND
+VINCULACIÓN FRONT<->BACK
+DOM: Document Object Modeler. Etiquetas creadas en HTML. Con Js podemos traer información desde
+la API de forma dinamica. Se puede utilizar para animaciones tambien. Un evento es cualquier tipo
+de interacción con el sistema. Todos los elementos se manejan a través del document. 
+    document.addEventListener(evento, accion_a_realizar_si_ocurre)
+
+Agregar filas a tabla: 
+document("DOMContentLoaded", async function() {
+    const cuerpoTablea = document.getElementById("cuerpo_tabla");
+    cuerpoTabla.innerHTML = ``
+    datos.forEach((elemento) => {
+        const row = document.createElement('tr'); //filas
+        row.innerHTML = `
+            <td>${elemento.id}</td>
+            <td>${elemento.nombre}</td>
+        `
+        cuerpoTabla.appendChild(row)
+})
+})
+
+FETCH: método para traer datos de una API. Sirve para consumir apis en código. Une el cliente
+con el servidor. Es Asíncrono por lo que se lo trabaja como promesa o funcionalidad asíncrona. 
+Si se unen ambos conceptos (DOM y FETCH), la integración será de JS Puro. Devuelve un archivo
+JSON.
+
+Ejemplo de uso:
+    const obtenerPokemones = async() => {
+        const url= "https://pokeapi.co/api/v2/pokemon"
+        const response = await fetch(url)
+        const pokemones = await respones.json() // Todos los objetos pokemones 
+        console.log(pokemones)
+        pokemones.results.map(pokemon => console.log(pokemon.name)) // Extraer los nombres de los pokemones
+    } 
+
+La idea del usar DOM y fetch es hacer una tabla de usuarios con datos que se traen de una api de forma dinamica.
+Es necesario poder eliminar, editar y crear registros en la tabla. Además de poder buscarlos por algún filtro.
+
+32)- Para poder introducir los registros de la api en la tabla se debe:
+    -Crear tabla en html con  un tbody con id:
+            <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">FechaAlta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="userTable">
+            </tbody>    
+        </table>
+    -En el script.js:
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchData();
+        })
+
+        async function fetchData() {
+            try {
+                // peticion al endpoint
+                const response = await fetch ("http://localhost:3000/usuarios/VerUsuarios");
+                // json a array
+                const data = await response.json(); 
+                // capturar cuerpo de la tabla
+                const tbody = document.getElementById("userTable");
+                // vaciar tabla de ser necesario
+                tbody.innerHTML = "";
+                // recorrer el array y se añade la fila a la tabla
+                data.forEach(usuario => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${usuario.id}</td>
+                        <td>${usuario.nombre}</td>
+                        <td>${usuario.apellido}</td>
+                        <td>${usuario.usuario}</td>
+                        <td>${usuario.email}</td>
+                        <td>${usuario.fechaAlta}</td>
+                    `;
+                // añade la fila a la tabla
+                tbody.appendChild(row);
+                })
+            }
+            catch (error) {
+                console.error("Error fetching: ", error);
+            }}
+
+33)- GetByFilter:
+    -En index.html crear un formulario con id="filterForm" y action="". Además de un boton type:"submit"
+    
+    -En index.js: 
+    document.addEventListener("DOMContentLoaded", function () {
+    fetchData();
+
+    const form = document.getElementById("filterForm");
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevenir actualización de la pagina
+        
+        const nombre = form.nombre.value.trim();
+        const apellido = form.apellido.value.trim();
+    
+        try {
+            const response = await fetch(`http://localhost:3000/usuarios/Buscar?nombre=${form.nombre.value}&apellido=${form.apellido.value}`);
+            const usuarios = await response.json();
+            
+            const tbody = document.getElementById("userTable");
+            tbody.innerHTML = "";
+            if (usuarios.length === 0) {
+                message.innerHTML = "<tr><td colspan='6' class='text-center'>No se han encontrado usuarios</td></tr>";
+            } else {
+            //  sólo los usuarios que coinciden con el filtro (por nombre y/o apellido).
+            usuarios.forEach(usuario => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${usuario.id}</td>
+                    <td>${usuario.nombre}</td>
+                    <td>${usuario.apellido}</td>
+                    <td>${usuario.usuario}</td>
+                    <td>${usuario.email}</td>
+                `;
+                tbody.appendChild(row);
+            })};
+        } catch (error) {
+                console.error("Error fetching: ", error);
+            }
+        });
+    });
+
+34)- 
+    <!-- Botón para agregar un nuevo usuario -->
+    <button type="button" class="btn btn-primary mb-3" id="addUserBtn">Agregar Usuario</button>
+
+    <!-- Formulario para agregar un usuario, oculto inicialmente -->
+    <div id="addUserForm" style="display: none;">
+        <form id="createUserForm">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" required>
+            </div>
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input type="text" class="form-control" id="usuario" name="usuario" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" id="cancelAddUserBtn">Cancelar</button>
+        </form>
+    </div>
+
+    document.addEventListener("DOMContentLoaded", function () {
+    fetchData();
+
+    // Mostrar formulario para agregar un nuevo usuario
+    const addUserBtn = document.getElementById("addUserBtn");
+    const addUserForm = document.getElementById("addUserForm");
+    const cancelAddUserBtn = document.getElementById("cancelAddUserBtn");
+
+    addUserBtn.addEventListener("click", function() {
+        addUserForm.style.display = "block";
+    });
+
+    cancelAddUserBtn.addEventListener("click", function() {
+        addUserForm.style.display = "none";
+    });
+
+    const createUserForm = document.getElementById("createUserForm");
+    createUserForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const nombre = createUserForm.nombre.value;
+        const apellido = createUserForm.apellido.value;
+        const usuario = createUserForm.usuario.value;
+        const email = createUserForm.email.value;
+
+        try {
+            const response = await fetch("http://localhost:3000/usuarios/crearUsuarios", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nombre, apellido, usuario, email })
+            });
+
+            if (response.ok) {
+                alert("Usuario agregado exitosamente");
+                addUserForm.style.display = "none";
+                fetchData(); // Refrescar la lista de usuarios
+            } else {
+                alert("Error al agregar el usuario");
+            }
+        } catch (error) {
+            console.error("Error al agregar usuario: ", error);
+        }
+    });
+
+    const form = document.getElementById("filterForm");
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevenir actualización de la página
+        
+        const nombre = form.nombre.value.trim();
+        const apellido = form.apellido.value.trim();
+    
+        try {
+            const response = await fetch(`http://localhost:3000/usuarios/Buscar?nombre=${nombre}&apellido=${apellido}`);
+            const usuarios = await response.json();
+            
+            const tbody = document.getElementById("userTable");
+            tbody.innerHTML = "";
+
+            usuarios.forEach(usuario => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${usuario.id}</td>
+                    <td>${usuario.nombre}</td>
+                    <td>${usuario.apellido}</td>
+                    <td>${usuario.usuario}</td>
+                    <td>${usuario.email}</td>
+                    <td>
+                        <button class="btn btn-warning editBtn" data-id="${usuario.id}">Editar</button>
+                        <button class="btn btn-danger deleteBtn" data-id="${usuario.id}">Eliminar</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            addEventListenersToButtons();
+        } catch (error) {
+            console.error("Error fetching: ", error);
+        }
+    });
+});
+
+async function fetchData() {
+    try {
+        const response = await fetch("http://localhost:3000/usuarios/verUsuarios");
+        const data = await response.json();
+
+        const tbody = document.getElementById("userTable");
+        tbody.innerHTML = "";
+
+        data.forEach(usuario => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${usuario.id}</td>
+                <td>${usuario.nombre}</td>
+                <td>${usuario.apellido}</td>
+                <td>${usuario.usuario}</td>
+                <td>${usuario.email}</td>
+                <td>
+                    <button class="btn btn-warning editBtn" data-id="${usuario.id}">Editar</button>
+                    <button class="btn btn-danger deleteBtn" data-id="${usuario.id}">Eliminar</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        addEventListenersToButtons();
+    } catch (error) {
+        console.error("Error fetching: ", error);
+    }
+}
+
+function addEventListenersToButtons() {
+    document.querySelectorAll(".editBtn").forEach(button => {
+        button.addEventListener("click", async function() {
+            const userId = this.getAttribute("data-id");
+
+            try {
+                const response = await fetch(`http://localhost:3000/usuarios/obtenerById/${userId}`);
+                const usuario = await response.json();
+
+                document.getElementById("nombre").value = usuario.nombre;
+                document.getElementById("apellido").value = usuario.apellido;
+                document.getElementById("usuario").value = usuario.usuario;
+                document.getElementById("email").value = usuario.email;
+
+                addUserForm.style.display = "block";
+
+                const createUserForm = document.getElementById("createUserForm");
+                createUserForm.addEventListener("submit", async function(event) {
+                    event.preventDefault();
+
+                    const nombre = createUserForm.nombre.value;
+                    const apellido = createUserForm.apellido.value;
+                    const usuario = createUserForm.usuario.value;
+                    const email = createUserForm.email.value;
+
+                    const updateResponse = await fetch(`http://localhost:3000/usuarios/actualizarUsuario/${userId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ nombre, apellido, usuario, email })
+                    });
+
+                    if (updateResponse.ok) {
+                        alert("Usuario actualizado");
+                        addUserForm.style.display = "none";
+                        fetchData(); // Refrescar la lista de usuarios
+                    } else {
+                        alert("Error al actualizar el usuario");
+                    }
+                });
+            } catch (error) {
+                console.error("Error al editar usuario: ", error);
+            }
+        });
+    });
+
+        document.querySelectorAll(".deleteBtn").forEach(button => {
+            button.addEventListener("click", async function() {
+                const userId = this.getAttribute("data-id");
+
+                try {
+                    const response = await fetch(`http://localhost:3000/usuarios/eliminarUsuario/${userId}`, {
+                        method: "DELETE"
+                    });
+
+                    if (response.ok) {
+                        alert("Usuario eliminado exitosamente");
+                        fetchData(); // Refrescar la lista de usuarios
+                    } else {
+                        alert("Error al eliminar el usuario");
+                    }
+                } catch (error) {
+                    console.error("Error al eliminar usuario: ", error);
+                }
+            });
+        });
+}
+
+
+
