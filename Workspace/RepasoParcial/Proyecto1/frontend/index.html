@@ -14,9 +14,44 @@
         <h1 class="text-center">TABLA DE USUARIOS</h1>
     </header>
     <br>
+    <form action="" id="filterForm">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre" name="nombre">
+        </div>
+        <div class="mb-3">
+          <label for="apellido" class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="apellido" name="apellido">
+        </div>
+        <button type="submit" class="btn btn-outline-secondary w-100">Enviar</button>
+      </form>
+      <button type="button" class="btn btn-primary mb-3" id="addUserBtn">Agregar Usuario</button>
+      <div id="addUserForm" style="display: none;">
+      <form id="createUserForm">
+          <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" required>
+          </div>
+          <div class="mb-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input type="text" class="form-control" id="apellido" name="apellido" required>
+          </div>
+          <div class="mb-3">
+              <label for="usuario" class="form-label">Usuario</label>
+              <input type="text" class="form-control" id="usuario" name="usuario" required>
+          </div>
+          <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <button type="button" class="btn btn-secondary" id="cancelAddUserBtn">Cancelar</button>
+      </form>
+      </div>
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
             <tr>
+                <th scope="col">Id</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
                 <th scope="col">Usuario</th>
@@ -25,12 +60,11 @@
 
             </tr>
         </thead>
+        <tbody id="userTable">
+        </tbody>    
+  
     </table>
 
-    <div class="col-md-4 text-center">
-        <button class="btn btn-primary fw-bold px-5 py-3 shadow rounded-pill transition" type="submit">
-        CREAR
-        </button>
-    </div>
+    <script src="fetchIndex.js"></script>
 </body>
 </html>

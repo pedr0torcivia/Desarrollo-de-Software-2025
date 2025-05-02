@@ -9,5 +9,5 @@ app.get("/", (req, res) => {
 
 //8- Mostrar por terminal que el servidor funciona
 app.listen(PORT, () => {
-    console.log(`Server corriendo en: http:/localhost:${PORT}`);
+    console.log(`Server corriendo en: http://localhost:${PORT}`);
 })

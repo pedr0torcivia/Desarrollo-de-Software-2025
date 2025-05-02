@@ -13,7 +13,7 @@ sequelize.define("Tareas", TareasModel.tareasAttributes, TareasModel.tareasMetho
 sequelize.define("Usuarios", UsuariosModel.usuariosAttributes, UsuariosModel.usuariosMethods)
 console.log("Base de datos conectada")
 // 17) Crear FKS entre tablas
-sequelize.models.Tareas.belongsTo(sequelize.models.Usuarios, {foreignKey: "UsuarioID"})
+sequelize.models.Tareas.belongsTo(sequelize.models.Usuarios, {foreignKey: "UsuarioId"})
 
 // 18) Exportar modelo 
 export default sequelize;
