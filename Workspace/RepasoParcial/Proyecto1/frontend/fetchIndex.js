@@ -83,8 +83,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchData() {
     try {
-        const response = await fetch("http://localhost:3000/usuarios/verUsuarios");
-        const data = await response.json();
+
+        
 
         const tbody = document.getElementById("userTable");
         tbody.innerHTML = "";
