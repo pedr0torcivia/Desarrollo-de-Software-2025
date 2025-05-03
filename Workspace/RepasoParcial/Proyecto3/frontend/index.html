@@ -1,41 +1,78 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es"> <!-- Indica que el idioma del documento es español -->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gestión de Álbumes</title>
+  <meta charset="UTF-8" /> <!-- Codificación UTF-8 para admitir caracteres especiales -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Escala para dispositivos móviles -->
+  <title>Gestión de Empresas</title> <!-- Título en la pestaña del navegador -->
+  <!-- Carga Bootstrap desde CDN para estilos y diseño responsivo -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="p-4">
-  <h1 class="mb-4">Gestión de Empresas</h1>
+<body class="p-4"> <!-- Padding general al cuerpo -->
+  <h1 class="mb-4">Gestión de Empresas</h1> <!-- Título principal -->
 
-  <form id="filterForm" class="row g-3 mb-3">
-    <div class="col-auto">
-      <input type="text" class="form-control" id="filtroNombre" placeholder="Buscar por nombre" />
-    </div>
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary">Buscar</button>
-    </div>
-    <div class="col-auto">
-      <button type="button" id="addEmpresaBtn" class="btn btn-success">Agregar Empresa</button>
-    </div>
-  </form>
-
-  <div id="addEmpresaForm" class="mb-4" style="display: none;">
-    <form id="createEmpresaForm" class="border p-3 rounded bg-light">
-      <div class="row mb-2">
-        <div class="col"><input name="nombre" placeholder="Nombre" class="form-control" required /></div>
-        <div class="col"><input name="razonSocial" placeholder="RazonSocial" class="form-control" required /></div>
-      </div>
-      <div class="row mb-2">
-        <div class="col"><input name="tipoEmpresa" placeholder="tipoEmpresa" class="form-control" required /></div>
-        <div class="col"><input name="cantidadEmpleados" placeholder="cantidadEmpleados" class="form-control" required /></div>
-      </div>
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" id="cancelAddEmpresaBtn" class="btn btn-secondary">Cancelar</button>
-    </form>
+<!-- Formulario para filtrar empresas por nombre -->
+<form id="filterForm" class="row g-3 mb-3">
+  <!-- Campo de entrada para el nombre (filtro) -->
+  <div class="col-auto">
+    <!-- Input de texto donde el usuario escribe el nombre que quiere buscar -->
+    <input 
+      type="text" 
+      class="form-control" 
+      id="filtroNombre" 
+      placeholder="Buscar por nombre" 
+    />
   </div>
 
+  <!-- Botón para enviar el formulario y realizar la búsqueda -->
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary">
+      Buscar
+    </button>
+  </div>
+
+  <!-- Botón para mostrar el formulario de agregar nueva empresa -->
+  <div class="col-auto">
+    <button 
+      type="button" 
+      id="addEmpresaBtn" 
+      class="btn btn-success"
+    >
+      Agregar Empresa
+    </button>
+  </div>
+</form>
+
+ <!-- Formulario para agregar una nueva empresa (inicialmente oculto) -->
+ <div id="addEmpresaForm" class="mb-4" style="display: none;">
+  <form id="createEmpresaForm" class="border p-3 rounded bg-light">
+    <div class="row mb-2">
+      <div class="col">
+        <!-- Campo nombre -->
+        <input name="nombre" placeholder="Nombre" class="form-control" required />
+      </div>
+      <div class="col">
+        <!-- Campo razón social -->
+        <input name="razonSocial" placeholder="RazonSocial" class="form-control" required />
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <!-- Campo tipo de empresa -->
+        <input name="tipoEmpresa" placeholder="tipoEmpresa" class="form-control" required />
+      </div>
+      <div class="col">
+        <!-- Campo cantidad de empleados -->
+        <input name="cantidadEmpleados" placeholder="cantidadEmpleados" class="form-control" required />
+      </div>
+    </div>
+    <!-- Botón para enviar el formulario -->
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <!-- Botón para cancelar (oculta el formulario) -->
+    <button type="button" id="cancelAddEmpresaBtn" class="btn btn-secondary">Cancelar</button>
+  </form>
+</div>
+
+  <!-- Tabla que mostrará las empresas -->
   <table class="table table-striped">
     <thead>
       <tr>
@@ -43,12 +80,13 @@
         <th>Razon Social</th>
         <th>Tipo Empresa</th>
         <th>Cantidad Empleados</th>
-        <th>Acciones</th>
+        <th>Acciones</th> <!-- Aquí irán botones como editar/eliminar -->
       </tr>
     </thead>
-    <tbody id="empresaTable"></tbody>
+    <tbody id="empresaTable"></tbody> <!-- El cuerpo se llenará dinámicamente con JS -->
   </table>
 
+  <!-- Carga el archivo script.js al final para que interactúe con el DOM ya cargado -->
   <script src="script.js"></script>
 </body>
 </html>
