@@ -4,22 +4,22 @@
 import express from "express"; // Framework para construir la API
 import cors from "cors"; // Middleware para permitir solicitudes desde otros orígenes (CORS)
 import { sequelize, EmpresaModel } from "./databases/db.js"; // Importa la conexión Sequelize y el modelo de Empresa
-import empresasRoutes from "./routes/empresas.routes.js"; // Importa las rutas de empresas
+import reparacionesRoutes from "./routes/reparaciones.routes.js"; // Importa las rutas de empresas
 
 // Inicializa la aplicación de Express y configura el puerto
-const app = express();
+const app = express(); 
 const PORT = process.env.PORT || 3000; // Usa el puerto del entorno o el 3000 por defecto
 
 // Middleware global
 app.use(cors()); // Habilita CORS para permitir peticiones desde el navegador
 app.use(express.json()); // Permite recibir datos en formato JSON en las peticiones
-app.use("/api/empresas", empresasRoutes); // Asocia las rutas de empresas bajo el prefijo /api/empresas
+app.use("/api/reparaciones", reparacionesRoutes); // Asocia las rutas de empresas bajo el prefijo /api/empresas
 
 // Función para insertar datos iniciales si la tabla está vacía
 async function seedData() {
-  const count = await EmpresaModel.count(); // Cuenta cuántas empresas existen
+  const count = await ReparacionModel.count(); // Cuenta cuántas empresas existen
   if (count === 0) { // Si no hay ninguna, inserta algunos datos de ejemplo
-    await EmpresaModel.bulkCreate([
+    await ReparacionModel.bulkCreate([
       {
         nombre: "Apple Inc.",
         razonSocial: "Pink Floyd Records S.A.",
