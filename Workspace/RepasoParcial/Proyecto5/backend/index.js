@@ -15,6 +15,13 @@ app.use(cors()); // Habilita CORS para permitir peticiones desde el navegador
 app.use(express.json()); // Permite recibir datos en formato JSON en las peticiones
 app.use("/reparaciones", reparacionesRoutes); // Asocia las rutas de empresas bajo el prefijo /api/empresas
 
+
+// Ruta raíz para que responda en http://localhost:3000
+app.get("/", (req, res) => {
+  res.send("API de Reparaciones funcionando");
+});
+
+
 // Función para insertar datos iniciales si la tabla está vacía
 async function seedData() {
   const count = await ReparacionModel.count(); // Cuenta cuántas empresas existen
