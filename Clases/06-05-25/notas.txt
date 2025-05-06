@@ -1,0 +1,199 @@
+TESTING:Proceso de evaluar y verificar que el software funcione según lo esperado. Mejora la calidad, evita errores y reduce costos.
+ 
+1. Pruebas Funcionales: Evalúan si el software cumple los requisitos funcionales definidos:
+    Unitarias: prueban funciones o módulos individuales (Caja Blanca).
+    Integración: verifican la interacción entre componentes.
+    Interfaz: prueban la transferencia de datos entre componentes conectados (ej. de CSV a XML).
+    Sistema: testean todo el sistema como una unidad.
+    Regresión: aseguran que lo que funcionaba antes sigue funcionando tras cambios.
+    Humo: validan funcionalidad básica en builds nuevas (potencialmente inestables).
+    Saneamiento: pruebas rápidas tras pequeños cambios, en builds ya estables.
+
+Aceptación: ejecutadas por el cliente o QA, validan que el sistema cumple con los requisitos de negocio.
+2. Pruebas No Funcionales: Evalúan atributos de calidad que no son funciones explícitas.
+    Rendimiento: mide tiempo de respuesta, uso de recursos, estabilidad.
+    Carga: simula el uso bajo condiciones normales (ej. 1000 usuarios simultáneos).
+    Estrés: evalúa el sistema bajo cargas extremas hasta romperlo.
+    Capacidad: mide si el sistema maneja grandes volúmenes de datos u operaciones.
+    Seguridad: prueba acceso no autorizado, vulnerabilidades, integridad de datos.
+    Escalabilidad: verifica si puede crecer con más usuarios, datos o servidores (vertical/horizontalmente).
+    Usabilidad: evalúa la experiencia del usuario, navegación, comprensión.
+    Mantenibilidad: mide qué tan fácil es modificar o actualizar el sistema.
+    Compatibilidad: verifica el comportamiento en distintos SO, dispositivos, navegadores, redes.
+
+
+HTTPS: conjunto de medidas que aseguran la confidencialidad, integridad y autenticación de la comunicación entre el cliente (navegador) 
+y el servidor web. 
+Confidencialidad 
+Los datos viajan cifrados, evitando que terceros (como atacantes en redes públicas) puedan leerlos.
+
+Integridad 
+Garantiza que los datos no fueron alterados durante la transmisión. Si alguien intenta modificar los datos, el navegador lo detecta.
+
+Autenticación 
+Mediante certificados digitales, el cliente verifica que se está conectando al servidor legítimo y no a un impostor (ataque Man-in-the-Middle).
+
+TIPOS DE TESTING DE CASOS: 
+Manual: humanos ejecutan casos de prueba.
+Automatizado: herramientas ejecutan tests automáticamente (más eficiente para regresiones).
+
+
+TDD (Test Driven Development): TDD se complementa con Integración Continua para validar código frecuentemente con pruebas automáticas.
+Ciclo:
+1.Elegir un requisito.
+2.Escribir una prueba.
+3.Verificar que falle.
+4.Escribir implementación.
+5.Ejecutar pruebas.
+6.Refactorizar.
+7.Actualizar requisitos.
+
+JEST: Framework de testing JavaScript
+
+Instalación: npm install --save-dev jest
+Scripts típicos en package.json
+Sintaxis: test(), expect().toBe(), expect().toEqual().
+
+Por ejemplo:
+    export function sumar(a, b) { return a + b; }
+
+    // primer.test.js
+    import sumar from "./index.js";
+    test("suma dos números", () => {
+    expect(sumar(1, 2)).toBe(3);
+    });
+
+Resultado de un npm run test PASS
+
+ PASS  ./primer.test.js
+  √ sumar() debe retornar la suma de dos números (3 ms)                                                                                                                                                              
+  √ cuentaLetras() debe contar correctamente los caracteres de una palabra                                                                                                                                           
+                                                                                                                                                                                                                     
+Test Suites: 1 passed, 1 total                                                                                                                                                                                       
+Tests:       2 passed, 2 total                                                                                                                                                                                       
+Snapshots:   0 total
+Time:        0.611 s
+
+
+Testing de APIs con SUPERTEST
+Librería para testear endpoints HTTP:
+Instalación: npm install --save-dev supertest
+Se usa con Jest.
+Permite testear endpoints locales o externos (e.g. API de perros).
+
+Verifica:
+Código de estado (.expect(200))
+Tipo de contenido (.expect('Content-Type', /json/))
+Cuerpo de respuesta (expect(response.body).toEqual(...))
+
+toBe vs toEqual
+toBe: compara referencias (útil para primitivos).
+toEqual: compara objetos profundamente.
+
+
+SEGURIDAD WEB: busca proteger sitios web de accesos no autorizados, modificaciones maliciosas, robos de información o interrupciones (DoS).
+Requiere proteger:
+El código del servidor y del cliente
+La configuración del servidor
+El manejo de contraseñas
+El uso de HTTPS
+
+
+OWASP: organización sin fines de lucro, reconocida a nivel mundial, dedicada a mejorar la seguridad del software, especialmente de aplicaciones web.
+Sitio oficial: https://owasp.org
+
+Top 10 – Principales amenazas
+Broken Access Control
+    Permite que un usuario acceda a recursos que no debería.
+    Mitigación: aplicar controles de acceso estrictos y consistentes.
+Cryptographic Failures
+    Uso incorrecto o inseguro de algoritmos de cifrado.
+    Mitigación: usar HTTPS, cifrado fuerte y mantener claves seguras.
+Inyección SQL
+    Inserción de comandos SQL maliciosos.
+    Mitigación: sanitizar entradas y usar ORM o consultas preparadas.
+Insecure Design
+    Fallas de seguridad desde la fase de diseño.
+    Mitigación: aplicar principios de diseño seguro.
+Security Misconfiguration
+    Configuraciones inseguras por defecto o mal hechas.
+    Ej: contraseñas por defecto, debug activo.
+    Mitigación: actualizar, auditar y endurecer la configuración.
+Componentes vulnerables y desactualizados
+    Uso de bibliotecas o frameworks inseguros.
+    Mitigación: mantener inventario y actualizar dependencias.
+Fallos en identificación y autenticación
+    Ej: contraseñas débiles, mala gestión de sesiones.
+    Mitigación: usar contraseñas fuertes, HTTPS y autenticación de dos factores.
+Fallos en integridad de software y datos
+    Código o datos modificados maliciosamente.
+    Ej: inyecciones, corrupción de archivos.
+    Mitigación: firmar actualizaciones, verificar integridad.
+Fallas en monitoreo y registro
+    No detectar ataques ni registrar eventos clave.
+    Mitigación: activar logs, alertas y auditorías.
+Cross-Site Request Forgery (CSRF)
+    El atacante envía peticiones en nombre del usuario autenticado.
+    Mitigación: usar tokens CSRF únicos por sesión.
+
+
+Otras amenazas comunes
+XSS (Cross-Site Scripting): inyección de scripts maliciosos.
+🔐 Mitigación: sanitizar entradas, evitar etiquetas <script>.
+
+Clickjacking: engañar al usuario para que haga clic en algo diferente a lo que cree.
+🔐 Mitigación: usar cabeceras HTTP (X-Frame-Options).
+
+Denegación de servicio (DoS): saturar el servidor con tráfico falso.
+🔐 Mitigación: firewalls, límites de tasa, detección de tráfico malicioso.
+
+Path Traversal: acceso no autorizado a archivos del sistema (../).
+🔐 Mitigación: sanitizar rutas.
+
+Inclusión de archivos / Inyección de comandos
+🔐 Mitigación: evitar eval/exec, desinfectar inputs.
+
+Buenas prácticas de seguridad
+Sanitizar toda entrada del usuario.
+Usar HTTPS + HSTS.
+Implementar autenticación robusta (contraseñas fuertes + 2FA).
+Limitar la exposición de datos sensibles (ej. solo mostrar los últimos 4 dígitos de tarjetas).
+Seguir el OWASP Top 10.
+Auditar y escanear regularmente (con herramientas automáticas o bug bounty).
+Usar frameworks modernos que incorporen medidas de seguridad por defecto.
+
+AUTENTICACIÓN Y AUTORIZACIÓN 
+AUTENTICACIÓN
+- Verifica la identidad del usuario (¿quién sos?).
+- Métodos comunes:
+  - Usuario + contraseña
+  - OTP (One Time Password) → SMS, email, Google Authenticator (MFA)
+  - Passwordless → magic link
+  - Login con redes sociales (Google, Facebook)
+  - Biométrica → huellas, rostro
+  - API: autenticación básica, OAuth, etc.
+
+AUTORIZACIÓN
+- Define qué recursos puede usar un usuario autenticado.
+- Ej: un admin accede a todo, un usuario común solo a su perfil.
+
+MÉTODOS DE AUTORIZACIÓN
+- Autorización HTTP: usa encabezado Authorization en peticiones.
+- Autorización API: clave + token oculto (por ejemplo en REST APIs).
+- OAuth 2.0: delega permisos a apps de terceros con consentimiento.
+- JWT (JSON Web Token):
+  - Se genera tras login y se envía con cada petición.
+  - Contiene info del usuario firmada digitalmente.
+  - Verifica identidad sin guardar sesión en servidor.
+
+JWT EN NODE.JS
+- Librería: jsonwebtoken
+- Crear token:
+    const token = jwt.sign({username: 'admin'}, 'clave', {expiresIn: '1h'});
+- Verificar token:
+    jwt.verify(token, 'clave', (err, decoded) => {...});
+
+EJERCICIOS
+- Login con token y acceso a ruta protegida usando Postman.
+- Reemplazar usuarios hardcodeados por consulta a base de datos.
+
