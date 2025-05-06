@@ -88,15 +88,11 @@ async function fetchData(cliente = "") {
     tbody.innerHTML = "";
 
     data.forEach((rep) => {
-      const fecha = new Date(rep.fechaRecepcion);
-      const fechaFormateada = `${fecha.getFullYear()}/${(fecha.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}/${fecha.getDate().toString().padStart(2, "0")}`;
 
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${rep.idReparacion}</td>
-        <td>${fechaFormateada}</td>
+        <td>${new Date(rep.fechaRecepcion).toLocaleDateString('es-AR')}</td>
         <td>${rep.nombreCliente}</td>
         <td>${rep.tipoEquipo}</td>
         <td>${rep.descripcionProblema}</td>
