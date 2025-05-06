@@ -1,0 +1,84 @@
+1. FUNCIONAMIENTO GENERAL DEL SISTEMA
+-------------------------------------
+El sistema es una aplicación CRUD de usuarios. Tiene:
+- Frontend (HTML + JS + Bootstrap): formulario, tabla y filtros.
+- Backend (Node.js + Express + Sequelize + SQLite): API REST con endpoints.
+- Base de datos SQLite: almacena usuarios.
+
+Flujo:
+1. Usuario interactúa (formulario/botones).
+2. JS ejecuta fetch() al backend.
+3. Express procesa y responde con JSON.
+4. Frontend actualiza el DOM con los datos.
+
+2. TIPOS DE PARÁMETROS
+-----------------------
+- Path Params: van en la URL (ej: /usuarios/5).
+- Query Params: para filtrar (ej: /usuarios?nombre=Ana).
+- Body: JSON enviado desde formularios con datos como:
+  { nombre, apellido, usuario, email }
+
+3. CÓMO SABER SI FUNCIONA
+--------------------------
+- En Postman: GET/POST/PUT/DELETE funcionan.
+- En navegador: carga la tabla, crea/edita/elimina correctamente.
+- En consola: no hay errores y aparece “Servidor corriendo en puerto 3000”.
+
+4. ¿QUÉ ES FETCH?
+------------------
+Es una función de JavaScript que permite hacer peticiones HTTP a una API.
+Se usa con async/await y puede hacer: GET, POST, PUT, DELETE.
+
+5. ¿DÓNDE VA FETCH?
+--------------------
+En el JS del frontend (ej: script.js), normalmente en un bloque:
+document.addEventListener("DOMContentLoaded", () => { ... });
+
+6. ¿CÓMO SE COMUNICA FETCH CON EL BACKEND?
+-------------------------------------------
+1. fetch() envía petición HTTP a Express.
+2. Express ejecuta el endpoint correspondiente.
+3. Se accede a base de datos por Sequelize.
+4. Se devuelve respuesta JSON.
+5. JS la procesa y actualiza la tabla.
+
+7. ¿QUÉ ES JSON EN ESTE CONTEXTO?
+----------------------------------
+JSON (JavaScript Object Notation) **es el medio estandarizado de comunicación entre el cliente y el servidor**. 
+Permite intercambiar datos estructurados como objetos clave-valor en formato texto.
+
+Se utiliza tanto:
+- Para ENVIAR datos (en el body de un POST/PUT).
+- Para RECIBIR respuestas (en los GET).
+
+Ejemplo de flujo con JSON:
+---------------------------
+1. Frontend crea un usuario:
+   fetch('/usuarios', {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify({
+       nombre: "Lionel",
+       apellido: "Messi"
+     })
+   });
+
+2. Backend recibe ese JSON como `req.body` y lo guarda.
+
+3. Backend responde con:
+   {
+     "id": 1,
+     "nombre": "Lionel",
+     "apellido": "Messi"
+   }
+
+4. Frontend actualiza la tabla con esa respuesta.
+
+8. TECNOLOGÍAS USADAS
+-----------------------
+- Express: framework para construir API REST.
+- Sequelize: ORM para manejar la base de datos en JS.
+- Node.js: entorno de ejecución del backend JS.
+- SQLite3: motor de base de datos local (ligero y simple).
+- CORS: permite que el frontend se comunique con el backend.
+

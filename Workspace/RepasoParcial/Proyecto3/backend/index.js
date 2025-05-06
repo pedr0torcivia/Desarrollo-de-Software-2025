@@ -3,8 +3,8 @@
 // Importa las dependencias necesarias
 import express from "express"; // Framework para construir la API
 import cors from "cors"; // Middleware para permitir solicitudes desde otros orígenes (CORS)
-import { sequelize, EmpresaModel } from "./databases/db.js"; // Importa la conexión Sequelize y el modelo de Empresa
-import reparacionesRoutes from "./routes/reparaciones.routes.js"; // Importa las rutas de empresas
+import { sequelize, EmpresaModel, ReparacionModel } from "./databases/db.js"; // Incluye también ReparacionModel
+import reparacionesRoutes from "./routes/reparaciones.routes.js"; // Importa las rutas de reparaciones
 
 // Inicializa la aplicación de Express y configura el puerto
 const app = express(); 
@@ -13,33 +13,48 @@ const PORT = process.env.PORT || 3000; // Usa el puerto del entorno o el 3000 po
 // Middleware global
 app.use(cors()); // Habilita CORS para permitir peticiones desde el navegador
 app.use(express.json()); // Permite recibir datos en formato JSON en las peticiones
-app.use("/api/reparaciones", reparacionesRoutes); // Asocia las rutas de empresas bajo el prefijo /api/empresas
+app.use("/api/reparaciones", reparacionesRoutes); // Asocia las rutas de reparaciones bajo el prefijo /api/reparaciones
+
+// Ruta raíz para que responda en http://localhost:3000
+app.get("/", (req, res) => {
+  res.send("API de Reparaciones funcionando");
+});
+
 
 // Función para insertar datos iniciales si la tabla está vacía
 async function seedData() {
-  const count = await ReparacionModel.count(); // Cuenta cuántas empresas existen
+  const count = await ReparacionModel.count(); // Cuenta cuántas reparaciones existen
   if (count === 0) { // Si no hay ninguna, inserta algunos datos de ejemplo
     await ReparacionModel.bulkCreate([
       {
-        nombre: "Apple Inc.",
-        razonSocial: "Pink Floyd Records S.A.",
-        tipoEmpresa: "MEDIANA",
-        cantidadEmpleados: 120,
+        fechaRecepcion: new Date("2024-05-01"),
+        nombreCliente: "Juan Pérez",
+        tipoEquipo: "Laptop",
+        descripcionProblema: "No enciende",
+        estado: "Recibido",
+        costoEstimado: 15000,
+        pagado: false,
       },
       {
-        nombre: "Google LLC",
-        razonSocial: "Daft Punk Productions Ltd.",
-        tipoEmpresa: "PEQUEÑA",
-        cantidadEmpleados: 45,
+        fechaRecepcion: new Date("2024-05-02"),
+        nombreCliente: "María García",
+        tipoEquipo: "Impresora",
+        descripcionProblema: "Atasco de papel",
+        estado: "En Diagnóstico",
+        costoEstimado: 8000,
+        pagado: false,
       },
       {
-        nombre: "Microsoft Corp.",
-        razonSocial: "Shady Records Inc.",
-        tipoEmpresa: "GRANDE",
-        cantidadEmpleados: 500,
+        fechaRecepcion: new Date("2024-05-03"),
+        nombreCliente: "Carlos López",
+        tipoEquipo: "Monitor",
+        descripcionProblema: "Pantalla parpadea",
+        estado: "Esperando Repuesto",
+        costoEstimado: 12000,
+        pagado: true,
       }
     ]);
-    console.log("Datos de Empresas insertados."); // Mensaje de éxito en consola
+    console.log("Datos de Reparaciones insertados.");
   }
 }
 
@@ -49,8 +64,8 @@ sequelize.sync().then(async () => {
   await seedData(); // Ejecuta inserción de datos si es necesario
 
   app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`); // Informa la URL del servidor
+    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
   });
 }).catch((err) => {
-  console.error("❌ Error al conectar base de datos:", err); // En caso de error en conexión
+  console.error("❌ Error al conectar base de datos:", err);
 });
