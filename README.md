@@ -42,3 +42,4 @@ git clone https://labsys.frc.utn.edu.ar/gitlab/desarrollo-de-software1/proyectos
 
 - `Workspace`  
   Programas y archivos varios no relacionados directamente al proyecto
+  Incluye Ejercitación de Parciales
