@@ -12,9 +12,7 @@ const articulosfamilias = sequelize.define("articulosfamilias", {
     type: DataTypes.STRING(30),
     allowNull: false,
     validate: {
-      notEmpty: {
-        msg: "Nombre es requerido",
-      },
+      notEmpty: { msg: "Nombre requerido" },
     },
   },
 }, {
