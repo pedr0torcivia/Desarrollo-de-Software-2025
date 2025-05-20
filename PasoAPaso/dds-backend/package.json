@@ -1,0 +1,15 @@
+{
+  "name": "dds-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "backend con express",
+  "main": "index.js",
+  "scripts": {
+    "test": "etc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

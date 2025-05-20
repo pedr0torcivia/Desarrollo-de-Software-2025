@@ -1,0 +1,63 @@
+React - Apunte 19
+
+- React es una librería JavaScript para construir interfaces de usuario. No es un framework. Fue creada por Facebook en 2013.
+
+- Características principales:
+  - Declarativo: React actualiza automáticamente la UI según el estado.
+  - Basado en Componentes: Las interfaces se construyen con componentes reutilizables.
+  - ReactDOM y Virtual DOM: Manipula una versión virtual del DOM para mejorar el rendimiento.
+
+- JSX: Sintaxis que permite mezclar HTML y JavaScript. Es más estricta que HTML. Usa className en vez de class.
+
+  const titulo = "Hola";
+  const header = <h1>{titulo}</h1>;
+
+- Evolución desde JavaScript puro:
+  1. Crear HTML con document.createElement (muy verboso).
+  2. Usar React.createElement (mejor, pero aún engorroso).
+  3. Usar JSX (más legible y natural).
+
+- Virtual DOM:
+  - React crea una copia virtual del DOM.
+  - Al cambiar el estado, compara (diffing) con el DOM anterior.
+  - Aplica solo los cambios necesarios en el DOM real.
+
+- Creación de apps con Vite:
+  - Comando: npm create vite@latest
+  - Elegir React + JavaScript.
+  - Iniciar con npm install y npm run dev.
+
+- Estructura de proyecto (Vite):
+  - index.html: contiene <div id="root">.
+  - main.jsx: renderiza <App />.
+  - App.jsx: componente principal.
+  - index.css: estilos generales.
+
+- Componentes React:
+  - Funcionales (recomendado desde React 16.8 con hooks).
+  - Por clases (obsoleto, solo para casos antiguos).
+  - Se definen con función JS que retorna JSX.
+  - Deben comenzar con mayúscula.
+
+  function MiComponente({ nombre }) {
+    return <h1>Hola, {nombre}!</h1>;
+  }
+
+- Props:
+  - Se pasan desde un componente padre.
+  - Se pueden desestructurar para mayor legibilidad.
+
+  function Componente({ prop1, prop2 }) {
+    return <p>{prop1} - {prop2}</p>;
+  }
+
+- Estilos en React:
+  - Usar className en lugar de class.
+  - Se puede:
+    - Importar archivos CSS (import './styles.css').
+    - Usar clases condicionales (className={activo ? 'on' : 'off'}).
+    - Usar estilos en línea con objetos JS (style={{ color: 'red' }}).
+
+- Renderización:
+  - Proceso por el cual React transforma componentes en elementos del DOM.
+  - Usa ReactDOM.createRoot(...).render(...).
