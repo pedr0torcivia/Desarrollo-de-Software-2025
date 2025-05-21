@@ -1,7 +1,7 @@
 import React from 'react';
 function Footer() {
   return (
-    <footer className="text-center">
+    <footer className="bg-light text-center w-100 mt-auto">
     <small>
       <span>© Pymes 2024</span>
       <span className="m-4">-</span>

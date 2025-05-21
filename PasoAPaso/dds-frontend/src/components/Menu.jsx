@@ -20,12 +20,14 @@ function Menu() {
   }, []);
 
   return (
-    <nav className="navbar navbar-dark bg-dark navbar-expand-md">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#!">
-          <i className="fa fa-industry"></i>
-          &nbsp;<i>Pymes</i>
-        </a>
+        <nav className="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
+        <div className="w-100 px-3 d-flex justify-content-between align-items-center">
+            <a className="navbar-brand logo-completo" href="#!">
+            <span className="logo-content">
+                <i className="fa fa-industry"></i>
+                &nbsp;<i>Pymes</i>
+            </span>
+            </a>
         <button
           className="navbar-toggler"
           type="button"
