@@ -2,6 +2,8 @@ const express = require("express"); // importamos express
 const app = express();              // creamos la app de express
 app.use(express.json());           // middleware para poder leer JSON en req.body
 require("./base-orm/sqlite-init");  // crear base si no existe
+const auth = require("./seguridad/auth");  // importar el módulo de autenticación
+
 
 // ruta de prueba raíz
 app.get("/", (req, res) => {
@@ -29,6 +31,10 @@ app.use(
     origin: "*", // origin: 'https://dds-frontend.azurewebsites.net'
   })
 );
+
+// importar el router de seguridad
+const seguridadRouter = require("./routes/seguridad");
+app.use(seguridadRouter);
 
 // levantar el servidor en puerto 3000
 const port = 3000;
