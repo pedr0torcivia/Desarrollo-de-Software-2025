@@ -15,7 +15,7 @@ function App() {
     <BrowserRouter>
       <ModalDialog />
       <Menu />
-      <div className="divBody">
+      <div className="divBody  px-4">
         <Routes>
           <Route path="/inicio" element={<Inicio />} />
           <Route path="/articulosfamilias" element={<ArticulosFamilias />} />

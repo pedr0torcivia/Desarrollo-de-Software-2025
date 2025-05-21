@@ -1,93 +1,99 @@
-.tituloPagina {
-  font-size: 1.75rem;
-  font-weight: 500;
-  color: white;
-  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-  border-bottom-style: solid;
-  border-color: gray;
-  border-bottom-width: thin;
-  padding-bottom: 0.1em;
-  margin-bottom: 0.5em;
-}    
-   body {
-  background-color: rgb(241, 243, 247);
+/* General */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
 }
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  border-radius: 0;
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
+/* Logo animado */
+.logo-completo .logo-content {
+  color: turquoise !important;
+  transition: color 0.4s ease-in-out;
+}
+.logo-completo:hover .logo-content {
+  color: white !important;
+}
+
+/* Sección principal */
 .divBody {
   background-color: white;
   min-height: 75vh;
-  padding: 1rem;
-}    
-
-body {
-  background-color: rgb(241, 243, 247);
+  padding: 2rem 1rem;
+  margin-top:  56px; 
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
-.divBody {
-  background-color: white;
-  min-height: 75vh;
-  padding: 1rem;
-}
-
-/* pie de la pagina */
+/* Pie de página */
 footer {
+  background-color: #f1f1f1;
+  width: 100%;
   padding: 1rem;
-}
-.navbar-brand {
-  color: aquamarine;
-  font-size: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 2rem;
 }
 
+/* Título con efecto */
 .tituloPagina {
   font-size: 1.75rem;
   font-weight: 500;
   color: white;
   text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-  border-bottom-style: solid;
-  border-color: gray;
-  border-bottom-width: thin;
+  border-bottom: thin solid gray;
   padding-bottom: 0.1em;
   margin-bottom: 0.5em;
 }
 
-
-
-/* todos los formularios */
+/* Formularios */
 form {
   background-color: rgb(241, 243, 247);
+  border: thin solid lightgrey;
   border-radius: 0.5rem;
-  border-style: solid;
-  border-color: lightgrey;
-  border-width: thin;
-  margin: 0em 0.5rem 1rem 0.5rem;
   padding: 0.5rem;
+  margin: 0.5rem;
   box-shadow: 0.62rem 0.62rem 0.31rem rgb(175, 173, 173);
 }
 
-/* espacio en los botones contenidos en un div con esta clase */
+/* Botones en bloque */
 .botones button {
-  margin: 0em 0.5em 0.5em 0em;
+  margin: 0 0.5em 0.5em 0;
 }
 
-/* todos los labels menos los de los radio y check */
+/* Labels */
 label:not([class^='custom-control']) {
   background-color: #d7dfe7;
   border-radius: 0.625em 0.2em 0rem 0.625em;
   border-bottom: solid;
-  margin-right: -0.9em; /* para que columna label este cerca del input*/
+  margin-right: -0.9em;
   padding-left: 0.5em;
   display: block;
   height: 90%;
 }
 
-/*<=576*/
+/* Responsivo */
 @media only screen and (max-width: 575px) {
   label:not([class^='custom-control']) {
-    margin-right: 0em;
-    margin-top: 0.3rem; /* para separar grupo label/input */
+    margin-right: 0;
+    margin-top: 0.3rem;
   }
 }
 
-/*>=576*/
 @media only screen and (min-width: 576px) {
   .inputMedio {
     width: 12em;
@@ -97,21 +103,19 @@ label:not([class^='custom-control']) {
   }
 }
 
+/* Badge */
 .pyBadge {
   background-color: #6c757d;
   color: white;
-  /* font-size: 1.1em; */
   display: inline-block;
   padding: 0.35em 0.4em;
   font-weight: 700;
   line-height: 1;
   text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
   border-radius: 0.25rem;
 }
 
-/* mensajes de validacion */
+/* Validación */
 .validacion {
   color: red;
   font-size: 0.8em;
@@ -120,37 +124,34 @@ label:not([class^='custom-control']) {
   padding-bottom: 0.5em;
 }
 
-/* mensajes de alerta al buscar y grabar */
+/* Alertas */
 .mensajesAlert {
-  /* color: #495057; */
-  margin: 0rem 0.5rem 0rem 0.5rem;
+  margin: 0 0.5rem;
 }
 
+/* Paginador */
 .paginador {
   background-color: #e9ecef;
-  padding: 0.5rem 1rem 0rem 1rem;
-  margin-top: -1rem; /* para pegarlo a la tabla */
+  padding: 0.5rem 1rem 0 1rem;
+  margin-top: -1rem;
 }
 
-/* todos los input a mayusculas, y no sus placeholders*/
+/* Inputs */
 input {
   text-transform: uppercase;
-  /* margin-bottom: 0.2em;  */
-  /*separa renglones*/
 }
 ::placeholder {
   text-transform: none;
 }
 
-/* encabezados de tablas */
+/* Tablas */
 thead {
-  /* bootstrap thead-light*/
   color: #495057;
-  background-color: #aeb7d7; /* #e9ecef; */
+  background-color: #aeb7d7;
   border-color: #dee2e6;
 }
 
-/* redes al pie de pagina */
+/* Redes en footer */
 .redes {
   background-color: blue;
   color: white;
