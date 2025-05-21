@@ -18,6 +18,18 @@ app.use(articulosfamiliasmockRouter);
 const articulosfamiliasRouter = require("./routes/articulosfamilias");
 app.use(articulosfamiliasRouter);
 
+// importar el router de articulos
+const articulosRouter = require("./routes/articulos");
+app.use(articulosRouter);
+
+// configurar servidor
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "*", // origin: 'https://dds-frontend.azurewebsites.net'
+  })
+);
+
 // levantar el servidor en puerto 3000
 const port = 3000;
 app.listen(port, () => {
