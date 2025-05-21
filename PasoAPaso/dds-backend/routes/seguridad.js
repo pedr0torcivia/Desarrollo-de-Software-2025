@@ -11,7 +11,7 @@ const users = [
     rol: "admin",
   },
   {
-    usuario: "Pedro",
+    usuario: "juan",
     clave: "123",
     rol: "member",
   },

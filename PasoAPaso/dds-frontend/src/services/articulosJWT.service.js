@@ -1,8 +1,13 @@
+import {config} from "../config";
 import httpService from "./http.service";
-// const urlResource = "https://labsys.frc.utn.edu.ar/dds-backend-2024/api/articulos";
-// mas adelante podemos usar un archivo de configuracion para el urlResource
-import { config } from "../config.js"; 
-const urlResource = config.urlResourceArticulos;
+const urlServidor = "https://labsys.frc.utn.edu.ar/dds-backend-2024"
+const urlResourceArticulos = urlServidor + "/api/articulosJWT";
+
+
+
+
+const urlResource = urlResourceArticulos;
+
 
 async function Buscar(Nombre, Activo, Pagina) {
   const resp = await httpService.get(urlResource, {
@@ -11,14 +16,17 @@ async function Buscar(Nombre, Activo, Pagina) {
   return resp.data;
 }
 
+
 async function BuscarPorId(item) {
   const resp = await httpService.get(urlResource + "/" + item.IdArticulo);
   return resp.data;
 }
 
+
 async function ActivarDesactivar(item) {
   await httpService.delete(urlResource + "/" + item.IdArticulo);
 }
+
 
 async function Grabar(item) {
   if (item.IdArticulo === 0) {
@@ -28,6 +36,7 @@ async function Grabar(item) {
   }
 }
 
-export const articulosService = {
+
+export const articulosJWTService = {
   Buscar,BuscarPorId,ActivarDesactivar,Grabar
 };
