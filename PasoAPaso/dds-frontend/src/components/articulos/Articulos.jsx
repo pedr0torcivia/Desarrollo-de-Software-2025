@@ -6,6 +6,7 @@ import ArticulosRegistro from "./ArticulosRegistro";
 // import { articulosFamiliasMockService as articulosFamiliasService } from "../../services/articulosFamilias-mock.service";
 import { articulosService } from "../../services/articulos.service";
 import { articulosFamiliasService } from "../../services/articulosFamilias.service"
+import modalDialogService from "../../services/modalDialog.service";
 
 function Articulos() {
   const TituloAccionABMC = {
@@ -45,18 +46,22 @@ async function Buscar(_pagina) {
     else {
       _pagina = Pagina;
     }
-
+    modalDialogService.BloquearPantalla(true);
     const data = await articulosService.Buscar(Nombre, Activo, _pagina);
+    modalDialogService.BloquearPantalla(false);
+
     setItems(data.Items);
     setRegistrosTotal(data.RegistrosTotal);
 
-    //generar array de las páginas para mostrar en select del paginador
+
+    //generar array de las paginas para mostrar en select del paginador
     const arrPaginas = [];
     for (let i = 1; i <= Math.ceil(data.RegistrosTotal / 10); i++) {
       arrPaginas.push(i);
     }
     setPaginas(arrPaginas);
   }
+
 
  async function BuscarPorId(item, accionABMC) {
   const data = await articulosService.BuscarPorId(item);
@@ -69,7 +74,7 @@ async function Buscar(_pagina) {
   }
   function Modificar(item) {
     if (!item.Activo) {
-      alert("No puede modificarse un registro Inactivo.");
+        modalDialogService.Alert("No puede modificarse un registro Inactivo.");
       return;
     }
     BuscarPorId(item, "M"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
@@ -97,15 +102,18 @@ async function Buscar(_pagina) {
   }
 
   async function ActivarDesactivar(item) {
-  const resp = window.confirm(
-    "Está seguro que quiere " +
-      (item.Activo ? "desactivar" : "activar") +
-      " el registro?"
-  );
-  if (resp) {
-    await articulosService.ActivarDesactivar(item);
-    await Buscar();
-  }
+    modalDialogService.Confirm(
+        "Esta seguro que quiere " +
+            (item.Activo ? "desactivar" : "activar") +
+            " el registro?",
+        undefined,
+        undefined,
+        undefined,
+        async () => {
+            await articulosService.ActivarDesactivar(item);
+            await Buscar();
+        }
+        );
 }
 
 
