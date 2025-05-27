@@ -1,161 +1,42 @@
-/* General */
-html, body, #root {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-}
-
-/* Navbar */
-.navbar {
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  border-radius: 0;
-  padding-left: 1rem;
-  padding-right: 1rem
-}
-
-/* Logo animado */
-.logo-completo .logo-content {
-  color: turquoise !important;
-  transition: color 0.4s ease-in-out;
-}
-.logo-completo:hover .logo-content {
-  color: white !important;
-}
-
-/* Sección principal */
-.divBody {
-  background-color: white;
-  min-height: 75vh;
-  padding: 2rem 1rem;
-  margin-top:  56px; 
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  width: 100%;
-}
-
-/* Pie de página */
-footer {
-  background-color: #f1f1f1;
-  width: 100%;
-  padding: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  margin-top: 2rem;
-}
-
-/* Título con efecto */
-.tituloPagina {
-  font-size: 1.75rem;
-  font-weight: 500;
-  color: white;
-  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-  border-bottom: thin solid gray;
-  padding-bottom: 0.1em;
-  margin-bottom: 0.5em;
-}
-
-/* Formularios */
-form {
-  background-color: rgb(241, 243, 247);
-  border: thin solid lightgrey;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  margin: 0.5rem;
-  box-shadow: 0.62rem 0.62rem 0.31rem rgb(175, 173, 173);
-}
-
-/* Botones en bloque */
-.botones button {
-  margin: 0 0.5em 0.5em 0;
-}
-
-/* Labels */
-label:not([class^='custom-control']) {
-  background-color: #d7dfe7;
-  border-radius: 0.625em 0.2em 0rem 0.625em;
-  border-bottom: solid;
-  margin-right: -0.9em;
-  padding-left: 0.5em;
-  display: block;
-  height: 90%;
-}
-
-/* Responsivo */
-@media only screen and (max-width: 575px) {
-  label:not([class^='custom-control']) {
-    margin-right: 0;
-    margin-top: 0.3rem;
-  }
-}
-
-@media only screen and (min-width: 576px) {
-  .inputMedio {
-    width: 12em;
-  }
-  .inputChico {
-    width: 7em;
-  }
-}
-
-/* Badge */
-.pyBadge {
-  background-color: #6c757d;
-  color: white;
-  display: inline-block;
-  padding: 0.35em 0.4em;
-  font-weight: 700;
-  line-height: 1;
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
   text-align: center;
-  border-radius: 0.25rem;
 }
 
-/* Validación */
-.validacion {
-  color: red;
-  font-size: 0.8em;
-  font-style: italic;
-  padding-left: 1em;
-  padding-bottom: 0.5em;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-/* Alertas */
-.mensajesAlert {
-  margin: 0 0.5rem;
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Paginador */
-.paginador {
-  background-color: #e9ecef;
-  padding: 0.5rem 1rem 0 1rem;
-  margin-top: -1rem;
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
 
-/* Inputs */
-input {
-  text-transform: uppercase;
-}
-::placeholder {
-  text-transform: none;
+.card {
+  padding: 2em;
 }
 
-/* Tablas */
-thead {
-  color: #495057;
-  background-color: #aeb7d7;
-  border-color: #dee2e6;
-}
-
-/* Redes en footer */
-.redes {
-  background-color: blue;
-  color: white;
-  padding: 0.4em;
-  margin: 0.3em;
-  border-radius: 1em;
+.read-the-docs {
+  color: #888;
 }
