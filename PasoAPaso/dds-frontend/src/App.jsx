@@ -1,12 +1,25 @@
-  import "./App.css";
-  import {Categorias} from './components/Categorias';
-  function App() {
-    return (
-      <>
+import "./App.css";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import {Inicio} from "./components/Inicio";
+import {Categorias} from "./components/Categorias";
+import {Menu} from "./components/Menu";
+import { Footer } from "./components/Footer";
+
+function App() {
+  return (
+    <>
+      <BrowserRouter>
+        <Menu />
         <div className="divBody">
-            <Categorias/>
+            <Routes>
+              <Route path="/inicio" element={<Inicio />} />
+              <Route path="/categorias" element={<Categorias />} />
+              <Route path="*" element={<Navigate to="/Inicio" replace />} />
+            </Routes>
         </div>
-      </>
-    );
-  }
-  export default App;
+        <Footer />
+      </BrowserRouter>
+    </>
+  );
+}
+export default App;
