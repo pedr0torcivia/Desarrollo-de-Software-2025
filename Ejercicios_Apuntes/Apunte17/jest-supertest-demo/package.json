@@ -1,0 +1,12 @@
+{
+  "name": "jest-supertest-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --silent --force-exit"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  }
+}
