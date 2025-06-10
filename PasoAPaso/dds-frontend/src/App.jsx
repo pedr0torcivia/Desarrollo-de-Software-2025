@@ -5,11 +5,14 @@ import {Categorias} from "./components/Categorias";
 import {Menu} from "./components/Menu";
 import { Footer } from "./components/Footer";
 import { Articulos } from "./components/articulos/Articulos"
+import { ModalDialog } from "./components/ModalDialog";
+
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ModalDialog/>
         <Menu />
         <div className="divBody">
             <Routes>
