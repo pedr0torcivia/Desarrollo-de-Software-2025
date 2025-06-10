@@ -1,0 +1,238 @@
+REACT: framework/libreria de JS para construir GUI. Su finalidad es construir la parte del cliente.Es de utilidad para no tener 1 HTML 
+por pantalla, por lo que se busca reutilizar codigo de un archivo para mejorar mantenibilidad, costos, etc. Es DECLARATIVO. Esto significa
+que no se trata de un programa secuencial/iterativa. El paradigma de react es hacer todo con JS (no se utiliza HTML), utilizando una sintaxis
+HTML EN JS llamada JSX (JS y XML).Todo en react, es un componente (estilo y logica residen en el), los cuales son piezas de codigo logicas y
+autocontenidas que describen parte de la GUI. Estos se pueden juntar para crear una GUI completa y React abstrae la mayor parte del trabajo 
+de renderizado, permitiendo llevar un enfoque orientado al diseño de interfaz.
+
+Utilizar dos terminales: una para back y otra para front.
+Para creacion del proyecto: npx create-react-app frontend
+NPX es un subconjunto de NPM
+
+Extensiones de react:
++ ES7+ React/Redux/React-Native
++ Path Intellisense
++ Reactjs code snippets
++ SQLite Viewer
+
+El comando creo diferentes carpetas con archivos:
+-public: archivos estaticos (fotos, videos, audios, etc.), manifest y tobots se usan para subir a internet
+    index.HTML -> Tiene un solo div que no se debe tocar. Es leido por index.js de src.
+        <div id="root"></div> Esto es importante ya que alli se va a crear la aplicación
+-src:
+    App.JS -> contiene JSX que permite escribir codigo similar a HTML con JS. Es donde se encuentra la interfaz.
+    Definición del componente principal o inicial de React que representa una parte de nuestra aplicación
+    index.js -> Indica que se debe crear una aplicación react con en el HTML. Inicia la ejecución de la librería de React y del componente App, 
+    es el que va a capturar el elemento que esta ubicado en nuestro index.html
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+        Luego indica que dentro de esa aplicacion indica que debe mostrarse todo lo que esté en App.JS
+            root.render(
+                <React.StrictMode>
+                    <App />
+                </React.StrictMode>
+                );
+
+En simples palabras: index.html es leido por index.js, index.js indica que se muestre el contenido de App.js y su contenido se va a convertir
+en HTML en index.html.  
+TODO LO QUE ESCRIBAMOS VA A SER CODIGO JAVASCRIPT QUE MEDIANTE UN PROCESO QUE CONVIERTE EN HTML PARA QUE PUEDA SER MOSTRADO AL USUARIO. 
+
+Para correr el archivo del front:
+    npm run start
+
+COMPONENTE: pieza de codigo que se pueden reutilizar en distintos proyectos. REACT es orientado a componentes. Pueden ser botones, pantallas, 
+formularios, etc. Son reutilizables. Nunca puedo devolver multiples interfaces en un componente. 
+RENDERIZACIÓN: proceso en el que el JS se trasforma en HTML. proceso en el que los componentes de React se convierten enelementos del DOM 
+(Document Object Model) que se pueden mostrar en el navegador. Cada componente es independiente entre sí.
+
+Cuando se crea un componente en React, se define su estructura y comportamiento através de código JavaScript. Luego, cuando se renderiza el 
+componente, React toma esa estructura y la convierte en elementos del DOM que se muestran en la pantalla.
+
+App.js contiene la aplicacion react que es un arbol genealogico de componentes. Es decir que importa los que se encuentra en cada componente 
+y lo muestra mediante index.js en index.html. La funcion App() es la funcion padre de todos los componentes, y cada uno de los componentes es
+reutilizable/esclable. 
+
+Etiquetas vacias en componentes: FRAGMENTOS <> contenido </>
+Funcionan como si fueran un <div> pero no tiene propiedades de el y no se muestra cuando se inspecciona. 
+
+CSS EN REACT: Crear carpeta styles dentro de src y dentro de ella agregar los estilos con el nombre del componente deseado. Se importan en el 
+componente usando import "../styles/componente.css"
+
+Para anidar multiples componentes en una interfaz se deben utilizar fragmentos en App.js
+
+PROPIEDADES DE COMPONENTES/PROPS: la funcion del componente recibe por parametro las propiedades que pueden modificarse del coponente y las 
+recibe desde app.js. Las propiedades pueden ser cualquier tipo de dato.
+
+Hooks: diferencia una pagina de una app web. Crea la apliacion web, le da dinamismo y hace que sea funcional. Funciones de react por defecto 
+que dan dinamismo a la aplicacion web (llamada a api, animaciones, etc.). Su notacion es use. Tener en cuenta: useState(), useEffect()
+    useState() -> se tiene un estado y un setter de estado. Para declarar estado:
+        const[estado,setEstado] = useState("estadoInicial")
+        setEstado("segundoEstado")
+        Se usan cuando se necesita dinamismo se necesita un estado. La actualizacion del estado es asincrona (no funciona con async Await).
+    useEffect() -> es una función cualquiera que se va a ejecutar cada vez que haya un cambio de dependencias. Recibe dos parametros, la
+    funcion a ejecutar y las dependecias (opcional) que son ante que situacion se debe ejecutar la función.
+        useEffect(funcionAEjecutar, [dependencias])
+        useEffect(funcionAEjecutar, []) -> Solo la primera vez 
+        useEffect(funcionAEjecutar, [estado1]) -> Cada vez que cambie el estado1 ejecutar la función
+        useEffect(funcionAEjecutar, [estado1, estado2]) -> Cada vez que cambie el estado1 o el estado2 ejecutar la función
+        Se usan cuando se llama a un GET de una api, debug de un estado, ejecución de eventos, etc. 
+
+IMPORTAR BOOTSTRAP: Ejecutar npm i bootstrap. Agregar en App.js:
+    import 'bootstrap/dist/css/bootstrap.min.css';
+    import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
+EN PARCIAL: 
+App.js con componente COnsultas que contiene un estado de filas (GET ALL/GET BY FILTER de la API), un filtro (formulario de busqueda) y tabla con registros.
+Hacer la lógica. Hacer el GetAll y GetByFilter.
+
+Hacer llamados a API -> npm i axios
+AXIOS: Permite consumir una API. Reemplaza el fetch, es decir, que se encarga de hacer el consumo de una API de un tercero. Tiene una sintaxis mas sencilla:
+    axios metodo(url, configuraciones)
+Las llamadas a la API se realizan dentro de la carpeta "services"
+Se debe crear la carpeta "constants" para almacenar la URL de la API a peticionar. 
+    Dentro de constants: constant.js con 
+                                            export const API URL = "http://localhost:<puerto>/<lo_que_se_repite>/"
+                                            Es una variable aparte 
+Se debe tener la carpeta routes
+
+
+ARBOL A OBTENER EN EL PARCIAL (directorios y archivos importantes):
+/proyecto
+|
+|----/backend
+|       |-/base-orm
+|       |-/routers
+|       |-/seguridad
+|       |-/test
+|       |-index.js
+|       |-package.json
+|
+|----/frontend
+|       |-/public
+|       |-/src
+|           |-/components
+|           |-/services
+|           |-/constants
+|           |-/datos-mock
+|           |-App.css
+|           |-App.js
+|           |-App.test.js
+|           |-config.js
+|           |-index.js
+|           |-index.css
+
+
+
+
+PASOS BACKEND: 
+1)- npx init -y
+2)- npm i axios
+3)- Crear carpeta routers con archivo <dominio>.routes.js con los endpoints de usando express
+
+
+PASOS FRONTEND: 
+1)- npx create-react-app frontend
+2)- Crear carpeta components:
+    -Dentro de la carpeta crear <nombreComponente>.jsx
+    -En component.jsx poner: rfc lo que crea la estructura basica del componente. 
+3)- Para insertar el componente debemos ir a App.js y dentro de la funcion App() una etiqueta con el nombre del componente
+4)- Crear carpeta constants con constants.js que tiene export const API_URL = "http://localhost:<puerto>/<lo_que_se_repite>/"
+5)- Crear carpeta service con archivo: <dominio>.service.js donde se va a importar el axios y la constante API_URL. Ademas se deben crear las Funciones
+    getAll() y getByFilter(), un objeto <dominio>Services con losm etodos y un export { <dominio>Services }
+
+    --GET ALL--
+    OBTENER TODOS LOS DATOS Y LOS RETORNA (EN CASO DE ERROR MOSTRAR EL OBJETO DE ERROR DECLARADO EN ROUTES).
+    Esto se utiliza en el componente de consulta, precisamente en el estado, el cual va a almacenar lo que se encuentre en la API.
+    const getAll = async () -> {
+        try {
+            const response = await acios.get(`$(API_URL)/obtenerTodos`);
+            console.log(response.data)
+            return response.data
+        } catch (error) {
+            console.log(error.response.data)
+            return error.response.data
+        }
+    }
+
+    En el componente:
+    export default function Consulta() {
+        const [rows, setRows] = useState([]); 
+
+        return {
+            <>
+                <div className="row">
+                    <Filtro />
+                </div>
+                <div className="row">
+                    <Tabla rows={rows} /> // ACÁ ES DONDE SE PASAN COMO PROPIEDAD LAS FILAS Y SE MUESTRAN
+                </div>
+            </>
+        }
+    };
+    (Cabe destacar que debe existir un componete tabla llamado function Tabla({rows}))
+    Cada fila es un registro de la api.
+    Para traer los datos de la api y mostrarlos por pantalla se debe utilizar: 
+    (SE DEBE AGREGAR ARRIBA DEL RETURN en Consulta())
+
+    async function fetchData() { // TRAIGO DATOS Y SETEA FILAS
+        setRows(await <dominio>services.getAll());
+    }
+
+    useEffect(() -> {
+        fetchData();
+    }, []); // SOLAMENTE LA PRIMERA VEZ QUE SE MUESTRA EL COMPONENTE
+
+    --GET BY FILTER--
+    Usar libreria llamada react-hook-form. Instalar con:  npm install react-hook-form 
+    REACT HOOK FORM: permite armar formularios sencillamente y de forma personalizada. 
+    Debe de existir un componente llamado filtro que use una funcion llamada useForm()
+    const Filtro - () -> {
+        const {
+            register,
+            handleSubmit,
+            formState: {errors},
+            reset,
+            setValue,
+        } = useForm()
+    }
+
+    A cada campo se deben poner sus restricciones, en cada input se debe declarar una serie de reglas. Se debe agregar un objeto {...register()} que recibe
+    dos paremetros, el campo a registrar y un objeto de conjunto de reglas. Mas tipicas: required, min, max, minLenght, maxLenght, pattern, validate, etc.
+    Cuando se envie el formulario se va a ejecutar una funcion que esta definida onSubmit={handleSubmit(onSubmit)}
+
+    const onSubmit = async (data) -> {
+        console.log(data)
+    }
+
+    data va a ser un objeto que contenga los valores que salen de los inputs del usuario. Las validaciones son un conjunto de objetos que tiene un required
+    y un mensaje. 
+    En <dominio>.service.js:
+    // data = { nombre: "", apellido: "" }
+    const getByFilters = async (data) => {
+    try {
+        const response = await axios.get(`${API_URL}/byFilters?nombre=${data.nombre}&apellido=${data.apellido}`);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.log(error.response.data);
+        return error.response.data;
+    }
+    }
+
+    En Consulta.jsx:
+    return {
+        <div className="row">
+            <Filtro setRows={setRows}
+    }
+
+    En Filtro.jsx (se debe usar setRows en el filtro para afectar dinamicamente las tablas al aplicar el filtro):
+    const onSubmit = async (data) -> {
+        console.log(data);
+        const response = await <dominio>Services.getByFilters(data);
+        setRows(response);
+    };
+
+    PARA BORRADO DE REGISTROS:
+    const handleDeleteUser = async (id) => {
+        await usuariosServices.deleteUser(id);
+        await fetchData(); // Obtener los datos actualizados después de eliminar el usuario
+    };
