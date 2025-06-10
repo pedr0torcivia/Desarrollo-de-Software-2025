@@ -1,0 +1,28 @@
+/* src/components/Yo.css */
+
+.yo-container {
+  padding: 2rem;
+  border: 2px solid #6c757d;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 2rem auto;
+  max-width: 500px;
+}
+
+.yo-titulo {
+  font-size: 2rem;
+  color: #343a40;
+  margin-bottom: 1rem;
+}
+
+.yo-nombre {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.yo-descripcion {
+  font-size: 1.1rem;
+  color: #495057;
+}
