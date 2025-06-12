@@ -1,0 +1,174 @@
+
+GUÍA COMPLETA PARA ENTENDER Y DEFENDER UN PROYECTO FULL STACK ABMC (DDS - UTN FRC)
+
+1. CONCEPTO GENERAL DEL EJERCICIO
+--------------------------------------------------
+El objetivo es desarrollar una aplicación full stack que permita realizar operaciones ABMC (Alta, Baja, Modificación y Consulta) sobre una entidad específica, como reservas, artículos, clientes, etc. Esta aplicación está dividida en dos grandes partes:
+
+- Backend: desarrollado con Node.js, Express, Sequelize y SQLite. Se encarga de exponer una API RESTful que interactúa con una base de datos.
+- Frontend: desarrollado con React y Vite, utilizando Axios para peticiones HTTP y Bootstrap 5 para estilos visuales.
+
+
+2. ESTRUCTURA TÉCNICA A EXPLICAR: ARQUITECTURA EN CAPAS (MVC LIGERO)
+--------------------------------------------------
+- Capa de modelo (components/): Define las entidades que representan tablas de la base de datos. Utiliza Sequelize para declarar los atributos, tipos de datos y restricciones (constraints) como claves primarias o no nulos.
+
+- Capa de servicios (services/): Contiene la lógica de negocio relacionada con la entidad. Implementa operaciones como crear, listar, modificar o eliminar registros. Esta capa se comunica directamente con el modelo.
+
+- Capa de rutas (routes/): Define los endpoints de la API RESTful. Utiliza Express.Router() para mapear rutas HTTP a funciones de servicio.
+
+- Base de datos (database/database.js): Archivo de configuración de Sequelize. Inicializa la conexión con SQLite y exporta una instancia usable en el resto del backend.
+
+- Servidor principal (index.js): Es el punto de entrada del backend. Configura Express, monta middlewares como express.json() y cors(), importa rutas, sincroniza los modelos con la base de datos y levanta el servidor.
+
+
+3. BACKEND: CONCEPTOS FUNDAMENTALES
+--------------------------------------------------
+Express:
+- Middleware: Funciones que se ejecutan antes de que la request llegue a su destino. Se usan para parsing, seguridad, logging, etc.
+- express.json(): Middleware que interpreta cuerpos JSON en requests entrantes.
+- cors(): Permite que el frontend pueda hacer peticiones al backend desde otro origen (CORS = Cross-Origin Resource Sharing).
+- Ruta RESTful: Ruta que sigue convenciones HTTP para CRUD: GET (leer), POST (crear), PUT (modificar), DELETE (borrar).
+
+Sequelize:
+- ORM (Object Relational Mapping): Permite interactuar con la base usando objetos JS en vez de SQL directo.
+- sequelize.define(): Define un modelo Sequelize (tabla).
+- Tipos comunes: Sequelize.STRING, Sequelize.INTEGER, Sequelize.DATE
+- Métodos comunes: findAll(), create(), findByPk(), update(), destroy()
+- sequelize.sync(): Crea automáticamente las tablas a partir de los modelos definidos.
+
+SQLite:
+- Usado por su facilidad de integración (archivo .db embebido).
+- La base se guarda localmente en un archivo .db.
+- Ideal para pruebas o proyectos chicos. PostgreSQL se prefiere en proyectos en producción o multiusuario.
+
+Testing con Jest y Supertest:
+- Jest es el framework de pruebas más popular en el ecosistema Node.js. Permite realizar pruebas unitarias y de integración.
+- Supertest se utiliza junto con Jest para testear endpoints HTTP de forma automática.
+- Las pruebas pueden verificar que los servicios respondan correctamente (status 200, datos correctos) y que errores se manejen bien (status 400, 404, etc.).
+
+
+4. FRONTEND: CONCEPTOS FUNDAMENTALES
+--------------------------------------------------
+React:
+- Componente: Bloque funcional de interfaz (por ejemplo: tabla, formulario).
+- Componente funcional vs de clase: Hoy se usan principalmente los funcionales con hooks.
+- useState: Hook que maneja estado local del componente.
+- useEffect: Hook que ejecuta efectos secundarios (ej: llamadas a API al montar componente).
+- Estado AccionABMC: Guarda el modo actual (A, B, M, C, L). Controla qué se renderiza.
+- Mostrar/ocultar formularios: Se hace condicionalmente según el estado.
+
+SPA (Single Page Application):
+- Aplicación que funciona dentro de una sola página HTML.
+- No recarga la página completa; usa el DOM virtual de React para renderizar cambios.
+- Transiciones se hacen cambiando el estado o usando React Router.
+
+Axios:
+- Librería para hacer requests HTTP desde JS.
+- Métodos comunes: axios.get, axios.post, axios.put, axios.delete
+- Manejo de errores: con .catch() o bloque try/catch.
+
+Bootstrap:
+- Framework de CSS con clases predefinidas.
+- Se importa en index.html por CDN.
+- Clases comunes: table, form-control, btn, container, row, col, etc.
+
+Seguridad e Integración Backend - Frontend:
+- Autenticación: Verifica quién es el usuario (Login)
+- Autorización: Verifica qué puede hacer (Roles y permisos)
+- Token JWT: El backend devuelve un token JWT firmado. El frontend lo guarda (por ejemplo en localStorage) y lo reenvía en cada request como Authorization: Bearer <token>
+- Keycloak: Herramienta de gestión de identidades usada para implementar autenticación y autorización basada en roles (OIDC + OAuth2). Se integra tanto en frontend (con react-keycloak) como en backend (middleware).
+- Protección de rutas: Frontend protege componentes según rol; backend protege endpoints REST con middleware.
+
+
+5. FLUJO DE UNA OPERACIÓN ABMC
+--------------------------------------------------
+1. Usuario entra al frontend (SPA)
+2. useEffect ejecuta getAll() y carga la tabla desde el backend (GET)
+3. Usuario hace clic en "Agregar", el estado cambia a AccionABMC = 'A'
+4. Se muestra el formulario. Al guardar, se ejecuta axios.post()
+5. El backend procesa el JSON con express.json() y guarda en SQLite
+6. El backend responde y el frontend recarga la lista con getAll() nuevamente
+
+
+6. PREGUNTAS DE COLOQUIO
+--------------------------------------------------
+- ¿Qué pasa si no uso express.json()? → No podés leer datos del body en formato JSON
+- ¿Qué hace sequelize.sync()? → Crea las tablas a partir de los modelos definidos
+- ¿Diferencia entre PUT y POST? → POST crea; PUT modifica (reemplaza o actualiza)
+- ¿Qué es un Hook? ¿Qué hace useEffect? → Hook = función de React. useEffect ejecuta código tras render.
+- ¿Por qué no se recarga la página? → React manipula solo el DOM virtual
+- ¿Qué pasa si elimino un archivo del backend? → Rompe la funcionalidad que lo usa
+- ¿Qué rol cumple cada carpeta? → Separación en modelo, servicio, rutas, etc.
+- ¿Cómo se conecta front con back? → Vía Axios, usando rutas REST (ej: /api/articulos)
+- ¿Cómo se testea el backend? → Con Jest y Supertest, simulando requests y verificando respuestas
+- ¿Cómo se protege una ruta RESTful? → Usando middlewares que validen JWT y roles
+
+
+7. TÉRMINOS CLAVE A DEFENDER
+--------------------------------------------------
+- Middleware: Funciones que procesan la request antes de llegar al endpoint final
+- ORM: Objeto que representa una tabla relacional (Sequelize)
+- SPA: Aplicación de una sola página (sin recarga)
+- Hook: Método de React para manejar estado o efectos secundarios
+- CRUD: Operaciones Create, Read, Update, Delete
+- Endpoint: URL y método HTTP que representa una acción específica
+- Axios: Cliente HTTP para frontend
+- Sequelize: ORM para Node.js
+- Express: Framework para APIs en Node.js
+- JSX: Sintaxis de React para HTML dentro de JS
+- JWT: Token firmado que representa la identidad del usuario
+- Keycloak: Proveedor de identidades para gestionar login y roles
+- Jest: Framework de testing en Node.js
+- Supertest: Herramienta para testear endpoints de Express
+
+
+8. PREGUNTAS Y RESPUESTAS SOBRE CAMBIOS EN EL CÓDIGO
+--------------------------------------------------
+¿Qué pasa si agrego una nueva columna al modelo Sequelize?Debés actualizar el modelo en components/Entidad.js, agregar la nueva propiedad con su tipo y restricciones. Luego, si está habilitado sequelize.sync({ alter: true }), la tabla se modifica automáticamente. También deberás adaptar formularios del frontend y el servicio para enviar ese nuevo dato.
+
+¿Cómo se agrega una columna calculada (por ej. "total")?No se almacena en la base de datos. Se puede calcular en el servicio backend antes de enviar la respuesta, o directamente en el frontend tras obtener los datos.
+
+¿Cómo se muestra una columna adicional en la tabla del frontend?Modificar el componente Tabla.jsx, agregando un nuevo  en el thead y una nueva celda {dato} en cada fila del tbody.
+
+¿Qué hay que tocar para ordenar los resultados por un campo (por ejemplo fecha)?En el backend, dentro del servicio, usar findAll({ order: [['fecha', 'DESC']] }). O bien hacerlo en el frontend con sort() si la carga es completa y local.
+
+¿Cómo agrego un filtro por fecha o por campo adicional?En el backend: recibir por query string (req.query.fecha) y agregar un where en el findAll. En el frontend: agregar un campo de filtro que dispare la llamada Axios con esa query.
+
+¿Qué implica cambiar de SQLite a PostgreSQL?Cambiar la configuración de Sequelize en database.js, instalar pg y pg-hstore, y definir las credenciales de conexión. No cambia la estructura del resto del backend.
+
+¿Cómo se integran validaciones del lado backend?Usar validaciones Sequelize (allowNull, validate, unique) o middleware previo al servicio (if (!campo) return res.status(400).json(...)).
+
+¿Cómo se agrega una relación entre modelos (por ejemplo, reserva pertenece a cliente)?En los modelos Sequelize, usar Reserva.belongsTo(Cliente) y Cliente.hasMany(Reserva). Luego hacer include: Cliente en el findAll.
+
+¿Cómo agrego paginación al backend y frontend?En backend usar findAndCountAll({ limit, offset }). En frontend controlar la página actual, enviar como query string y mostrar botones de "Siguiente/Anterior".
+
+¿Cómo agrego una columna solo visible para usuarios admin?Controlar roles en el backend y enviar campos distintos según el JWT. En el frontend, verificar el rol del usuario antes de renderizar.
+
+¿Cómo agrego una columna que muestra información de otra tabla (join)?Usar include en Sequelize para hacer joins. En la respuesta, acceder con reserva.cliente.nombre por ejemplo.
+
+¿Cómo testeo que se agregó correctamente una nueva funcionalidad?Crear test con Jest + Supertest. Simular un POST con los datos y verificar que el GET los incluya.
+
+¿Cómo manejo errores del backend en el frontend?Usar .catch() en Axios. Mostrar alertas o mensajes de error con condicionales si error.response.status === 400, etc.
+
+¿Cómo agrego mensajes de éxito o feedback al usuario?En el frontend, luego de una respuesta exitosa (then() en Axios), usar setMensaje('Guardado correctamente') o mostrar un alert() temporal.
+
+¿Cómo se puede reutilizar el mismo formulario para Alta y Modificación?Usar un solo componente que recibe props con los datos a editar (o vacíos si es Alta). Controlar si existe id para decidir si hacer POST o PUT.
+
+¿Cómo agrego un campo obligatorio en el frontend?Agregar el atributo required en el  y validar antes de enviar los datos. Con react-hook-form se puede hacer validaciones más completas.
+
+¿Cómo agrego una confirmación antes de eliminar?Agregar window.confirm("¿Estás seguro que querés eliminar?") antes de ejecutar la función axios.delete()
+------
+¿Cómo se visualizan y actualizan los estados de React en un formulario controlado?Cada campo de formulario tiene un estado vinculado mediante useState. El valor del input se pasa con value={estado} y se actualiza usando onChange={e => setEstado(e.target.value)}. Esto hace que el input esté completamente controlado por React.
+
+¿Cuál es la diferencia entre eventos onChange y onInput?onChange se dispara cuando el valor cambia y se "confirma" (usualmente al perder foco), mientras que onInput se dispara en cada tecla presionada. En formularios controlados se usa onChange por defecto.
+
+¿Cómo vinculo un input al estado de React?Definís un estado con const [campo, setCampo] = useState(''), luego en el input ponés value={campo} y onChange={e => setCampo(e.target.value)}. Esto garantiza que el valor actual siempre esté sincronizado con el estado.
+
+¿Cómo hago para que un campo numérico no permita un valor mayor a un máximo?Agregá max={n} en el input (por ejemplo <input type="number" max={1000} ... />). Además, podés validar manualmente en el evento onChange con una condición: if (e.target.value <= 1000) setImporte(e.target.value).
+
+¿Cómo valido el formato de una fecha en el formulario?Si usás <input type="date" />, el navegador valida automáticamente el formato. Para validaciones personalizadas, podés usar expresiones regulares (regex) como /^\d{4}-\d{2}-\d{2}$/ para verificar el formato AAAA-MM-DD, o usar librerías como moment.js para validación y formateo.
+
+¿Cómo marco errores visualmente en un input inválido?Podés usar Bootstrap y condicionales: <input className={campoValido ? 'form-control' : 'form-control is-invalid'} /> y mostrar un <div className="invalid-feedback">Mensaje de error</div>.
+
+¿Cómo limpio los estados del formulario luego de guardar?Después de guardar con éxito (dentro del .then() de Axios), hacé setCampo1(''), setCampo2(''), etc., o usá un objeto de estado y hacé setDatosIniciales({ ... }).

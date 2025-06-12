@@ -520,14 +520,29 @@ Codigos de respuesta HTTP:
               npm install react-hook-form
 
 BACKEND: 
-1)- src/index.js con rutas GET y POST, servidor express y sincronizacion con la base de datos. 
-2)- Modelo con tipo de datos del dominio en carpeta /src/models/modelo.js
-3)- Servicios del modelo con /src/services/modelo.services.js
-4)- Base de datos en /src/database
+1) - Crear proyecto Node.js: Dentro de backend/, ya está inicializado con npm init y tiene sus dependencias: express, sequelize, sqlite3, cors.
+2) - Estructura base: Dentro de src/ están las subcarpetas necesarias:
+    components/: modelo Sequelize de la entidad principal (por ejemplo, Articulo.js, Reserva.js, etc.)
+    routes/: define los endpoints de Express
+    services/: encapsula la lógica CRUD
+    database/: contiene database.js con la conexión a SQLite
+    index.js: punto de entrada principal del servidor
+3) - Definir modelo Sequelize: Crear el archivo correspondiente en components/ con los atributos especificados por la consigna (ejemplo: Reserva.js)
+4) - Configurar Sequelize: En database/database.js se importa Sequelize y se crea la instancia usando SQLite, apuntando al archivo .db.
+5) - Crear servicio CRUD: En services/, se define el archivo que hace create, findAll, findByPk, update, y destroy sobre el modelo.
+6) - Configurar rutas Express: En routes/, definir los endpoints RESTful (GET /, POST /, PUT /:id, DELETE /:id, GET /:id).
+7) - Levantar servidor: En index.js se importa todo, se aplican middlewares (cors, express.json()), se montan rutas, y se hace sync() con Sequelize.
+8) - Probar API: Usar Postman para validar que todos los endpoints funcionan correctamente.
+
 
 FRONTEND:
-1)- Crear Componente /src/components/Menu.jsx
-    En el importar React, link desde react-router-dom, styles.css
-    Agregar un div, un titulo (h#), Boton que navegue a ruta '/registro' 
-2)- Crear Componente /src/components/Consulta.jsx
-    En el importar React 
+1) - Crear proyecto con Vite: generar el proyecto con 'npm create vite@latest frontend --template react'
+2) - Instalar dependencias necesarias: como axios y react-router-dom.
+3) - Agregar Bootstrap 5: En index.html del public/, se incluye Bootstrap por CDN.
+4) - Estructurar componentes en src/components/: Componentes funcionales como: Tabla, Formulario, Filtro, etc.
+5) - Servicios Axios: En src/services/, hay archivos como articulos.service.js, que definen funciones como getAll, getById, create, update, delete.
+6) - Router y navegación SPA: En App.jsx, se usa <BrowserRouter> y <Routes> para definir rutas únicas. Todo se muestra en una sola página.
+7) - Control de estado: App.jsx o el componente principal controla el estado general (useState, useEffect) y renderiza según el modo: listado, alta, modificación, etc.
+8) - Formulario de carga y edición: Un mismo formulario sirve para alta y modificación. Se muestra u oculta según el estado actual (AccionABMC).
+9) - Tabla de resultados y búsqueda: Se renderiza la tabla al cargar. Permite filtrar resultados por búsqueda textual (case-insensitive).
+10) - Conexión con el backend: Cada acción en el frontend llama a los métodos definidos con Axios que interactúan con los endpoints del backend.
