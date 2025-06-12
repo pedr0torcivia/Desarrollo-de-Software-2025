@@ -1,0 +1,133 @@
+body {
+  background-color: rgb(241, 243, 247);
+}
+
+.divBody {
+  background-color: white;
+  min-height: 75vh;
+  padding: 1rem;
+}
+
+footer {
+  padding: 1rem;
+}
+
+.navbar-brand {
+  color: aquamarine;
+  font-size: 1.5rem;
+}
+
+.tituloPagina {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: white;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  border-bottom-style: solid;
+  border-color: gray;
+  border-bottom-width: thin;
+  padding-bottom: 0.1em;
+  margin-bottom: 0.5em;
+}
+
+/* Estilos para formularios */
+form {
+  background-color: rgb(241, 243, 247);
+  border-radius: 0.5rem;
+  border-style: solid;
+  border-color: lightgrey;
+  border-width: thin;
+  margin: 0em 0.5rem 1rem 0.5rem;
+  padding: 0.5rem;
+  box-shadow: 0.62rem 0.62rem 0.31rem rgb(175, 173, 173);
+}
+
+/* Botones espaciados */
+.botones button {
+  margin: 0em 0.5em 0.5em 0em;
+}
+
+/* CORREGIDO: estilos para labels */
+label:not(.form-check-label):not(.form-label) {
+  background-color: #d7dfe7;
+  border-radius: 0.625em 0.2em 0rem 0.625em;
+  border-bottom: solid;
+  margin-right: -0.9em;
+  padding-left: 0.5em;
+  display: block;
+  height: auto; /* antes era 90% y eso aplastaba */
+}
+
+/* <=576px */
+@media only screen and (max-width: 575px) {
+  label:not(.form-check-label):not(.form-label) {
+    margin-right: 0em;
+    margin-top: 0.3rem;
+  }
+}
+
+/* >=576px */
+@media only screen and (min-width: 576px) {
+  .inputMedio {
+    width: 12em;
+  }
+  .inputChico {
+    width: 7em;
+  }
+}
+
+.pyBadge {
+  background-color: #6c757d;
+  color: white;
+  display: inline-block;
+  padding: 0.35em 0.4em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.validacion {
+  color: red;
+  font-size: 0.8em;
+  font-style: italic;
+  padding-left: 1em;
+  padding-bottom: 0.5em;
+}
+
+.mensajesAlert {
+  margin: 0rem 0.5rem 0rem 0.5rem;
+}
+
+.paginador {
+  background-color: #e9ecef;
+  padding: 0.5rem 1rem 0rem 1rem;
+  margin-top: -1rem;
+}
+
+
+::placeholder {
+  text-transform: none;
+}
+
+/* encabezados de tablas */
+thead {
+  color: #495057;
+  background-color: #aeb7d7;
+  border-color: #dee2e6;
+}
+
+.redes {
+  background-color: blue;
+  color: white;
+  padding: 0.4em;
+  margin: 0.3em;
+  border-radius: 1em;
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}
