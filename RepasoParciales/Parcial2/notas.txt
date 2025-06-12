@@ -96,31 +96,46 @@ Se debe tener la carpeta routes
 
 
 ARBOL A OBTENER EN EL PARCIAL (directorios y archivos importantes):
-/proyecto
-|
-|----/backend
-|       |-/base-orm
-|       |-/routers
-|       |-/seguridad
-|       |-/test
-|       |-index.js
-|       |-package.json
-|
-|----/frontend
-|       |-/public
-|       |-/src
-|           |-/components
-|           |-/services
-|           |-/constants
-|           |-/datos-mock
-|           |-App.css
-|           |-App.js
-|           |-App.test.js
-|           |-config.js
-|           |-index.js
-|           |-index.css
-
-
+/parcial/
+├── backend/                ← API RESTful con Node.js, Express y Sequelize
+│   ├── index.js
+│   ├── .env
+│   ├── package.json
+│   ├── base-orm/           ← Inicialización Sequelize
+│   │   ├── sequelize-init.js
+│   │   └── sqlite-init.js
+│   ├── models/             ← Modelos Sequelize
+│   ├── routes/             ← Endpoints Express por entidad
+│   ├── seguridad/          ← Middleware de autenticación (opcional)
+│   └── test/               ← Tests de endpoints (opcional)
+│
+└── frontend/               ← SPA en React (Create React App o Vite)
+    ├── index.html
+    ├── vite.config.js      ← Solo si se usa Vite
+    ├── package.json
+    ├── public/
+    └── src/
+        ├── main.jsx
+        ├── App.jsx
+        ├── config.js       ← URL del backend
+        ├── components/
+        │   ├── Menu.jsx
+        │   ├── Footer.jsx
+        │   └── Inicio.jsx
+        │
+        ├── components/[entidad]/
+        │   ├── [Entidad].jsx            ← componente principal
+        │   ├── [Entidad]Buscar.jsx      ← filtros
+        │   ├── [Entidad]Listado.jsx     ← tabla
+        │   └── [Entidad]Registro.jsx    ← formulario alta/modificación
+        │
+        ├── services/
+        │   ├── [entidad].service.js     ← peticiones a API
+        │   ├── http.service.js          ← wrapper común (axios)
+        │   └── modalDialog.service.js   ← alertas / confirmaciones
+        │
+        └── datos-mock/
+            └── [entidad]-mock.js        ← datos simulados (opcional)
 
 
 PASOS BACKEND: 
@@ -139,7 +154,7 @@ PASOS FRONTEND:
 5)- Crear carpeta service con archivo: <dominio>.service.js donde se va a importar el axios y la constante API_URL. Ademas se deben crear las Funciones
     getAll() y getByFilter(), un objeto <dominio>Services con losm etodos y un export { <dominio>Services }
 
-    --GET ALL--
+    ---- GET ALL ----
     OBTENER TODOS LOS DATOS Y LOS RETORNA (EN CASO DE ERROR MOSTRAR EL OBJETO DE ERROR DECLARADO EN ROUTES).
     Esto se utiliza en el componente de consulta, precisamente en el estado, el cual va a almacenar lo que se encuentre en la API.
     const getAll = async () -> {
@@ -181,7 +196,7 @@ PASOS FRONTEND:
         fetchData();
     }, []); // SOLAMENTE LA PRIMERA VEZ QUE SE MUESTRA EL COMPONENTE
 
-    --GET BY FILTER--
+    ----- GET BY FILTER ----
     Usar libreria llamada react-hook-form. Instalar con:  npm install react-hook-form 
     REACT HOOK FORM: permite armar formularios sencillamente y de forma personalizada. 
     Debe de existir un componente llamado filtro que use una funcion llamada useForm()
@@ -231,8 +246,288 @@ PASOS FRONTEND:
         setRows(response);
     };
 
-    PARA BORRADO DE REGISTROS:
+    ---- DELETE ----
     const handleDeleteUser = async (id) => {
         await usuariosServices.deleteUser(id);
         await fetchData(); // Obtener los datos actualizados después de eliminar el usuario
     };
+
+    DEBE DE HABER DOS INTERFACES UNA PARA LA CONSULTA CON getAll, gerByFilter y Delete Y Otra con un formulacio de creacion. Se debe usar la 
+    libreria react-router, que sirve para hacer rutas.
+    En frontend, en la terminal se instala como: npm i react-router-dom
+    Consiste en armar un sistema de navegacion para la pagina. Dividir el formulario de actualizacion en otra pantalla.
+    <BrowserRouter> ----> /algo/algo
+    <HashRouter> ---> /#/algo/#/algo/ (Hace lo mismo pero con un hashtag)
+
+    <Route/>  Tiene dos propiedades: Path (nombre de la ruta) y element (que pantalla se va a mostrar en esa ruta)
+
+    En App.js, se debe de modificar de la siguiente manera:
+
+    function App() {
+        return (
+           <BrowserRouter> --- Tipo de navegacion (Dentro de el se debe definir un conjunto de rutas)
+            <Routes>
+                <Route path="/" element={<ComponenteConsulta />}/> --- RUTA RAIZ: localhost:puerto/ 
+                <Route path="/otroComponente" element={<OtroComponente />}/> 
+            </Routes>
+           </BrowserRouter>
+        )
+    }
+
+    Se debe crear un componente Menu.jsx que es el menu de opciones de la aplicacion. Permite crear una barra de navegacion responsive. 
+
+
+    function Menu() {
+    return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+            <div className="container">
+                <Link className="navbar-brand" to="/inicio">Inicio</Link> -- SImilar a la etiqueta a de HTML y te dice a que ruta se va a dirigir
+                <div className="navbar-nav">
+                    <Link className="nav-link" to="/home">Home</Link>
+                    <Link className="nav-link" to="/otro">Otro</Link>
+                </div>
+            </div>
+        </nav>
+    );
+    }
+    export default Menu;
+    
+    function App() {
+        return (
+           <BrowserRouter>
+           <Menu /> --- Se pone por afuera de las rutas para que aparezca SIEMPRE
+            <Routes>
+                <Route path="/" element={<ComponenteConsulta />}/> 
+                <Route path="/otroComponente" element={<OtroComponente />}/> 
+            </Routes>
+           </BrowserRouter>
+        )
+    }
+
+    PAGINAS DE ERROR 404 -----> Cuando no existe la URL. Se debe crear un componente Error.JSX
+    Debe tener un encabezado, una imagen si se quiere y un boton para volver a la pagina principal.
+
+        function App() {
+        return (
+           <BrowserRouter>
+           <Menu /> 
+            <Routes>
+                <Route path="/" element={<ComponenteConsulta />}/> 
+                <Route path="/otroComponente" element={<OtroComponente />}/> 
+                <Route path="*" element={<Error />}/> 
+            </Routes>
+           </BrowserRouter>
+        )
+    }
+6)- POSTFORM: Formaulario de creacion (rfc). Para crear este formulario se debe ser consistente con el del menú.
+
+    export default function PostForm() {
+        const {register, handleSubmit, formSate: {errors}, reset, setValue} = useForm()
+        const onSubmit = async (data) -> { // ES LA QUE LLAMA AL SERVICIO
+            console.log(data);
+        };
+        return (ESTRUCTURA DEL FORMULARIO)
+    }
+
+    La estructura del formulario debe tener labels con campos para completar y un boton de crear. Cada campo tiene un label y un input (con sus atributos)
+    y un objeto llamado register (envia los datos al objeto data, con reglas required: (value, message) y un maxLenght: (value, message))
+    Al enviar el formulario se ejecuta el onSubmit
+
+    Se debe vincula a un servicio de usuarios (DEBE HABER EXTREMA CONSISTENCIA CON EL BACKEND (TENER EN CUENTA Mayusculas y Minusculas)): 
+    EN EL SERVICIO:
+    const create = async(data) => {
+        try {
+            const response = await axios.post(`${API_URL}/crearUsuario`, data)
+            console.log(response.data)
+            return response.data;
+        } catch (error) {
+            console.log(error.response.data)
+            return error.response.data
+        }
+    }
+
+    EN EL SERVICES DEL BACKEND: 
+    const createUser = async(body) = {
+        if (!body) {
+            throw new Error('Error Faltan datos')
+        }
+
+        if (!body.atributo1 || !body.atributo1) {
+             throw new Error('Error Faltan datos')
+        }
+    }
+
+    La idea entonces es:
+    1. Ejecucion del servicio
+    2. Creacion del registro en Base de datos
+    3. Volver a la pantalla inicial si esta todo Ok, sino mostrar error 
+
+    SE DEBE CREAR UN estado
+    const [postError, setPostError] = useState(false) -- VA A SER TRUE SI LA API DA ERROR 
+     
+    const onSubmit = async (data) = {
+        console.log(data)
+        const.response = await usuariosServices.create(data) 
+        console.log("respuesta en post:", response)
+        if (response.error) {
+            setPostError(response.error); // ACÁ SE CAMBIARIA EL ESTADO
+            return
+        } 
+        navigate("/")
+    }
+
+
+    Dentro del return  (HTML que se retorna), se debe agregar {postErrir && <p>{postError}</p>}
+    Se debe utilizar useNavigate para volver a la pantalla principal.
+
+7)- PANTALLA DE ACTUALIZACIÓN: Boton actualizar en la tabla, al lado del borrar en la columna acciones. EL formulario va a variar dinamicamente ya que 
+depende de cada usuario. Primero se tendria que definir un formulario de actualizacion PutForm.jsx
+    <Route path="/actualizar/:id" element={<PutForm />}/>
+
+En el componente Tabla.jsc debe estar definido el boton de Actualizar, donde (se debe imporar navigate):
+    <button onClick=[() -> navigate(`/actualizar/${user.id}`)] classname="btn-..." style={...}> 
+    
+A nivel maquetacion es igual que el PostForm, lo que cambia es que debemos lograr que  se muestren los datos actuales de cada usuario.
+    1.Capturar formulario de acrtualizacion de ese id
+    2.Llamar getById para traer datos actuales
+    3.Mostrar datos actual en cada uno de los campos
+    4.Misma logica de post
+
+    Se debe usar useParams:
+    const (id) = useParams()
+    console.log("Id capturado: ", id)
+
+Crear getById en servicios:
+    const getById = async (id) => {
+        try {
+            const response = await.axios.get(`${API_URL}/${id}`);
+            console.log(response.data)
+            return response.data;
+        } catch (error) {
+            console.log(error.response.data)
+            return error.response.data
+        }
+    }
+
+    Cada vez que se entre a la interfaz (con distintos id). 
+
+
+// CADA VEZ  QUE SE EJECUTA EL PARAMETRO DE LA URL, SE EJECUTA ESTE EFECTO
+useEffect(() => {
+    const getUser = async () => {
+    const data = await usuariosServices.getById(id);
+    // SETEA CADA UNO DE LOS CAMPOS CON LA INFROMACIÓN TRAIDA 
+    setValue("nombre", data.nombre);
+    setValue("apellido", data.apellido);
+    setValue("usuario", data.usuario);
+    setValue("password", data.password);
+    setValue("email", data.email);
+  };
+  getUser();
+}, [id]);
+
+
+const onSubmit = async (data, id) => {
+  const response = await usuariosServices.upadete(data);
+  console.log("respuesta en post: ", response);
+  if (response.error) {
+    setUpdateError(response.error); // "no se pudo crear el usuario"
+    return;
+  }
+  navigate("/");
+};
+
+EN SERVICIO DE ACTUALIZACIOn:
+const update = async (data, id) -> {
+    try {
+        const response = await.axios.put(`${API_URL}/modificar?id=${id}`, data);
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.log(error.response.data)
+        return error.response.data
+        }
+}
+
+EN BACKEND: 
+router.put("/modificar", async (req, res) => {
+  const { id } = req.query;
+  try {
+    const response = await usersServices.updateUser(id, req.body);
+    return res.json(response);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+EN SERVICIO DE BACKEND:
+const updateUser = async (idUsuario, body) => {
+  const userToUpdate = await sequelize.models.Usuarios.findByPk(idUsuario); // busco por clave primaria
+
+  if (!userToUpdate) {
+    // si no existe tiro error
+    throw new Error("Error, no existe ese usuario");
+  }
+
+  // si no viene algún atributo en la solicitud, tiro un error
+  if (!body.nombre || !body.apellido || !body.usuario || !body.password || !body.email) {
+    throw new Error("Error, falta algún dato");
+  }
+
+  // si existe, seteo sus datos como lo que me dio el body
+  userToUpdate.nombre = body.nombre;
+  userToUpdate.apellido = body.apellido;
+  userToUpdate.usuario = body.usuario;
+  userToUpdate.password = body.password;
+  userToUpdate.email = body.email;
+
+  await userToUpdate.save(); // no olvidarse de guardar los cambios
+
+  return userToUpdate;
+};
+
+El camino que hace entonces es:
+-Se ingresan los datos en el PutForm
+-PutForm llama al servicio update
+-Cuando llama al servicio, en el router del backend llama al servicio para que actualice el usuario
+-El servicio del backend determina si existe o no un error.
+-Si existe muestra un error, si no existe actualiza el registro en la bd. 
+
+PARA PARCIAL!!!
+Codigos de respuesta HTTP:
+200 -> Todo Ok
+200 -> OK
+201 -> Creado
+
+400 -> Errores de usuario
+400 -> Faltan datos
+404 -> No encontrado
+401 -> No autorizado
+
+500 -> Errores de servidor/programa
+500 -> Error imprevisto
+
+
+1)- Backend:npm init -y 
+            npm install express sequelize sqlite3 cors
+            npm install --save-dev nodemon
+            npm i
+
+    Frontend: npm create vite@latest frontend -- --template react
+              npm install
+              npm install axios react-router-dom
+              npm i
+              npm install react-hook-form
+
+BACKEND: 
+1)- src/index.js con rutas GET y POST, servidor express y sincronizacion con la base de datos. 
+2)- Modelo con tipo de datos del dominio en carpeta /src/models/modelo.js
+3)- Servicios del modelo con /src/services/modelo.services.js
+4)- Base de datos en /src/database
+
+FRONTEND:
+1)- Crear Componente /src/components/Menu.jsx
+    En el importar React, link desde react-router-dom, styles.css
+    Agregar un div, un titulo (h#), Boton que navegue a ruta '/registro' 
+2)- Crear Componente /src/components/Consulta.jsx
+    En el importar React 
