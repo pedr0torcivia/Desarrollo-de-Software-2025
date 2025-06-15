@@ -1,0 +1,323 @@
+
+📦 RESUMEN GENERAL – FRONTEND (React + Vite)
+
+🧠 ¿Qué hace el frontend?
+Es una Single Page Application (SPA) desarrollada con React que:
+- Muestra un listado de libros obtenidos desde el backend.
+- Permite buscar libros por título.
+- Permite agregar, editar y eliminar libros.
+- Usa Bootstrap 5 para estilos, Axios para llamadas HTTP y Hooks de React para el control de estado.
+
+🧩 Componentes principales:
+
+1. App.jsx
+   - Punto de entrada de la app.
+   - Llama a <LibrosPage />.
+
+2. LibrosPage.jsx
+   - Maneja toda la lógica de estado.
+   - Administra búsqueda, listado, formulario, edición y eliminación.
+   - Usa useState y useEffect para reaccionar a cambios.
+
+3. LibroForm.jsx
+   - Formulario controlado para crear y editar libros.
+   - Usa useEffect para precargar campos si hay edición.
+   - Al hacer submit, hace POST o PUT al backend.
+
+4. LibrosTable.jsx
+   - Muestra la lista de libros en una tabla.
+   - Llama a las funciones de editar y eliminar del componente padre.
+
+5. librosService.js
+   - Encapsula las llamadas a la API.
+   - Función obtenerLibros() consulta el backend con Axios.
+
+6. main.jsx
+   - Monta la app en el DOM.
+   - Usa ReactDOM.createRoot y <React.StrictMode>.
+
+✅ Características técnicas:
+- Componentes funcionales.
+- Hooks: useState, useEffect.
+- Axios para comunicación HTTP.
+- Bootstrap 5 (CDN) para estilos.
+- Separación clara entre componentes y servicios.
+
+
+✅ src/services/librosService.js
+
+import axios from 'axios';
+
+const API_URL = 'http://localhost:3000/api/libros';
+
+export async function obtenerLibros(search = '') {
+  try {
+    const url = search ? `${API_URL}?search=${encodeURIComponent(search)}` : API_URL;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener libros:', error);
+    throw error;
+  }
+}
+
+🧠 ¿Qué hace?
+- Es un archivo de servicio que encapsula las llamadas HTTP al backend.
+- Usa Axios para realizar peticiones a la API `/api/libros`.
+- La función `obtenerLibros(search)` hace una petición GET:
+  - Si se pasa un término de búsqueda, agrega `?search=...` a la URL.
+  - Si no, pide todos los libros.
+
+📌 Ventajas de separar Axios en un archivo:
+- Centraliza la lógica de red.
+- Permite reutilizar el código desde cualquier componente.
+- Si cambia la URL base o se agrega autenticación, solo se cambia acá.
+
+🛠️ Qué podrías modificar si te lo piden:
+
+1. Agregar más funciones:
+   - `getById(id)`: para traer un libro individual
+   - `create(data)`: para POST
+   - `update(id, data)`: para PUT
+   - `remove(id)`: para DELETE
+
+2. Manejo de errores global:
+   - Podés lanzar mensajes más descriptivos, o usar `toast` en el frontend.
+   - Agregar manejo con `try/catch` donde se llama este servicio.
+
+3. Hacer que la URL base sea configurable:
+   - Usar una variable de entorno con Vite: `import.meta.env.VITE_API_URL`
+
+4. Soporte para paginación:
+   - Aceptar `page`, `limit` como parámetros opcionales y agregarlos como query string.
+
+5. Usar interceptores de Axios:
+   - Para agregar tokens de autenticación o manejar errores centralizados.
+
+
+✅ src/main.jsx
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+🧠 ¿Qué hace?
+
+- Es el archivo que arranca la aplicación React.
+- Busca en el DOM el div con id "root" que está en index.html.
+- Usa `ReactDOM.createRoot(...)` para montar el componente `<App />` dentro del DOM.
+- Todo el frontend comienza desde este punto.
+
+📌 ¿Qué es React.StrictMode?
+- Es una herramienta de desarrollo de React que detecta problemas potenciales.
+- Solo afecta en modo desarrollo, no se usa en producción.
+- Vuelve a ejecutar render y efectos para ayudarte a detectar errores como:
+  - mutaciones no intencionales
+  - uso incorrecto de ciclos de vida
+  - efectos secundarios duplicados
+
+🛠️ Qué podrías modificar si te lo piden:
+
+1. Quitar StrictMode (no recomendado salvo para testing):
+   <React.StrictMode> → <></>
+
+2. Agregar un proveedor global (Context, Redux, etc.):
+   import { LibrosProvider } from './context/LibrosContext';
+   y envolver el `<App />` así:
+   <LibrosProvider><App /></LibrosProvider>
+
+3. Agregar soporte para i18n o configuración global:
+   Envolver App con `I18nextProvider`, `ThemeProvider`, etc.
+
+4. Importar estilos globales:
+   Podés agregar: import './index.css' o './App.css'
+
+5. Preparar montaje para SPA con rutas:
+   En vez de renderizar App directamente, podrías montar un `<Router />` dentro.
+
+💡 Este archivo no se toca mucho, pero es fundamental porque arranca toda la app.
+
+
+✅ src/components/LibrosPage.jsx
+
+🧠 ¿Qué hace?
+- Es el componente principal de la lógica de libros.
+- Administra todos los estados (libros, formulario, búsqueda).
+- Se comunica con el backend mediante axios y el servicio obtenerLibros().
+- Controla cuándo mostrar la tabla o el formulario.
+
+📌 Funcionalidad clave:
+- useEffect(): al montar el componente → carga libros.
+- useState(): gestiona todos los estados (libros, mensaje, form, edición).
+- manejarBusqueda(): dispara la búsqueda.
+- onEdit(): llena el formulario para modificar.
+- onDelete(): confirma y elimina.
+- onSave(): guarda cambios y actualiza.
+- onCancel(): oculta el formulario.
+
+🛠️ Qué podrías modificar si te lo piden:
+- Separar búsqueda en un componente Filtro.jsx:
+  Mover el formulario de búsqueda (input + botón) a un componente reutilizable, y pasarle props como busqueda, setBusqueda, onSubmit. Mejora el orden del código.
+
+- Agregar paginación a la carga de libros:
+  Controlar un estado page, y agregar botones de "Anterior / Siguiente". En el backend, implementar `limit` y `offset`.
+
+- Validar formato del año antes de guardar:
+  Verificar que `anio` sea un número entre 1900 y 2100, con `if (anio < 1900 || anio > 2100)` antes del POST o PUT.
+
+- Usar context o props para manejar libros desde App.jsx:
+  En vez de manejar los estados en LibrosPage, se pueden mover al nivel superior (`App.jsx`) y pasar como props para mayor control global.
+
+- Agregar loading/spinner mientras se cargan libros:
+  Agregar un estado `cargando`, y usar `setCargando(true/false)` en `cargarLibros()`, mostrando un spinner mientras se espera.
+
+✅ src/components/LibroForm.jsx
+
+🧠 ¿Qué hace?
+- Es el formulario que se usa tanto para alta como para modificación.
+- Usa useState para controlar los inputs (título, autor, año).
+- Si recibe un libro para editar (bookToEdit), llena los campos.
+- Cuando se envía:
+  - Si hay un libro: PUT al backend.
+  - Si no hay: POST al backend.
+
+📌 Detalles clave:
+- onSave: callback al padre para actualizar lista y cerrar form.
+- onCancel: cancela sin guardar.
+- value + onChange: hace que cada campo sea controlado por React.
+
+🛠️ Qué podrías modificar si te lo piden:
+- Agregar validaciones (campos obligatorios, año válido, etc.):
+  Podés agregar condicionales que verifiquen si todos los campos están completos antes de permitir el submit.
+
+- Agregar feedback visual (is-invalid de Bootstrap):
+  Mostrar estilos visuales de error con Bootstrap cuando un campo está mal, y un div con texto explicativo.
+
+- Reemplazar por react-hook-form si piden algo más profesional:
+  Esta librería reduce código, centraliza validaciones y da más control en formularios grandes.
+
+- Separar lógica en un hook personalizado para limpieza:
+  Crear un hook `useFormularioLibro()` que encapsule los estados, validaciones y efectos del formulario para reutilización y limpieza.
+
+✅ src/components/LibrosTable.jsx
+
+🧠 ¿Qué hace?
+- Muestra la tabla con los libros usando clases Bootstrap para diseño y responsividad.
+- Usa props para recibir la lista de libros y los callbacks para editar y eliminar.
+- Usa map() para recorrer la lista y generar una fila por libro automáticamente.
+- Cada fila tiene botones "Editar" y "Eliminar", que llaman a las funciones `onEdit(libro)` y `onDelete(id)` provistas por el padre.
+
+📌 Posibles modificaciones:
+- Agregar ordenamiento por columnas (alfabético, año):
+  Podés hacer que al hacer clic en el encabezado, se ordene la tabla localmente con `sort()`.
+
+- Agregar íconos o acciones extras (ver detalles):
+  Se pueden incluir botones con íconos como lupa, PDF, exportar, etc.
+
+- Separar la fila en un subcomponente Row.jsx:
+  Podés mover `<tr>...</tr>` a su propio archivo para mejor lectura y reusabilidad.
+
+- Cambiar estilos:
+  Agregar color alternado, encabezado sticky, tabla responsive, etc.
+
+
+✅ src/App.jsx
+
+import React from 'react';
+import LibrosPage from './components/LibrosPage';
+
+function App() {
+  return (
+    <div>
+      <LibrosPage />
+    </div>
+  );
+}
+
+export default App;
+
+🧠 ¿Qué hace?
+- Es el componente principal que se monta en el DOM (en #root de index.html).
+- Llama a LibrosPage, que contiene toda la lógica de búsqueda, listado y formulario.
+- Todo lo que ves en la pantalla nace de este componente raíz.
+
+🛠️ ¿Qué podrías cambiar o agregar?
+
+1. ✅ Agregar navegación SPA (con router)
+   - Instalar: npm install react-router-dom
+   - Usar rutas:
+     import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+     function App() {
+       return (
+         <BrowserRouter>
+           <Routes>
+             <Route path="/" element={<LibrosPage />} />
+             <Route path="/otra" element={<OtroComponente />} />
+           </Routes>
+         </BrowserRouter>
+       );
+     }
+
+2. ✅ Mostrar un Menu.jsx arriba
+   - Crear componente Menu.jsx:
+     export default function Menu() {
+       return <nav className="navbar bg-dark text-white p-2">Menú Principal</nav>;
+     }
+
+   - En App.jsx:
+     import Menu from './components/Menu';
+
+     function App() {
+       return (
+         <>
+           <Menu />
+           <LibrosPage />
+         </>
+       );
+     }
+
+3. ✅ Agregar estado global (lifting state up)
+   - Mover estados de búsqueda y libros a App.jsx:
+     const [libros, setLibros] = useState([]);
+     const [busqueda, setBusqueda] = useState('');
+
+   - Pasarlos como props:
+     <LibrosPage libros={libros} setLibros={setLibros} busqueda={busqueda} setBusqueda={setBusqueda} />
+
+4. ✅ Agregar estilos globales
+   - Envolver con contenedor Bootstrap:
+     return (
+       <div className="container mt-4">
+         <LibrosPage />
+       </div>
+     );
+
+5. ✅ Dividir layout y vistas
+   - Crear Layout.jsx que incluya menú y children:
+     export default function Layout({ children }) {
+       return (
+         <>
+           <Menu />
+           <div className="container mt-4">{children}</div>
+         </>
+       );
+     }
+
+   - En App.jsx:
+     import Layout from './components/Layout';
+
+     function App() {
+       return (
+         <Layout>
+           <LibrosPage />
+         </Layout>
+       );
+     }
+
