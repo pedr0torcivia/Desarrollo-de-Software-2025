@@ -1,0 +1,351 @@
+
+📦 RESUMEN GENERAL – BACKEND (Node.js + Express + Sequelize + SQLite)
+
+🧠 ¿Qué hace el backend?
+- Expone una API RESTful en `/api/libros`.
+- Permite realizar operaciones CRUD sobre libros (crear, leer, modificar, eliminar).
+- Usa Express para manejar rutas y middlewares.
+- Usa Sequelize como ORM para mapear JS ↔ SQL.
+- Usa SQLite como base de datos embebida.
+- Incluye seeding automático de 40 libros si la base está vacía.
+
+🧩 Archivos principales:
+
+1. database/database.js
+   - Configura Sequelize para conectarse a SQLite.
+   - Exporta una instancia de conexión reutilizable.
+
+2. models/Libro.js
+   - Define la tabla `Libros` con campos: IdLibro, Titulo, Autor, AnioPublicacion.
+   - Usa tipos y validaciones Sequelize.
+
+3. services/libros.service.js
+   - Contiene funciones: getAllLibros, getLibroById, createLibro, updateLibro, deleteLibro.
+   - Encapsula la lógica de acceso a la base.
+
+4. routes/libros.routes.js
+   - Define las rutas HTTP: GET, POST, PUT, DELETE.
+   - Llama a los servicios y responde al cliente.
+
+5. index.js
+   - Punto de entrada.
+   - Configura middlewares, monta rutas, sincroniza la base y realiza seeding.
+   - Levanta el servidor Express en el puerto 3000.
+
+✅ Características técnicas:
+- Express como framework web.
+- Sequelize como ORM.
+- SQLite como base de datos.
+- Rutas RESTful bien definidas.
+- Arquitectura en capas (modelo, servicio, rutas).
+- Código modular y organizado.
+
+
+✅ 1. src/database/database.js
+
+const { Sequelize } = require('sequelize');
+
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './src/database/libros.db'
+});
+
+module.exports = sequelize;
+
+🧠 ¿Qué hace?
+- Crea una instancia de Sequelize usando SQLite.
+- El archivo libros.db es la base de datos física.
+- Exporta esa instancia para que todos los modelos la usen.
+
+🛠️ ¿Qué podrías cambiar?
+- Para usar una base en memoria (para testing): storage: ':memory:'
+- Para usar PostgreSQL:
+  new Sequelize('base', 'usuario', 'clave', {
+    host: 'localhost',
+    dialect: 'postgres'
+  })
+
+
+✅ 2. src/models/Libro.js
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database/database');
+
+const Libro = sequelize.define('Libro', {
+  IdLibro: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  Titulo: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Autor: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  AnioPublicacion: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
+}, {
+  tableName: 'Libros',
+  timestamps: false
+});
+
+module.exports = Libro;
+
+🧠 ¿Qué hace?
+- Define la tabla Libros con 4 columnas:
+  - IdLibro: entero, autoincremental, PK
+  - Titulo, Autor: texto obligatorio
+  - AnioPublicacion: número obligatorio
+- Usa timestamps: false para que no cree createdAt y updatedAt.
+
+- Define la tabla "Libros" en la base de datos SQLite usando Sequelize.
+- Cada campo se mapea a una columna con tipo y restricciones.
+- Sequelize luego traduce esto a SQL cuando ejecutás sequelize.sync().
+
+🧩 Campo por campo:
+
+1. IdLibro:
+   - Es la clave primaria.
+   - Es autoincremental (INTEGER PRIMARY KEY AUTOINCREMENT).
+   - No se define manualmente en formularios.
+
+2. Titulo:
+   - Tipo STRING (texto).
+   - No puede ser nulo.
+
+3. Autor:
+   - Tipo STRING (texto).
+   - También obligatorio.
+
+4. AnioPublicacion:
+   - Tipo INTEGER.
+   - Es obligatorio. Se puede validar (rango de años por ejemplo).
+
+📌 Opciones del modelo:
+- tableName: fuerza a que la tabla se llame "Libros".
+- timestamps: false desactiva las columnas automáticas createdAt y updatedAt.
+
+🛠️ ¿Qué podrías modificar si te lo piden?
+
+1. Agregar una columna "Genero":
+   Genero: {
+     type: DataTypes.STRING,
+     allowNull: true
+   }
+
+2. Validar que el título tenga entre 3 y 100 letras:
+   Titulo: {
+     type: DataTypes.STRING,
+     allowNull: false,
+     validate: {
+       len: [3, 100]
+     }
+   }
+
+3. Aceptar autores opcionales:
+   Autor: {
+     type: DataTypes.STRING,
+     allowNull: true
+   }
+
+4. Validar el año:
+   AnioPublicacion: {
+     type: DataTypes.INTEGER,
+     allowNull: false,
+     validate: {
+       min: 1900,
+       max: 2100
+     }
+   }
+"""
+
+
+✅ 3. src/services/libros.service.js
+
+const Libro = require('../models/Libro');
+const { Op } = require('sequelize');
+
+async function getAllLibros(search) {
+  let condition = {};
+  if (search) {
+    condition = {
+      Titulo: {
+        [Op.like]: `%${search}%`
+      }
+    };
+  }
+  return await Libro.findAll({ where: condition });
+}
+
+async function getLibroById(id) {
+  return await Libro.findByPk(id);
+}
+
+async function createLibro(data) {
+  return await Libro.create(data);
+}
+
+async function updateLibro(id, data) {
+  const libro = await Libro.findByPk(id);
+  if (libro) {
+    return await libro.update(data);
+  }
+  return null;
+}
+
+async function deleteLibro(id) {
+  const libro = await Libro.findByPk(id);
+  if (libro) {
+    return await libro.destroy();
+  }
+  return null;
+}
+
+module.exports = {
+  getAllLibros,
+  getLibroById,
+  createLibro,
+  updateLibro,
+  deleteLibro
+};
+
+🧠 ¿Qué hace cada parte?
+
+- Se encarga de ejecutar la lógica CRUD directamente sobre el modelo Sequelize.
+- `getAllLibros(search)`: si hay texto de búsqueda, filtra libros por coincidencia parcial en el título.
+- `getLibroById(id)`: busca por clave primaria.
+- `createLibro(data)`: crea un nuevo libro.
+- `updateLibro(id, data)`: modifica si existe el libro con ese ID.
+- `deleteLibro(id)`: elimina un libro si lo encuentra.
+
+🛠️ Cambios que podrías hacer si te lo piden:
+
+1. Validar datos:
+   - Podés verificar manualmente:
+     if (!data.Titulo || !data.Autor) throw new Error("Faltan datos");
+
+2. Ordenar resultados:
+   - Podés devolver los libros ordenados alfabéticamente:
+     return await Libro.findAll({ where: condition, order: [['Titulo', 'ASC']] });
+
+3. Limitar resultados:
+   - Para evitar traer demasiados libros:
+     return await Libro.findAll({ limit: 10 });
+
+4. 🔄 Paginación con limit y offset:
+   - Supongamos que querés mostrar solo 10 libros por página.
+
+   Ejemplo:
+     - Página 1 → offset: 0, limit: 10
+     - Página 2 → offset: 10, limit: 10
+     - Página 3 → offset: 20, limit: 10
+
+   Código ejemplo:
+     async function getAllLibros(search, page = 1, pageSize = 10) {
+       let condition = {};
+       if (search) {
+         condition = { Titulo: { [Op.like]: `%${search}%` } };
+       }
+       const offset = (page - 1) * pageSize;
+       return await Libro.findAll({
+         where: condition,
+         limit: pageSize,
+         offset,
+         order: [['Titulo', 'ASC']]
+       });
+     }
+
+   - Así podrías recibir `page` como parámetro de la query (ej: `/api/libros?page=2`)
+   - Con eso devolvés resultados “paginados”.
+
+5. Evitar duplicados:
+   - Buscar si ya existe un libro igual antes de crearlo:
+     const existente = await Libro.findOne({ where: { Titulo: data.Titulo, Autor: data.Autor } });
+     if (existente) throw new Error('Ya existe ese libro.');
+
+
+
+
+✅ 4. src/routes/libros.routes.js
+
+const express = require('express');
+const router = express.Router();
+const service = require('../services/libros.service');
+
+router.get('/', async (req, res) => {
+  const libros = await service.getAllLibros(req.query.search);
+  res.json(libros);
+});
+
+router.get('/:id', async (req, res) => {
+  const libro = await service.getLibroById(req.params.id);
+  libro ? res.json(libro) : res.status(404).send();
+});
+
+router.post('/', async (req, res) => {
+  const libro = await service.createLibro(req.body);
+  res.status(201).json(libro);
+});
+
+router.put('/:id', async (req, res) => {
+  const updated = await service.updateLibro(req.params.id, req.body);
+  updated ? res.json(updated) : res.status(404).send();
+});
+
+router.delete('/:id', async (req, res) => {
+  const deleted = await service.deleteLibro(req.params.id);
+  deleted ? res.status(204).send() : res.status(404).send();
+});
+
+module.exports = router;
+
+🧠 ¿Qué hace este archivo?
+
+- Define las rutas REST para trabajar con la entidad Libro.
+- Cada ruta llama al servicio correspondiente y responde al cliente con los datos o errores adecuados.
+
+🔍 Detalle de cada ruta:
+
+1. GET /api/libros
+   - Llama a getAllLibros.
+   - Si hay search en la query string, se filtra por título.
+   - Devuelve lista de libros en JSON.
+
+2. GET /api/libros/:id
+   - Busca un libro por ID.
+   - Si lo encuentra, lo devuelve.
+   - Si no, responde con 404.
+
+3. POST /api/libros
+   - Crea un nuevo libro con los datos del body.
+   - Devuelve 201 y el libro creado.
+
+4. PUT /api/libros/:id
+   - Modifica el libro existente si lo encuentra.
+   - Si no lo encuentra, responde 404.
+
+5. DELETE /api/libros/:id
+   - Elimina el libro si existe.
+   - Responde 204 si fue exitoso, 404 si no lo encuentra.
+
+🛠️ Posibles modificaciones útiles:
+
+- Validar datos antes de crear:
+    if (!req.body.Titulo) return res.status(400).json({ error: 'Falta título' });
+
+- Agregar paginación:
+    Leer page y pageSize de req.query y pasarlos al servicio.
+
+- Manejar errores:
+    Envolver en try/catch y responder 500 con mensaje.
+
+- Middleware para validar ID:
+    Verificar que req.params.id sea numérico antes de ejecutar la lógica.
+
+- Agrupar más rutas:
+    Podés tener más archivos como autores.routes.js, usuarios.routes.js, etc. y montarlos todos juntos.
