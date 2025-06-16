@@ -1,4 +1,4 @@
-# 📘 Portafolio Personal - Pedro Torcivia
+# 🗂️ Portafolio Personal - Pedro Torcivia
 **Legajo:** 400091
 **Curso:** 3K1 
 **Materia:** Desarrollo de Software  
