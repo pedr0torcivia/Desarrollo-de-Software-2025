@@ -1,8 +1,9 @@
 # 🗂️ Portafolio Personal - Pedro Torcivia
-**Legajo:** 400091
-**Curso:** 3K1 
+**Legajo:** 400091  
+**Curso:** 3K1  
 **Materia:** Desarrollo de Software  
 **Año:** 2025  
+
 **Repositorio local:** `portafolio_400091_torcivia`  
 **Repositorio GitLab:** [portafolio_400091_torcivia](https://labsys.frc.utn.edu.ar/gitlab/desarrollo-de-software1/proyectos2025/3k1/portafolios/portafolio_400091_torcivia)  
 **Repositorio GitLab para Video de Conflicto:** [conflictogit_deza_maretto_pecchenino_torcivia](https://labsys.frc.utn.edu.ar/gitlab/desarrollo-de-software1/proyectos2025/3k1/conflictogit_deza_maretto_pecchenino_torcivia)
