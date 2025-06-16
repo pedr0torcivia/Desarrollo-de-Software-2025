@@ -1,17 +1,10 @@
-# Portafolio de Cursado – Pedro Torcivia  
-**Desarrollo de Software – 3K1**  
-**Legajo:** 400091  
-**Facultad Regional Córdoba – UTN**
+# 📘 Portafolio Personal - Pedro Torcivia
 
----
-
-## Descripción
-
-Este repositorio contiene el portafolio de actividades correspondiente al cursado de la asignatura **Desarrollo de Software** durante el año 2025. Su objetivo principal es documentar el progreso académico a través de entregas prácticas, ejercicios de programación y reflexiones técnicas relacionadas con los contenidos abordados en clase.
-
-El portafolio fue desarrollado de manera individual y refleja la aplicación de conocimientos adquiridos en el diseño, desarrollo y documentación de software siguiendo principios fundamentales de la ingeniería de software.
-
----
+**Materia:** Desarrollo de Software  
+**Año:** 2025  
+**Repositorio local:** `portafolio_400091_torcivia`  
+**Repositorio GitLab:** _[https://labsys.frc.utn.edu.ar/gitlab/desarrollo-de-software1/proyectos2025/3k1/portafolios/portafolio_400091_torcivia]_
+**Repositorio GitLab para Video Conflicto:** _[https://labsys.frc.utn.edu.ar/gitlab/desarrollo-de-software1/proyectos2025/3k1/conflictogit_deza_maretto_pecchenino_torcivia]_
 
 # Clonar el repositorio
 ```bash
@@ -19,27 +12,84 @@ git clone https://labsys.frc.utn.edu.ar/gitlab/desarrollo-de-software1/proyectos
 ```
 ---
 
-<p align="center">
-  <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3djdHp0dnY2N3BkY2k3eHZrc3NiMWFnNzRhejNocXN1bG5sMTc0ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cFkiFMDg3iFoI/giphy.gif" width="450" alt="Coding animation">
-</p>
-
 ## Organización del Repositorio
 
-- `Bootstrap`  
-  Archivos relacionados a Bootstrap
+El portafolio está organizado en carpetas temáticas que reflejan los diferentes momentos del cursado:
+______________________________________________________________________________________________________________________________________
+| Carpeta                           | Contenido principal                                                                            |
+|-----------------------------------|------------------------------------------------------------------------------------------------|
+| `Clases/`                         | Actividades por fecha (`MM-DD-YY`) con contenidos dados en clase.                              |
+| `Ejercicios_Apuntes/`             | Resoluciones de apuntes, organizados por número (`ApunteX`).                                   |
+| `Guía_de_Ejercicios/`             | Actividades semanales separadas (Seoarados por `SemanaX`).                                     |
+| `Desafíos/`                       | Entregas evaluativas (`Desafío1`, `Desafío2`).                                                 |
+| `Bootstrap/`                      | Archivos de diseño (`css/`, `js/`) para uso en proyectos web.                                  |
+| `Ejercitacion_React_Hook_Form/`   | Proyecto práctico React con validación de formularios. Incluye `frontend/` y `backend/`.       |
+| `PasoAPaso/`                      | Desarrollo completo del caso obligatorio Paso a Paso, con versiones originales y actualizadas. |
+| `Parciales/`                      | Proyectos usados en los parciales.                                                             |
+| `RepasoParciales/`                | Sección práctica dividida en `Parcial1/` y `Parcial2/`.                                        |
+| `Workspace/`                      | Espacio de pruebas, investigaciones y entorno de desarrollo.                                   |
+|___________________________________|________________________________________________________________________________________________|
+---
 
-- `Clases`  
-  Notas y ejercicios trabajados en clase
+## Actividades Semanales
 
-- `Ejercicios_Apunte`  
-  Ejercicios correspondientes a cada apunte semanal
+Las actividades semanales están organizadas principalmente en:
 
-- `Guia_de_Ejercicios`  
-  Guía de ejercicios semanales de la unidad de valoración
+- `Guía_de_Ejercicios/`: Carpeta por semana (`Semana_1` a `Semana_7`) con actividades guiadas.
+- `Clases/`: Avances por fecha, con actividades y anotaciones por clase.
+- `Ejercicios_Apuntes/`: Ejercicios practicos presentados en los apuntes de la asignatura.
 
-- `node_modules`  
-  Dependencias del proyecto (generadas por npm)
+---
 
-- `Workspace`  
-  Programas y archivos varios no relacionados directamente al proyecto
-  Incluye Ejercitación de Parciales
+## Caso "Paso a Paso" Obligatorio
+
+Ubicación: `PasoAPaso/`
+
+Incluye:
+
+- `dds-backend/`: **Versión original 2024** del backend desarrollada en clases.
+- `dds-backend-2025/`: **Versión actualizada** con mejoras aplicadas por los profesores.
+- `dds-frontend/`: Desarrollo del frontend conectado al backend desarrollado en clases.
+- Documentación:
+  - `Backend 2025 - paso a paso.pdf`
+  - `Frontend 2025 - paso a paso.pdf`
+
+Este apartado evidencia tanto la implementación funcional como el proceso de revisión y mejora del trabajo realizado.
+
+---
+
+## Parciales y Repasos
+
+### `Parciales/`
+- Contiene los Parciales entregados (`Parcial1` el 08/05/2025 y `Parcial2` el 19/06)
+
+### `RepasoParciales/Parcial1/`
+- Contiene proyectos de repaso para el Primer Parcial (`ProyectoX`), más archivos complementarios (`notas.txt`, `Preguntas.txt`).
+
+### `RepasoParciales/Parcial2/`
+- Contiene proyectos de repaso para el Segundo Parcial (`ProyectoX`), carpeta `RepasoFront/` y archivos complementarios (`Guia_Completa_Proyecto_DDS.txt`, `notas.txt`).
+
+---
+
+## Workspace
+
+Ubicación: `Workspace/`
+
+Contiene:
+
+- En su mayoria pruebas de conceptos (DOM, fetch, asincronismo).
+- Instalaciones reales de npm (`node_modules`, `package.json`, `package-lock.json`).
+- Archivos HTML y JS para prototipado y pruebas de conceptos.
+
+---
+
+## En General
+
+Este portafolio refleja:
+
+- Un trabajo progresivo a lo largo del cuatrimestre.
+- Evidencias de clase por clase.
+- Desarrollo completo del caso Paso a Paso.
+- Resolución de desafíos y preparación de parciales.
+- Mejora continua del backend a través de versiones originales y actualizadas.
+
