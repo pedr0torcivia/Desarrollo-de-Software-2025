@@ -1,0 +1,61 @@
+
+export default function ContratoListado({ contratos }) {
+  const formatearFecha = (fechaIso) => {
+    const f = new Date(fechaIso);
+    return f.toLocaleDateString("es-AR");
+  };
+
+  // VARIANTE
+  const formatearFecha2 = (fechaIso) => {
+      const f = new Date(fechaIso);
+      return f.toLocaleDateString("es-AR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+    };
+
+
+  const formatearMoneda = (importe) => {
+    return Number(importe).toLocaleString("es-AR", {
+      style: "currency",
+      currency: "ARS",
+      minimumFractionDigits: 2,
+    });
+  };
+
+  const formatearMonedaConARSFinal = (importe) => {
+  const numeroFormateado = Number(importe).toLocaleString("es-AR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return `${numeroFormateado} ARS`;
+};
+
+
+  if (!contratos.length)
+    return <div className="alert alert-warning">No hay contratos encontrados.</div>;
+
+  return (
+    <div className="table-responsive">
+      <table className="table table-striped table-bordered">
+        <thead className="table-dark">
+          <tr>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Importe Mensual</th>
+          </tr>
+        </thead>
+        <tbody>
+          {contratos.map((c) => (
+            <tr key={c.IdContrato}>
+              <td>{formatearFecha(c.FechaInicio)}</td>
+              <td>{formatearFecha(c.FechaFin)}</td>
+              <td>{formatearMoneda(c.ImporteMensual)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

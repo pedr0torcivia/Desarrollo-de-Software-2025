@@ -1,0 +1,81 @@
+### Registro de un admin
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Admin",
+  "apellido": "Principal",
+  "mail": "admin@bici.com",
+  "direccion": "Avenida Siempre Viva 123",
+  "idBarrio": 1,
+  "password": "admin123",
+}
+
+### Registro de usuario común
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Usuario",
+  "apellido": "Normal",
+  "mail": "usuario@bici.com",
+  "direccion": "Calle Falsa 456",
+  "idBarrio": 2,
+  "password": "usuario123"
+}
+
+### Registro de otro usuario común
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Otro",
+  "apellido": "Común",
+  "mail": "otro@bici.com",
+  "direccion": "Boulevard Central 789",
+  "idBarrio": 3,
+  "password": "otro123"
+}
+
+### Login admin
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "mail": "admin@bici.com",
+  "password": "admin123"
+}
+
+### Login usuario común
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "mail": "usuario@bici.com",
+  "password": "usuario123"
+}
+
+### Login otro usuario
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "mail": "otro@bici.com",
+  "password": "otro123"
+}
+
+### Acceso a barrios (requiere token de cualquier usuario)
+GET http://localhost:3000/api/barrios
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibm9tYnJlIjoiQWRtaW4iLCJhcGVsbGlkbyI6IlByaW5jaXBhbCIsIm1haWwiOiJhZG1pbkBiaWNpLmNvbSIsImFkbWluIjoxLCJpYXQiOjE3NDk1MzQyODR9.XRynvXT2TJBqgf16_EF_g4kuHmcJUiH_VtJbsJ2TF3U
+
+### Acceso a tarifas (requiere token admin)
+GET http://localhost:3000/api/estaciones
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibm9tYnJlIjoiQWRtaW4iLCJhcGVsbGlkbyI6IlByaW5jaXBhbCIsIm1haWwiOiJhZG1pbkBiaWNpLmNvbSIsImFkbWluIjoxLCJpYXQiOjE3NDk1MzQyODR9.XRynvXT2TJBqgf16_EF_g4kuHmcJUiH_VtJbsJ2TF3U
+
+### Acceso a cuentas (requiere token admin)
+GET http://localhost:3000/api/cuentas
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibm9tYnJlIjoiQWRtaW4iLCJhcGVsbGlkbyI6IlByaW5jaXBhbCIsIm1haWwiOiJhZG1pbkBiaWNpLmNvbSIsImFkbWluIjoxLCJpYXQiOjE3NDk1MzQyODR9.XRynvXT2TJBqgf16_EF_g4kuHmcJUiH_VtJbsJ2TF3U
+
+### Acceso a tarifas con token de usuario común (debería fallar con 403)
+GET http://localhost:3000/api/tarifas
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibm9tYnJlIjoiQWRtaW4iLCJhcGVsbGlkbyI6IlByaW5jaXBhbCIsIm1haWwiOiJhZG1pbkBiaWNpLmNvbSIsImFkbWluIjoxLCJpYXQiOjE3NDk1MzQyODR9.XRynvXT2TJBqgf16_EF_g4kuHmcJUiH_VtJbsJ2TF3U

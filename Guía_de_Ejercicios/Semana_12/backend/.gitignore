@@ -1,0 +1,28 @@
+# Node.js
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Logs
+logs/
+*.log
+
+# Archivos de Sequelize
+.env
+.env.local
+.env.*.local
+
+# VS Code config
+.vscode/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Cobertura de pruebas (si usás Jest más adelante)
+coverage/
+
+# Archivos temporales
+*.tmp
+*.swp
+*.bak
