@@ -1,0 +1,15 @@
+/* frontend/src/App.css */
+body {
+  background-color: #f8f9fa; /* gris claro típico de Bootstrap */
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1, h4 {
+  color: #212529; /* texto oscuro estándar */
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
