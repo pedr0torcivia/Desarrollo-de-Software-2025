@@ -1,0 +1,157 @@
+¿Que es un idp?
+¿Que es el endpoint wellknow configuration?
+	
+https://labsys.frc.utn.edu.ar/aim/realms/dds-materia
+https://labsys.frc.utn.edu.ar/aim/admin/iaew/console/#/
+user: iaew-admin
+pass: Gusmemima02$
+
+Perfecto, sobrinito Galactus. Te paso todo en texto corrido, sin listas ni emojis.
+
+---
+
+Un IdP, o Identity Provider, es un proveedor de identidad. Se trata de un sistema que autentica a los usuarios y 
+emite información sobre su identidad, como tokens, atributos o roles. Su función principal es validar las credenciales
+del usuario, como nombre de usuario y contraseña, y entregar un token de acceso que otras aplicaciones pueden usar para
+autorizar acciones. En sistemas modernos, los IdP permiten implementar inicio de sesión único (SSO) y son esenciales para 
+delegar la autenticación en servicios externos. Algunos ejemplos de IdP son Keycloak, Auth0, Google, Azure AD u Okta.
+
+El endpoint `.well-known/openid-configuration` es una dirección URL que forma parte del protocolo OpenID Connect. 
+Su objetivo es permitir que las aplicaciones cliente descubran automáticamente la configuración del proveedor de identidad. 
+Este endpoint devuelve un JSON con la información necesaria para que el cliente sepa cómo comunicarse con el IdP, como por 
+ejemplo la URL de autorización, la URL para obtener tokens, la URL del endpoint de usuario, los algoritmos de firma soportados, 
+las claves públicas para verificar tokens y otros datos técnicos. Por ejemplo, si accedés a la URL 
+`https://labsys.frc.utn.edu.ar/aim/realms/dds-materia/.well-known/openid-configuration` vas a obtener un archivo JSON que 
+describe  cómo interactuar con ese IdP.
+
+La URL `https://labsys.frc.utn.edu.ar/aim/realms/dds-materia` apunta a un realm específico dentro del servidor de identidad. 
+En Keycloak, un realm representa un espacio de autenticación aislado, como una organización o un sistema. En tanto, la URL 
+`https://labsys.frc.utn.edu.ar/aim/admin/iaew/console/` corresponde al panel de administración de Keycloak, que permite configurar
+usuarios, clientes, permisos, roles y demás elementos relacionados con la autenticación.
+
+
+https://labsys.frc.utn.edu.ar/aim/admin/dds-materia/console/#/
+3k1a2024@gmail.com / 3k1a2024$
+
+¿Cómo se cual es el endpoint wellknow configuration de esta pagina?
+Para saber cuál es el **endpoint de configuración OpenID Connect (OIDC)** de esa instancia de Keycloak (la que te da acceso con el 
+mail `3k1a2024@gmail.com`), solo tenés que conocer la estructura estándar del protocolo.
+
+El **endpoint de configuración** se forma con esta estructura:
+https://<dominio>/realms/<nombre-del-realm>/.well-known/openid-configuration
+
+En tu caso, ya que estás usando el realm llamado `dds-materia`, el endpoint sería:
+https://labsys.frc.utn.edu.ar/aim/realms/dds-materia/.well-known/openid-configuration
+
+Si pegás esa URL en el navegador, vas a obtener un JSON con toda la configuración necesaria para integrar un cliente (como tu app 
+React o backend Express).
+
+Este endpoint es parte del estándar de OpenID Connect y siempre tiene esa forma cuando usás Keycloak. No depende del panel de 
+administración, ni del usuario ni del cliente: depende solo del nombre del realm y del servidor donde está desplegado el IdP.
+
+¿Qué es un Realm?
+En Keycloak, un **realm** es un espacio de gestión de identidad **aislado**. Es como una “instancia” o un “contenedor” de usuarios, 
+roles, clientes, políticas de seguridad y configuraciones. Cada realm tiene sus propios usuarios, sus propios permisos y su propia 
+configuración de autenticación. Por ejemplo, `dds-materia` es un realm usado por tu facultad para la materia DDS. Si existiera otro 
+realm llamado `empresa-x`, ambos serían completamente independientes y no compartirían usuarios ni configuraciones.
+
+¿Qué es un token de aplicación o token de cliente?
+Un token de aplicación (también llamado client token) es un token de acceso que representa una aplicación cliente, no un usuario. 
+Es útil para cuando una app necesita autenticarse ante el servidor sin intervención humana, como en backend-to-backend o cron jobs.
+
+Se usa el flujo Client Credentials de OAuth 2.0 para obtener ese tipo de token.
+Este token:
+
+* No tiene identidad de usuario, sino del cliente (por ejemplo, `frontend-app`, `microservicio-x`, etc.).
+* Sirve para autenticarse en APIs que solo requieren identificar la aplicación.
+* Es un JWT que contiene claims como el nombre del cliente, el scope, la expiración, etc.
+
+¿Cómo se genera un token de cliente en Keycloak?
+1. Vas al panel de administración de Keycloak.
+2. Entrás al realm (por ejemplo, `dds-materia`).
+3. Vas a la sección Clientes.
+4. Creás un cliente nuevo o seleccionás uno existente.
+5. En la configuración del cliente:
+
+   * Se activa Client authentication (autenticación del cliente).
+   * En tipo de acceso, activás Confidential (para flujos con secreto).
+6. Vas a la pestaña Credenciales y copiás el Client ID y el Client Secret.
+
+Con eso, podés hacer una solicitud HTTP POST para obtener el token, como esta:
+POST https://labsys.frc.utn.edu.ar/aim/realms/dds-materia/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&
+client_id=nombre-del-cliente&
+client_secret=secreto-del-cliente
+
+La respuesta es un JSON con el token:
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "expires_in": 300,
+  "token_type": "Bearer"
+}
+
+Ese token lo usás en las cabeceras Authorization de tus requests:
+Authorization: Bearer <access_token>
+
+¿Que hace un token de aplicacion? 
+Un token de aplicación es un token de acceso emitido por el proveedor de identidad para una aplicación cliente, 
+no para un usuario. Representa la identidad de la aplicación en sí y se utiliza principalmente en escenarios donde 
+una aplicación necesita acceder a un recurso protegido sin intervención del usuario. Por ejemplo, un servicio backend 
+que llama a otro servicio backend en segundo plano. El token contiene información como el identificador del cliente, 
+los scopes autorizados y la hora de expiración. Este token permite que la aplicación se autentique ante una API como 
+si fuera una entidad propia.
+
+El endpoint de introspección permite verificar si un token es válido. Al enviar el token a ese endpoint junto con 
+las credenciales del cliente, el servidor responde si el token está activo y, en ese caso, incluye los datos contenidos
+en el token, como el cliente que lo emitió, los permisos asociados, el tiempo de expiración y otros atributos. Esta 
+validación suele realizarse en APIs o recursos que necesitan asegurarse de que el token recibido no está vencido, 
+fue emitido por un cliente legítimo y tiene los permisos necesarios para acceder al recurso. La introspección es 
+una forma estándar de validar tokens sin necesidad de analizar su firma manualmente.
+
+
+C:\Users\PEDROT\portafolio_400091_torcivia>curl -X POST "https://labsys.frc.utn.edu.ar/aim/realms/dds-materia/protocol/openid-connect/token" -H "Content-Type:
+application/x-www-form-urlencoded" -d "grant_type=client_credentials" -d "client_id=app-backend-400091" -d "client_secret=mXMA5V8ZbLbUPxSy9Bwxjg1Oi90pq9J8"
+{"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkazZ1OVVMSkppaFFJMDF5OE1uUEpGVUhsRlZuTDNXT0xEQlRZZDh5TUlJIn0.eyJleHAiOjE3NTAxNjU2NTMsImlhdC
+I6MTc1MDE2NTM1MywianRpIjoiZGQ5OGNiOWYtZTE5MS00M2FmLWIyNDUtYzcxMjY5YmJkZjFlIiwiaXNzIjoiaHR0cHM6Ly9sYWJzeXMuZnJjLnV0bi5lZHUuYXIvYWltL3JlYWxtcy9kZHMtbWF0ZXJpYSIsI
+mF1ZCI6ImFjY291bnQiLCJzdWIiOiJhZGRhYThhMi0yNWVhLTRiZjYtYTE4MC1mYjQwNzdhNDIxZGMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhcHAtYmFja2VuZC00MDAwOTEiLCJyZWFsbV9hY2Nlc3MiOnsi
+cm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJkZWZhdWx0LXJvbGVzLWRkcy1tYXRlcmlhIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmF
+nZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJjbGllbnRJZCI6ImFwcC1iYWNrZW5kLTQwMDA5MSIsImNsaWVudEhvc3
+QiOiIxOTAuMTE0LjIwOC4xNDQiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1hcHAtYmFja2VuZC00MDAwOTEiLCJjbGllbnRBZGRyZXNzIjoiM
+TkwLjExNC4yMDguMTQ0In0.T9aLn3MwuPOgJIsei5Av8064PPVY0gmsFAdswZcq7FU0AC2NESv0lWHVxYsf53HrxBL2S-KnDCgIwRN8BaPeRFl5-eFj0onk-_gcOSFQdQ1cDYXue6Z6OtkWtu3P7OpTwbY_Py4a
+Ji3NzI-jcVBumcIi6VT9c08-ojvs_i37NI8VabLo0Pfk7_rVXnt-m4xDIeE3iyGLK058kN4wDlCR_-BQjwhBdHb4pQqGN3thlzydzR5Lbqj1HJ906vIw7oulCo0cchRcJ7TroJCZRV_lAx_i95os_SJ2bn873S2
+dvS32GHqI4sbYmE_UQYbXOFFkhg7bfRxQp7DdLBEIFY63XQ","expires_in":300,"refresh_expires_in":0,"token_type":"Bearer","not-before-policy":0,"scope":"email profile"}
+
+
+TOKEN DE USUARIO
+Un token de usuario (access token) identifica a un usuario humano en lugar de una aplicación. Para obtenerlo se usa el flujo Resource Owner Password Credentials 
+(llamado en Keycloak Direct Access Grant). Esto permite intercambiar usuario y contraseña por un token, siempre que el cliente tenga activado Direct Access Grants Enabled
+
+Para generar un token de usuario en Keycloak, lo que vas a usar es el flujo password (también llamado Resource Owner 
+Password Credentials Grant) si estás trabajando con Postman o directamente desde backend.
+
+Este flujo permite que un cliente confidencial (como tu app-backend-400091) obtenga un access_token actuando en nombre 
+de un usuario real, enviando el username y password de ese usuario.
+
+Requisitos previos
+El cliente debe tener habilitado el flujo "Direct Access Grants" (directAccessGrantsEnabled = true)
+Vos ya lo tenés habilitado según el JSON que pasaste antes.
+
+Debe existir un usuario creado en el realm dds-materia con:
+
+nombre de usuario (ejemplo: usuario1)
+contraseña definida (por ejemplo: 123456)
+
+Petición para obtener token de usuario
+Vas a hacer un POST a este endpoint:
+https://labsys.frc.utn.edu.ar/aim/realms/dds-materia/protocol/openid-connect/token
+Y el cuerpo (x-www-form-urlencoded) debe tener estos campos:
+
+Key	Value
+grant_type	password
+client_id	app-backend-400091
+client_secret	mXMA5V8ZbLbUPxSy9Bwxjg1Oi90pq9J8
+username	(nombre del usuario en Keycloak)
+password	(contraseña del usuario en Keycloak)
+
