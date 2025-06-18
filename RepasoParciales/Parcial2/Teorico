@@ -1,3 +1,46 @@
+🖥️ BACKEND (Node.js + Express + Sequelize + SQLite)
+📁 models/Entidad.js
+→ Define el modelo Sequelize. Especifica los campos (atributos), tipos de datos y restricciones (PK, not null, etc.). Cada archivo representa una tabla.
+
+📁 services/entidad.service.js
+→ Lógica de negocio pura. Funciones como create, findAll, update, destroy, que manipulan datos usando el modelo. Acá se encapsula el acceso real a la DB.
+
+📁 routes/entidad.routes.js
+→ Define los endpoints REST (GET, POST, PUT, DELETE). Usa Express Router para conectar URLs con funciones del service.
+
+📄 database/database.js
+→ Inicializa Sequelize. Conecta a SQLite, define dónde se guarda el .db, y exporta la conexión para usarla en los demás archivos.
+
+📄 index.js
+→ Punto de entrada del servidor. Configura Express (express.json(), cors()), importa rutas, hace sequelize.sync() y levanta el servidor (app.listen(3000)).
+
+🌐 FRONTEND (React + Vite + Axios + Bootstrap)
+📄 main.jsx
+→ Inicializa React. Renderiza el componente App dentro del DOM. También puede incluir configuración global (React Router, contextos, etc.).
+
+📄 App.jsx
+→ Componente raíz. Maneja el estado global (lista de entidades, estado ABMC), ejecuta getAll() con useEffect, muestra tabla o formulario según el estado.
+
+📁 components/Tabla.jsx
+→ Muestra los registros en una tabla. Recibe la lista por props y genera filas dinámicamente. También suele tener botones Editar y Eliminar.
+
+📁 components/Formulario.jsx
+→ Formulario para Alta y Modificación. Se llena con datos por props si es Modificación, y se conecta a axios.post/put. Usa react-hook-form si se desea.
+
+📁 services/entidad.service.js
+→ Maneja las llamadas HTTP al backend usando Axios (getAll, getById, create, update, delete). Se usa desde App y Formulario.
+
+📄 index.html
+→ HTML base de Vite. Contiene el CDN de Bootstrap. Todo React se monta en un <div id="root">.
+
+🔁 COMUNICACIÓN FRONT ↔ BACK
+Front llama al backend con Axios usando rutas tipo /api/entidades.
+
+Backend responde en JSON.
+
+Front renderiza los datos o muestra errores.
+
+Al guardar algo, se recarga la lista con getAll().
 ¿Cómo harías para que TicketForm también pueda editar un ticket además de crearlo? ¿Cómo distinguirías entre ambas acciones?
 Usaría el mismo componente TicketForm para ambas acciones. Si recibe un ticket por props, significa que es una modificación y se inicializa el formulario con esos datos. Si no recibe nada, se asume que es una alta. La diferencia se implementa chequeando si existe ticket.idTicket: si sí, se hace un PUT; si no, un POST.
 
