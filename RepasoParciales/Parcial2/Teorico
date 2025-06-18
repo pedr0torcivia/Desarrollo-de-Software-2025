@@ -1,0 +1,120 @@
+¿Cómo harías para que TicketForm también pueda editar un ticket además de crearlo? ¿Cómo distinguirías entre ambas acciones?
+Usaría el mismo componente TicketForm para ambas acciones. Si recibe un ticket por props, significa que es una modificación y se inicializa el formulario con esos datos. Si no recibe nada, se asume que es una alta. La diferencia se implementa chequeando si existe ticket.idTicket: si sí, se hace un PUT; si no, un POST.
+
+¿Qué ventajas ofrece React con JSX en comparación con manipular el DOM directamente con JavaScript puro?
+JSX permite escribir HTML dentro de JavaScript de forma declarativa, haciendo el código más legible y estructurado. Evita manipulación directa del DOM, lo cual reduce errores, mejora el rendimiento y facilita el mantenimiento.
+
+¿Qué función cumple el useEffect en el componente TicketList? ¿Por qué lo usamos ahí y no en App.js directamente?
+useEffect permite ejecutar una acción al montar el componente, como hacer una petición a la API. Se usa en TicketList si la lógica de carga está encapsulada ahí. Pero si el estado está en App.js, conviene usar useEffect en App para mantener el control centralizado.
+
+¿Qué ventajas tiene separar las llamadas Axios en archivos de servicios y no hacerlas directamente en los componentes?
+Centraliza la lógica de acceso a la API, facilita la reutilización, mejora la mantenibilidad y permite testear más fácilmente los servicios sin tocar la UI.
+
+¿Qué ventaja tiene tener un único estado global en App.js y pasar datos por props en lugar de que cada componente tenga su propio estado?
+Permite mantener sincronizada toda la aplicación. Si varios componentes necesitan ver o modificar los mismos datos (como los tickets), es mejor centralizarlo en App para evitar inconsistencias y duplicación de lógica.
+
+¿Cómo garantizarías que no se envíen formularios con datos inválidos desde TicketForm? ¿Dónde validarías: en frontend, backend o ambos?
+Validaría en ambos. En el frontend uso required, validaciones con react-hook-form o funciones personalizadas. En el backend valido antes de guardar con condiciones o reglas de Sequelize. Así se cubren errores del usuario y posibles manipulaciones maliciosas.
+
+¿Por qué usamos una SPA (Single Page Application) en vez de una página tradicional que recarga cada vez?
+Porque la SPA mejora la experiencia del usuario: la página no se recarga, los cambios son instantáneos, se navega más rápido y consume menos datos al evitar recargar archivos repetidamente.
+
+¿Qué pasa si no usamos cors() en el backend cuando trabajamos con frontend y backend separados?
+El navegador bloquea las peticiones por política de seguridad, ya que impide el intercambio de recursos entre orígenes distintos. cors() permite explícitamente esas conexiones.
+
+¿Por qué usamos .catch() en Axios? ¿Qué pasa si no lo usamos?
+.catch() permite capturar errores como fallas de red o errores del backend. Si no lo usamos, los errores quedan sin manejar y la app puede romperse o mostrar mal funcionamiento sin avisar al usuario.
+
+¿Qué diferencia hay entre usar axios.get('/api/tickets') directamente en App.js y encapsularlo en una función getAllTickets() en un archivo tickets.service.js?
+Encapsularlo permite reutilizar esa función en otros componentes, simplifica el código del componente, mejora la organización y facilita testear o cambiar la URL desde un solo lugar.
+
+¿Qué estrategia podrías usar si el backend tarda mucho en responder? ¿Cómo mejorarías la experiencia del usuario mientras espera?
+Mostrar un spinner o mensaje de “Cargando...” mientras se hace la petición. También puedo usar setTimeout para alertas si tarda demasiado o habilitar el reintento automático.
+
+¿Qué implicaría agregar paginación en el frontend si el backend devolviera 1000 tickets?
+Evitaría cargar todos los tickets de una sola vez. El frontend mandaría consultas con ?page=1&limit=20, y mostraría solo esos 20 por página. También requiere botones de navegación.
+
+¿Cómo harías para mostrar un mensaje de “Guardado exitoso” o “Error al guardar” después de enviar el formulario?
+Usaría .then() y .catch() de Axios. En .then() muestro un mensaje tipo alert o actualizo un estado mensaje. En .catch() capturo el error y muestro otro mensaje con el error correspondiente.
+
+¿Por qué conviene tener TicketList y TicketForm como componentes separados y no hacer todo en App.js?
+Se aplica separación de responsabilidades. TicketList se ocupa de mostrar datos; TicketForm, de cargarlos. Esto hace el código más modular, reutilizable y fácil de mantener.
+
+¿Qué ocurre si se borra el archivo donde está definido el modelo Sequelize en el backend? ¿Qué impacto tendría?
+No se podrían crear, consultar ni modificar los datos de esa entidad. Las rutas que dependen del modelo lanzarían errores y el backend no iniciaría correctamente si se usa sequelize.sync().
+
+¿Qué significa que React tenga un “DOM virtual”? ¿Qué ventajas trae respecto al DOM real?
+React usa un DOM virtual para comparar cambios en memoria antes de aplicarlos al DOM real. Esto hace que las actualizaciones sean más rápidas y eficientes, ya que solo modifica lo que cambió.
+
+¿Por qué usamos value={campo} y onChange={...} en los inputs de un formulario controlado? ¿Qué pasa si no lo hacemos?
+Porque en un formulario controlado React maneja el valor del input. value lo vincula al estado, y onChange actualiza ese estado. Si no lo hacemos, el input se vuelve no controlado y puede generar comportamientos inconsistentes.
+
+¿Qué rol cumple react-hook-form en la gestión de formularios? ¿En qué simplifica la lógica respecto a useState tradicional?
+react-hook-form maneja el estado y la validación del formulario automáticamente. Evita definir múltiples useState, mejora el rendimiento, reduce código repetido y facilita validar múltiples campos.
+
+¿Qué es un Hook en React y por qué son preferidos frente a componentes de clase?
+Un Hook es una función especial de React para usar estado y efectos. Son preferidos porque simplifican el código, evitan boilerplate, permiten reusar lógica entre componentes y se integran bien con funciones modernas.
+
+¿Por qué usamos useState([]) en el listado? ¿Qué representa ese arreglo vacío al principio?
+Inicializa el estado de la lista vacía mientras esperamos los datos. Representa que aún no hay tickets cargados y previene errores al intentar mapear undefined o null.
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+¿Cómo estructurarías la comunicación desde TicketList hacia App.js si fuera necesario modificar un ticket?
+Crearía una función en App.js llamada handleEdit(ticket) que reciba como parámetro el objeto ticket a modificar. Esta función se pasaría como prop al componente TicketList bajo el nombre onEdit. Dentro de TicketList, en cada fila de la tabla, agregarías un botón "Editar" que, al hacer clic, dispare esa función onEdit(ticket). De esta manera, se comunica el componente hijo con el padre. Además, se debe agregar una columna en el encabezado de la tabla llamada "Acción" o "Editar" para mantener la estructura clara.
+
+¿Por qué elegimos usar react-hook-form en lugar de formularios controlados tradicionales con useState? ¿Qué ventajas ofrece?
+react-hook-form simplifica la gestión de formularios evitando el uso repetitivo de useState para cada campo. Solo se necesita el hook useForm, lo cual reduce el código y mejora el rendimiento. También ofrece validación integrada de campos, manejo automático del evento submit, control del estado del formulario (por ejemplo, si fue modificado o enviado), y facilita el acceso a errores. En resumen, hace que crear, validar y enviar formularios sea más eficiente y limpio.
+
+¿Cómo manejarías un error si la petición POST falla (por ejemplo, el servidor no responde o hay un error de validación)?
+Capturaría el error con .catch() en la promesa de Axios, luego setearía un estado de error y mostraría un mensaje al usuario, por ejemplo, con un alert, modal o una etiqueta span. Si es un error de validación, puedo mostrar el mensaje específico del backend. Si es un error del servidor o red, mostraría un mensaje genérico como "Intente más tarde", para no revelar detalles técnicos al usuario.
+
+¿Por qué es importante que App.js sea quien actualice el estado de los tickets, y no TicketForm directamente?
+Porque la lista de tickets es compartida entre varios componentes, como TicketList. Centralizar el estado en App.js permite que todos los componentes que lo necesiten lo reciban vía props. Si TicketForm manejara el estado, se rompería esa comunicación y habría que pasar callbacks innecesarios hacia arriba. TicketForm debe enfocarse solo en capturar y enviar los datos del formulario.
+
+¿Por qué se decidió modularizar la aplicación en componentes como App.js, TicketList.jsx y TicketForm.jsx? ¿Qué beneficios tiene?
+La modularización mejora la organización del código, haciéndolo más legible, mantenible y reutilizable. Cada componente tiene una responsabilidad clara: App.js maneja el estado general, TicketList muestra los datos, y TicketForm gestiona la entrada del usuario. Esto permite renderizar de forma condicional, facilita pruebas unitarias y mantiene la cohesión funcional dentro de cada módulo.
+-----
+1. Por qué se utiliza JWT actualmente?
+Porque es un estándar moderno, liviano y seguro que permite autenticar usuarios sin mantener sesiones en el servidor. El JWT está firmado y contiene toda la información necesaria del usuario, lo que permite validarlo localmente sin consultar la base de datos. Es especialmente útil en arquitecturas modernas como APIs REST y aplicaciones frontend como React, donde se necesita escalabilidad y velocidad.
+
+2. ¿Qué es un IdP (Identity Provider) y cuál es su función?
+Es un software encargado de autenticar identidades. Cuando un usuario inicia sesión, el IdP valida sus credenciales y, si son correctas, emite un token (por ejemplo, un JWT). Este token se utiliza luego para acceder a los sistemas protegidos. Además, el IdP puede incluir información como roles, permisos y tiempo de expiración dentro del token.
+
+3. ¿Qué diferencia hay entre un token de usuario y un token de administrador?
+Ambos son tokens de acceso (generalmente JWT), pero representan diferentes niveles de permiso.
+El token de usuario representa a un usuario estándar e incluye su identidad básica.
+El token de administrador incluye información adicional, como roles o permisos elevados.
+La diferencia radica en los claims dentro del token, como un campo role: admin o scope: write.
+
+4. Si quisieras agregar la actualización de una actividad desde un componente hijo, ¿cómo lo harías hacia App.jsx?
+Crearía una función en App.jsx (por ejemplo, handleEditarActividad) y la pasaría como prop al componente hijo correspondiente. Desde el hijo, al hacer clic en "Editar", se llamaría a esa función enviando el ID o el objeto completo de la actividad. En App.jsx, se guardaría esa actividad en un estado (actividadSeleccionada) y se enviaría como prop al formulario, permitiendo editarla.
+
+5. ¿Por qué App.jsx debe manejar los estados?
+Porque es el componente padre y centraliza la lógica de la aplicación. Al tener el estado global, puede pasarlo a los componentes hijos y recibir actualizaciones desde ellos mediante callbacks. Si cada componente tuviera su propio estado, sería difícil mantener la sincronización entre ellos.
+
+6. ¿Por qué App.jsx debe manejar el estado y no TicketForm directamente?
+Porque TicketForm solo debe encargarse de mostrar y procesar el formulario. La lista de tickets, su actualización y almacenamiento deben ser responsabilidad de App.jsx, que gestiona el estado global y permite que los cambios se reflejen también en TicketList.
+
+7. Si TicketList necesitara modificar un ticket, ¿cómo estructurarías esa comunicación de vuelta hacia App.js?
+Dentro de TicketList, capturaría el evento de clic en "Editar" y llamaría a una función pasada por props desde App.jsx (por ejemplo, onEdit). Esa función se encarga de buscar el ticket por ID, guardarlo en un estado (ticketSeleccionado) y pasarlo al formulario. Así se completa el flujo de edición desde el hijo hacia el padre.
+
+8. ¿Por qué elegimos usar react-hook-form en lugar de manejar formularios controlados tradicionales de React? ¿Qué ventajas ofrece?
+Porque permite registrar inputs sin necesidad de usar useState para cada campo. Simplifica el código, mejora el rendimiento (menos renders) y facilita la validación. Además, provee herramientas como handleSubmit, errors y formState que permiten controlar fácilmente el estado y la validez del formulario.
+
+9. ¿Cómo manejarías un error si la petición POST falla (por ejemplo, el servidor no responde o hay un problema de validación en el backend)?
+Usaría un bloque try/catch o .catch() en la llamada con Axios. Si ocurre un error, capturaría el mensaje y lo mostraría al usuario, ya sea mediante un alert, un mensaje en pantalla o una etiqueta. Si es un error de validación, podría mostrar mensajes específicos por campo. Si es un error del servidor o red, mostraría un mensaje general como "Intente nuevamente más tarde".
+
+10. Describe paso a paso qué ocurre en backend/index.js desde que el servidor Express recibe una petición GET a /api/tareas hasta que envía la respuesta al cliente. ¿Qué middlewares de Express intervienen y cuál es su función?
+Primero, la petición entra al servidor. Pasa por cors() que habilita el acceso desde el frontend, y por express.json() que permite interpretar cuerpos JSON. Luego se enruta a /api/tareas mediante el router, que ejecuta la función correspondiente (por ejemplo, findAll() en el servicio), la cual usa Sequelize para consultar la base de datos. Finalmente, la respuesta se devuelve al cliente con res.json().
+
+11. Si quisieras añadir un filtro opcional a la ruta /api/tareas para buscar también por Responsable, ¿cómo modificarías la lógica?
+En el endpoint /api/tareas, capturaría req.query.search y req.query.responsable. Luego, construiría un objeto where dinámico usando Op.like de Sequelize para aplicar filtros condicionales si esos parámetros están presentes. Así, se puede buscar por descripción, por responsable o por ambos combinados.
+
+12. ¿Cómo interactúa la función de carga inicial de tareas en scripts/scripts.js con el DOM?
+Utiliza document.getElementById() para seleccionar el contenedor <tbody>. Luego, itera sobre la lista de tareas usando forEach() y genera dinámicamente elementos <tr> y <td> para cada campo (id, descripción, responsable). Estas filas se agregan a la tabla usando appendChild().
+
+13. ¿Cómo se maneja la búsqueda en el frontend clásico al hacer clic en "Buscar"?
+Se captura el valor del input con document.getElementById('inputBuscar').value, se construye la URL con query string usando encodeURIComponent, y se hace el fetch. Antes de mostrar los resultados nuevos, se limpia la tabla con tabla.innerHTML = '', y luego se insertan las filas correspondientes a los datos devueltos.
+
+14. ¿Cómo mostrarías el mensaje "No se encontraron tareas" si una búsqueda no devuelve resultados? ¿Dónde lo implementarías?
+Lo implementaría en el frontend. Si el array de tareas devuelto está vacío (tareas.length === 0), en lugar de mostrar una tabla vacía, insertaría un mensaje en pantalla que diga "No se encontraron tareas". Esto mejora la experiencia del usuario, ya que indica claramente que no hubo coincidencias.
+
