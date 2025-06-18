@@ -58,20 +58,20 @@ Un Hook es una función especial de React para usar estado y efectos. Son prefer
 ¿Por qué usamos useState([]) en el listado? ¿Qué representa ese arreglo vacío al principio?
 Inicializa el estado de la lista vacía mientras esperamos los datos. Representa que aún no hay tickets cargados y previene errores al intentar mapear undefined o null.
 _________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-¿Cómo estructurarías la comunicación desde TicketList hacia App.js si fuera necesario modificar un ticket?
-Crearía una función en App.js llamada handleEdit(ticket) que reciba como parámetro el objeto ticket a modificar. Esta función se pasaría como prop al componente TicketList bajo el nombre onEdit. Dentro de TicketList, en cada fila de la tabla, agregarías un botón "Editar" que, al hacer clic, dispare esa función onEdit(ticket). De esta manera, se comunica el componente hijo con el padre. Además, se debe agregar una columna en el encabezado de la tabla llamada "Acción" o "Editar" para mantener la estructura clara.
+            ¿Cómo estructurarías la comunicación desde TicketList hacia App.js si fuera necesario modificar un ticket?
+            Crearía una función en App.js llamada handleEdit(ticket) que reciba como parámetro el objeto ticket a modificar. Esta función se pasaría como prop al componente TicketList bajo el nombre onEdit. Dentro de TicketList, en cada fila de la tabla, agregarías un botón "Editar" que, al hacer clic, dispare esa función onEdit(ticket). De esta manera, se comunica el componente hijo con el padre. Además, se debe agregar una columna en el encabezado de la tabla llamada "Acción" o "Editar" para mantener la estructura clara.
 
-¿Por qué elegimos usar react-hook-form en lugar de formularios controlados tradicionales con useState? ¿Qué ventajas ofrece?
-react-hook-form simplifica la gestión de formularios evitando el uso repetitivo de useState para cada campo. Solo se necesita el hook useForm, lo cual reduce el código y mejora el rendimiento. También ofrece validación integrada de campos, manejo automático del evento submit, control del estado del formulario (por ejemplo, si fue modificado o enviado), y facilita el acceso a errores. En resumen, hace que crear, validar y enviar formularios sea más eficiente y limpio.
+            ¿Por qué elegimos usar react-hook-form en lugar de formularios controlados tradicionales con useState? ¿Qué ventajas ofrece?
+            react-hook-form simplifica la gestión de formularios evitando el uso repetitivo de useState para cada campo. Solo se necesita el hook useForm, lo cual reduce el código y mejora el rendimiento. También ofrece validación integrada de campos, manejo automático del evento submit, control del estado del formulario (por ejemplo, si fue modificado o enviado), y facilita el acceso a errores. En resumen, hace que crear, validar y enviar formularios sea más eficiente y limpio.
 
-¿Cómo manejarías un error si la petición POST falla (por ejemplo, el servidor no responde o hay un error de validación)?
-Capturaría el error con .catch() en la promesa de Axios, luego setearía un estado de error y mostraría un mensaje al usuario, por ejemplo, con un alert, modal o una etiqueta span. Si es un error de validación, puedo mostrar el mensaje específico del backend. Si es un error del servidor o red, mostraría un mensaje genérico como "Intente más tarde", para no revelar detalles técnicos al usuario.
+            ¿Cómo manejarías un error si la petición POST falla (por ejemplo, el servidor no responde o hay un error de validación)?
+            Capturaría el error con .catch() en la promesa de Axios, luego setearía un estado de error y mostraría un mensaje al usuario, por ejemplo, con un alert, modal o una etiqueta span. Si es un error de validación, puedo mostrar el mensaje específico del backend. Si es un error del servidor o red, mostraría un mensaje genérico como "Intente más tarde", para no revelar detalles técnicos al usuario.
 
-¿Por qué es importante que App.js sea quien actualice el estado de los tickets, y no TicketForm directamente?
-Porque la lista de tickets es compartida entre varios componentes, como TicketList. Centralizar el estado en App.js permite que todos los componentes que lo necesiten lo reciban vía props. Si TicketForm manejara el estado, se rompería esa comunicación y habría que pasar callbacks innecesarios hacia arriba. TicketForm debe enfocarse solo en capturar y enviar los datos del formulario.
+            ¿Por qué es importante que App.js sea quien actualice el estado de los tickets, y no TicketForm directamente?
+            Porque la lista de tickets es compartida entre varios componentes, como TicketList. Centralizar el estado en App.js permite que todos los componentes que lo necesiten lo reciban vía props. Si TicketForm manejara el estado, se rompería esa comunicación y habría que pasar callbacks innecesarios hacia arriba. TicketForm debe enfocarse solo en capturar y enviar los datos del formulario.
 
-¿Por qué se decidió modularizar la aplicación en componentes como App.js, TicketList.jsx y TicketForm.jsx? ¿Qué beneficios tiene?
-La modularización mejora la organización del código, haciéndolo más legible, mantenible y reutilizable. Cada componente tiene una responsabilidad clara: App.js maneja el estado general, TicketList muestra los datos, y TicketForm gestiona la entrada del usuario. Esto permite renderizar de forma condicional, facilita pruebas unitarias y mantiene la cohesión funcional dentro de cada módulo.
+            ¿Por qué se decidió modularizar la aplicación en componentes como App.js, TicketList.jsx y TicketForm.jsx? ¿Qué beneficios tiene?
+            La modularización mejora la organización del código, haciéndolo más legible, mantenible y reutilizable. Cada componente tiene una responsabilidad clara: App.js maneja el estado general, TicketList muestra los datos, y TicketForm gestiona la entrada del usuario. Esto permite renderizar de forma condicional, facilita pruebas unitarias y mantiene la cohesión funcional dentro de cada módulo.
 -----
 1. Por qué se utiliza JWT actualmente?
 Porque es un estándar moderno, liviano y seguro que permite autenticar usuarios sin mantener sesiones en el servidor. El JWT está firmado y contiene toda la información necesaria del usuario, lo que permite validarlo localmente sin consultar la base de datos. Es especialmente útil en arquitecturas modernas como APIs REST y aplicaciones frontend como React, donde se necesita escalabilidad y velocidad.
@@ -118,3 +118,259 @@ Se captura el valor del input con document.getElementById('inputBuscar').value, 
 14. ¿Cómo mostrarías el mensaje "No se encontraron tareas" si una búsqueda no devuelve resultados? ¿Dónde lo implementarías?
 Lo implementaría en el frontend. Si el array de tareas devuelto está vacío (tareas.length === 0), en lugar de mostrar una tabla vacía, insertaría un mensaje en pantalla que diga "No se encontraron tareas". Esto mejora la experiencia del usuario, ya que indica claramente que no hubo coincidencias.
 
+Archivo	Qué se hace
+keycloak.js	Inicializa Keycloak
+index.js	Envuelve la app con el proveedor de autenticación
+App.jsx	Define las rutas y cuáles son protegidas
+ProtectedRoute.jsx	Verifica si el usuario está logueado y tiene rol
+api.js	Configura Axios para que mande el token
+Productos.jsx	Muestra datos protegidos desde el backend
+________________________________________
+¿Cómo funciona todo junto?
+1.	El usuario entra a React → no está logueado → Keycloak lo redirige al login.
+2.	Al loguearse, Keycloak entrega el JWT.
+3.	React guarda ese token y lo usa con Axios en cada request.
+4.	Al entrar a /productos, React verifica con ProtectedRoute que el usuario tenga el rol requerido.
+5.	Si todo está bien, se cargan los productos desde el backend.
+
+
+🔑 El IDP (como Keycloak):
+✅ Crea y firma el token JWT cuando el usuario se loguea.
+
+❌ No valida el token en cada request.
+
+🖥️ El backend (tu API en Express, por ejemplo):
+✅ Recibe el JWT en cada request (en el header Authorization).
+
+✅ Verifica que:
+El token no esté vencido
+La firma sea válida
+El rol del usuario sea el correcto (admin, lector, etc.)
+Y si todo está bien... le deja pasar. Si no, devuelve un 401 o 403.
+
+📌 Comparación clara:
+Rol	¿Qué hace?
+IDP (Keycloak)	Autentica al usuario y le entrega un JWT
+Backend (API)	Verifica que ese JWT sea válido y decide si da acceso
+
+🧠 Analogía:
+El IDP es como la oficina que emite tu credencial.
+El backend es el guardia que te pide esa credencial para dejarte pasar o no.
+
+
+PREGUNTAS Y RESPUESTAS SOBRE CAMBIOS EN EL CÓDIGO (MODELO CRUD)
+==============================================================
+
+1. ¿Qué pasa si agrego una nueva columna al modelo Sequelize?
+--------------------------------------------------------------
+Tu modelo Sequelize actual está en backend/src/models/Usuarios.js. El objeto usuariosAttributes define los campos. Si querés agregar una columna nueva:
+
+1. Sumás una propiedad más en ese objeto, por ejemplo:
+   edad: {
+     type: DataTypes.INTEGER,
+     allowNull: true
+   }
+
+2. Si tu sync() está configurado como sequelize.sync({ alter: true }), la tabla se actualiza automáticamente.
+
+3. Además deberías:
+   - Agregar el nuevo campo en los formularios (PostForm.jsx, PutForm.jsx).
+   - Modificar el backend para aceptar ese campo (en los servicios y routers).
+   - Agregarlo al servicio en el frontend (usuarios.service.js).
+
+
+2. ¿Cómo se agrega una columna calculada (por ej. "total")?
+-------------------------------------------------------------
+No está en la base de datos. Lo podés:
+- Calcular en el backend antes de mandar la respuesta (en usuarios.service.js).
+- O hacer el cálculo en el frontend en el componente Tabla.jsx antes de mostrarla.
+
+
+3. ¿Cómo se muestra una columna adicional en la tabla del frontend?
+--------------------------------------------------------------------
+Está en frontend/src/components/Tabla.jsx. Agregás:
+
+1. Un nuevo <th>NombreColumna</th> en el <thead>.
+2. Y en cada <tr>, otra celda con {row.nombreColumna} en el <tbody>.
+
+
+4. ¿Qué hay que tocar para ordenar los resultados por un campo (por ejemplo fecha)?
+-----------------------------------------------------------------------------------
+En tu backend podés modificar findAll() en usuarios.service.js con:
+  findAll({ order: [['fechaAlta', 'DESC']] });
+
+También podrías ordenar en el frontend usando .sort() si los datos ya se cargaron todos.
+
+
+5. ¿Cómo agrego un filtro por fecha o campo adicional?
+-------------------------------------------------------
+1. En el backend (usuarios.routes.js), capturás el filtro con req.query y usás where:
+   where: {
+     fechaAlta: {
+       [Op.gte]: fechaInicio
+     }
+   }
+
+2. En el frontend (Filtro.jsx y usuarios.service.js), agregás un nuevo campo en el formulario que mande ese filtro en la URL.
+
+
+6. ¿Qué implica cambiar de SQLite a PostgreSQL?
+-----------------------------------------------
+En databases.js (src/databases/databases.js):
+
+- Cambiás de:
+  new Sequelize({ dialect: 'sqlite', storage: 'db.sqlite' })
+  a:
+  new Sequelize('mi_db', 'usuario', 'pass', {
+    host: 'localhost',
+    dialect: 'postgres'
+  });
+
+- Instalás pg y pg-hstore.
+
+
+7. ¿Cómo se integran validaciones del lado backend?
+----------------------------------------------------
+Ya usás Sequelize. Tenés cosas como:
+  unique: true,
+  allowNull: false
+
+También podrías validar manualmente en el router o servicio:
+  if (!req.body.usuario) return res.status(400).json({ error: "Usuario obligatorio" });
+
+
+8. ¿Cómo se agrega una relación entre modelos?
+----------------------------------------------
+Tu proyecto tiene un solo modelo, pero si tuvieras, dirías:
+  Reserva.belongsTo(Cliente);
+  Cliente.hasMany(Reserva);
+
+Y luego en la consulta:
+  Reserva.findAll({ include: Cliente });
+
+
+9. ¿Cómo agrego paginación al backend y frontend?
+--------------------------------------------------
+En usuarios.service.js:
+  const { count, rows } = await Usuario.findAndCountAll({ limit, offset });
+
+Y en el frontend (ConsultasUsuarios.jsx), agregás botones para cambiar página y mandás ?limit=10&offset=20.
+
+
+10. ¿Cómo agrego una columna solo visible para usuarios admin?
+---------------------------------------------------------------
+En el backend, verificás el rol del usuario con el token:
+  if (req.user.role === 'admin') {
+    usuario.adminInfo = ...;
+  }
+
+En el frontend:
+  {usuario.role === 'admin' && <td>{row.infoPrivada}</td>}
+
+
+11. ¿Cómo agrego una columna de otra tabla (join)?
+---------------------------------------------------
+En Sequelize:
+  Usuario.findAll({ include: Perfil });
+
+Y accedés en frontend con: row.perfil.nombre
+
+
+12. ¿Cómo testeo que se agregó bien una funcionalidad?
+-------------------------------------------------------
+Usás Jest + Supertest. Por ejemplo:
+  test('crea usuario', async () => {
+    const res = await request(app).post('/usuarios').send({ nombre: 'Juan' });
+    expect(res.statusCode).toBe(201);
+  });
+
+
+13. ¿Cómo manejo errores del backend en el frontend?
+-----------------------------------------------------
+En usuarios.service.js:
+  .catch((error) => {
+    if (error.response.status === 400) {
+      alert("Faltan datos");
+    }
+  });
+
+
+14. ¿Cómo agrego mensajes de éxito o feedback?
+-----------------------------------------------
+En el then() de Axios:
+  .then(() => {
+    setMensaje("Guardado correctamente");
+    alert("Guardado");
+  });
+
+
+15. ¿Cómo reutilizo un formulario para Alta y Modificación?
+------------------------------------------------------------
+Tu PutForm.jsx y PostForm.jsx podrían unirse. Controlás si hay id:
+  if (id) {
+    // PUT
+  } else {
+    // POST
+  }
+
+
+16. ¿Cómo agrego un campo obligatorio en el frontend?
+------------------------------------------------------
+Ya usás react-hook-form. Tenés esto en tus formularios:
+  <input {...register("nombre", { required: "Nombre requerido" })} />
+
+
+17. ¿Cómo agrego confirmación antes de eliminar?
+-------------------------------------------------
+En Tabla.jsx, antes del handleDeleteUser(id):
+  if (window.confirm("¿Seguro que querés eliminar?")) {
+    handleDeleteUser(id);
+  }
+
+
+18. ¿Cómo se visualizan y actualizan los estados de React en formulario controlado?
+-------------------------------------------------------------------------------------
+Con useState:
+  const [nombre, setNombre] = useState("");
+  <input value={nombre} onChange={(e) => setNombre(e.target.value)} />
+
+
+19. ¿Diferencia entre onChange y onInput?
+------------------------------------------
+- onChange: al confirmar (o perder foco).
+- onInput: cada tecla. En formularios controlados se prefiere onChange.
+
+
+20. ¿Cómo vinculo input al estado?
+-----------------------------------
+  const [email, setEmail] = useState("");
+  <input value={email} onChange={e => setEmail(e.target.value)} />
+
+
+21. ¿Cómo limitar número máximo?
+---------------------------------
+  <input type="number" max={100} />
+  // o validación manual
+  if (e.target.value <= 100) setEdad(e.target.value);
+
+
+22. ¿Cómo validar fecha?
+-------------------------
+Con:
+  <input type="date" />
+o regex si querés controlar el formato vos: /^\d{4}-\d{2}-\d{2}$/
+
+
+23. ¿Cómo marcar errores visualmente?
+--------------------------------------
+Con Bootstrap:
+  <input className={`form-control ${errors.campo && "is-invalid"}`} />
+  <div className="invalid-feedback">Campo requerido</div>
+
+
+24. ¿Cómo limpiar estados después de guardar?
+----------------------------------------------
+Después del axios.post(...), hacés:
+  setNombre("");
+  setApellido("");
+o reiniciás todo con reset() si usás react-hook-form.
