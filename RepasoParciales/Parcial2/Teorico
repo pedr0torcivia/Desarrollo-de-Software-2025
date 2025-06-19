@@ -101,7 +101,21 @@ Un Hook es una función especial de React para usar estado y efectos. Son prefer
 ¿Por qué usamos useState([]) en el listado? ¿Qué representa ese arreglo vacío al principio?
 Inicializa el estado de la lista vacía mientras esperamos los datos. Representa que aún no hay tickets cargados y previene errores al intentar mapear undefined o null.
 _________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
- 
+    ¿Cómo estructurarías la comunicación desde TicketList hacia App.js si fuera necesario modificar un ticket?
+    Lo que haría sería definir una función en App.js, por ejemplo handleEdit, que reciba el ticket a editar. Esa función se la paso como prop a TicketList, tal vez con el nombre onEdit. Y dentro de TicketList, en cada fila agrego un botón “Editar” que, cuando se clickea, llama a esa función y le pasa el ticket correspondiente. Así, desde el hijo le mando datos al padre. También agregaría una columna en la tabla para ese botón, tipo “Acción” o “Editar”, para mantener todo claro.
+
+    ¿Por qué elegimos usar react-hook-form en lugar de formularios controlados tradicionales con useState? ¿Qué ventajas ofrece?
+    Porque con react-hook-form se reduce un montón el código que tendríamos que escribir con useState para cada input. Solo usamos useForm y ya podemos registrar los campos, validar, y manejar el submit. Además, tiene validaciones integradas, acceso fácil a errores y el control de estado del formulario es mucho más liviano. En general, hace todo más simple y ordenado.
+
+    ¿Cómo manejarías un error si la petición POST falla (por ejemplo, el servidor no responde o hay un error de validación)?
+    Lo primero que hago es usar un try/catch o un .catch() en la promesa de Axios. Si hay error, guardo ese mensaje en un estado y lo muestro con algo visible como un alert, un div, o lo que sea más claro para el usuario. Si el backend manda un mensaje específico de validación, lo muestro. Si es un error más general del servidor o de red, prefiero mostrar algo tipo “Ocurrió un error, intente más tarde”, para no mostrar info técnica.
+
+    ¿Por qué es importante que App.js sea quien actualice el estado de los tickets, y no TicketForm directamente?
+    Porque App.js es el componente principal que tiene la lista de tickets, y ese mismo estado lo usan varios componentes. Si dejamos que TicketForm actualice por su cuenta, perdemos el control central del estado y puede traer inconsistencias. En cambio, si App se encarga de guardar los cambios, puede actualizar todo de manera más ordenada y pasarle los datos actualizados a los componentes que lo necesiten.
+
+    ¿Por qué se decidió modularizar la aplicación en componentes como App.js, TicketList.jsx y TicketForm.jsx? ¿Qué beneficios tiene?
+    Separar en componentes nos ayuda a tener el código más ordenado y fácil de mantener. Cada uno tiene una función clara: App maneja el estado general, TicketList se encarga de mostrar los tickets, y TicketForm es solo para la carga o edición. Esto hace que sea más fácil de leer, de testear, y también podemos reutilizar partes si hace falta. Además, cada uno se puede trabajar o modificar de forma independiente sin romper el resto.
+
 -----
 1. Por qué se utiliza JWT actualmente?
 Porque es un estándar moderno, liviano y seguro que permite autenticar usuarios sin mantener sesiones en el servidor. El JWT está firmado y contiene toda la información necesaria del usuario, lo que permite validarlo localmente sin consultar la base de datos. Es especialmente útil en arquitecturas modernas como APIs REST y aplicaciones frontend como React, donde se necesita escalabilidad y velocidad.
